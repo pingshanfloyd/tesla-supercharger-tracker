@@ -1,17 +1,16 @@
-# Tesla Supercharger Open Access Tracker
+# Tesla Supercharger Tracker
 
-特斯拉超级充电站第三方开放（otherEVs=true）月度追踪报告。
+Tracking Tesla Supercharger third-party EV access worldwide.
 
-## 数据来源
+🌐 Live site: [tesla.gann.ing](https://tesla.gann.ing/)
 
-[supercharge.info](https://supercharge.info/service/supercharge/allSites)
+## Auto-deploy
 
-## 在线访问
+This site is automatically updated monthly via GitHub Pages.
 
-通过 GitHub Pages 或 Vercel 部署后访问。
+## Structure
 
-## 报告说明
+- `index.html` - Main dashboard
+- `archive.html` - Historical reports
+- `404.html` - Custom 404 page
 
-- 每月27日自动更新
-- 按区域分组：美洲、欧洲、亚太、中东非
-- 对比上月变化：新增/停止开放国家、站点数变化
