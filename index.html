@@ -33,8 +33,8 @@
             background: radial-gradient(circle, rgba(232, 65, 24, 0.15) 0%, transparent 70%);
             border-radius: 50%;
         }
-        .header h1 { font-size: 28px; font-weight: 700; color: #fff; margin-bottom: 8px; position: relative; }
-        .header .subtitle { color: #8a8ab0; font-size: 14px; position: relative; }
+        .header h1 { font-size: 28px; font-weight: 700; color: #fff; margin-bottom: 8px; position: relative; text-align: center; line-height: 1.4; }
+        .header .subtitle { color: #8a8ab0; font-size: 14px; position: relative; text-align: center; }
 
         /* Stats Row */
         .stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px; }
@@ -243,7 +243,7 @@ const REPORT_DATA = {
     // Build header
     let html = `
     <div class="header">
-        <h1>⚡ 特斯拉超充站第三方开放${D.reportType}</h1>
+        <h1>⚡ 特斯拉超充站<br>第三方开放${D.reportType}</h1>
         <div class="subtitle">${D.reportDate} · 数据来源 ${D.dataSource}</div>
     </div>`;
 
