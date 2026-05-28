@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>特斯拉超充站第三方开放基准报告 - 2026年5月</title>
+    <title>特斯拉超充站第三方开放追踪</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -33,32 +33,13 @@
             background: radial-gradient(circle, rgba(232, 65, 24, 0.15) 0%, transparent 70%);
             border-radius: 50%;
         }
-        .header h1 {
-            font-size: 28px;
-            font-weight: 700;
-            color: #fff;
-            margin-bottom: 8px;
-            position: relative;
-        }
-        .header .subtitle {
-            color: #8a8ab0;
-            font-size: 14px;
-            position: relative;
-        }
+        .header h1 { font-size: 28px; font-weight: 700; color: #fff; margin-bottom: 8px; position: relative; }
+        .header .subtitle { color: #8a8ab0; font-size: 14px; position: relative; }
 
         /* Stats Row */
-        .stats-row {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 16px;
-            margin-bottom: 24px;
-        }
+        .stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px; }
         .stat-card {
-            background: #141420;
-            border: 1px solid #1e1e30;
-            border-radius: 12px;
-            padding: 20px;
-            text-align: center;
+            background: #141420; border: 1px solid #1e1e30; border-radius: 12px; padding: 20px; text-align: center;
         }
         .stat-card .label { color: #6a6a8a; font-size: 13px; margin-bottom: 6px; }
         .stat-card .value { font-size: 32px; font-weight: 700; color: #fff; }
@@ -67,96 +48,75 @@
         .stat-card .value.blue { color: #54a0ff; }
         .stat-card .unit { font-size: 14px; color: #6a6a8a; margin-left: 2px; }
 
+        /* Changes Section */
+        .changes-section {
+            background: #141420; border: 1px solid #1e1e30; border-radius: 12px;
+            margin-bottom: 24px; overflow: hidden;
+        }
+        .changes-header { padding: 16px 24px; border-bottom: 1px solid #1e1e30; display: flex; align-items: center; gap: 10px; }
+        .changes-header .icon { font-size: 22px; }
+        .changes-header h2 { font-size: 18px; font-weight: 600; color: #fff; }
+        .changes-body { padding: 20px 24px; }
+        .change-group { margin-bottom: 16px; }
+        .change-group:last-child { margin-bottom: 0; }
+        .change-group-title { font-size: 14px; font-weight: 600; color: #8a8ab0; margin-bottom: 8px; }
+        .change-item { font-size: 14px; color: #c0c0d0; padding: 4px 0; }
+        .change-item .flag { margin-right: 6px; }
+
         /* Region Section */
         .region-section {
-            background: #141420;
-            border: 1px solid #1e1e30;
-            border-radius: 12px;
-            margin-bottom: 20px;
-            overflow: hidden;
+            background: #141420; border: 1px solid #1e1e30; border-radius: 12px;
+            margin-bottom: 20px; overflow: hidden;
         }
         .region-header {
-            padding: 16px 24px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            border-bottom: 1px solid #1e1e30;
+            padding: 16px 24px; display: flex; align-items: center; gap: 10px;
+            border-bottom: 1px solid #1e1e30; flex-wrap: wrap;
         }
         .region-header .icon { font-size: 22px; }
         .region-header h2 { font-size: 18px; font-weight: 600; color: #fff; }
         .region-header .count {
-            margin-left: auto;
-            background: #1e1e30;
-            color: #8a8ab0;
-            padding: 2px 10px;
-            border-radius: 20px;
-            font-size: 13px;
+            margin-left: auto; background: #1e1e30; color: #8a8ab0;
+            padding: 2px 10px; border-radius: 20px; font-size: 13px;
         }
+        .region-countries {
+            padding: 10px 24px; color: #6a6a8a; font-size: 13px;
+            border-bottom: 1px solid #12121e; line-height: 1.8;
+        }
+        .region-countries span { color: #8a8ab0; margin-right: 4px; }
 
         /* Table */
         .data-table { width: 100%; border-collapse: collapse; }
         .data-table th {
-            text-align: left;
-            padding: 12px 24px;
-            color: #6a6a8a;
-            font-size: 12px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+            text-align: left; padding: 12px 24px; color: #6a6a8a; font-size: 12px;
+            font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;
             border-bottom: 1px solid #1e1e30;
         }
-        .data-table td {
-            padding: 10px 24px;
-            font-size: 14px;
-            border-bottom: 1px solid #12121e;
-        }
+        .data-table th:first-child { min-width: 5.5em; }
+        .data-table td { padding: 10px 24px; font-size: 14px; border-bottom: 1px solid #12121e; }
         .data-table tr:hover { background: #1a1a28; }
-        .data-table .country { font-weight: 500; color: #fff; }
+        .data-table .country { font-weight: 500; color: #fff; white-space: nowrap; }
         .data-table .num { font-variant-numeric: tabular-nums; color: #c0c0d0; }
         .data-table .pct-cell { width: 200px; }
-        .pct-bar-wrap {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .pct-bar-bg {
-            flex: 1;
-            height: 8px;
-            background: #1e1e30;
-            border-radius: 4px;
-            overflow: hidden;
-        }
-        .pct-bar {
-            height: 100%;
-            border-radius: 4px;
-            transition: width 0.6s ease;
-        }
+        .pct-bar-wrap { display: flex; align-items: center; gap: 10px; }
+        .pct-bar-bg { flex: 1; height: 8px; background: #1e1e30; border-radius: 4px; overflow: hidden; }
+        .pct-bar { height: 100%; border-radius: 4px; transition: width 0.6s ease; }
         .pct-bar.high { background: linear-gradient(90deg, #00d2d3, #01a3a4); }
         .pct-bar.mid { background: linear-gradient(90deg, #54a0ff, #2e86de); }
         .pct-bar.low { background: linear-gradient(90deg, #feca57, #ff9f43); }
         .pct-bar.very-low { background: linear-gradient(90deg, #ff6b6b, #ee5a24); }
-        .pct-val {
-            min-width: 48px;
-            text-align: right;
-            font-size: 13px;
-            font-weight: 600;
-        }
+        .pct-val { min-width: 48px; text-align: right; font-size: 13px; font-weight: 600; }
         .pct-val.high { color: #00d2d3; }
         .pct-val.mid { color: #54a0ff; }
         .pct-val.low { color: #feca57; }
         .pct-val.very-low { color: #ff6b6b; }
 
-        /* Full row */
+        /* Full rate row (100%) */
         .full-row td { background: #0d1a0d; }
         .full-row .country { color: #00d2d3; }
 
         /* Footer */
         .footer {
-            text-align: center;
-            padding: 30px 20px;
-            color: #4a4a6a;
-            font-size: 13px;
-            line-height: 1.8;
+            text-align: center; padding: 30px 20px; color: #4a4a6a; font-size: 13px; line-height: 1.8;
         }
         .footer a { color: #54a0ff; text-decoration: none; }
         .footer a:hover { text-decoration: underline; }
@@ -166,148 +126,217 @@
             .stats-row { grid-template-columns: repeat(2, 1fr); }
             .header h1 { font-size: 22px; }
             .stat-card .value { font-size: 24px; }
-            .data-table th, .data-table td { padding: 8px 12px; }
+            .data-table th, .data-table td { padding: 10px 12px; }
+            .data-table th:first-child { min-width: 5.5em; }
             .pct-cell { width: 140px; }
         }
         @media (max-width: 480px) {
             .stats-row { grid-template-columns: 1fr 1fr; }
-            .pct-cell { width: 100px; }
+            .header { padding: 24px 20px; }
+            .data-table th, .data-table td { padding: 8px 8px; font-size: 13px; }
+            .data-table th:first-child { min-width: 5em; }
+            .pct-cell { width: 110px; }
+            .pct-bar-wrap { gap: 6px; }
+            .pct-val { min-width: 38px; font-size: 12px; }
         }
     </style>
 </head>
 <body>
-<div class="container">
-    <div class="header">
-        <h1>⚡ 特斯拉超充站第三方开放基准报告</h1>
-        <div class="subtitle">2026年5月 · 首次基准 · 数据来源 supercharge.info</div>
-    </div>
+<div class="container" id="app"></div>
 
+<script>
+// ============================================================
+//  数据区域 —— 后续更新只需修改此部分，勿改模板代码
+// ============================================================
+const REPORT_DATA = {
+    reportDate: '2026年5月',
+    reportType: '基准报告',
+    dataSource: 'supercharge.info',
+    totalSites: 10546,
+    openSites: 6434,
+    openRate: 61.0,
+    totalCountries: 40,
+
+    regions: [
+        {
+            name: '美洲',
+            icon: '🌎',
+            countries: [
+                { name: '美国',    open: 2664, total: 3907 },
+                { name: '加拿大',  open: 228,  total: 374 },
+                { name: '墨西哥',  open: 24,   total: 41 }
+            ]
+        },
+        {
+            name: '欧洲',
+            icon: '🌍',
+            countries: [
+                { name: '土耳其',     open: 47,  total: 47 },
+                { name: '匈牙利',     open: 35,  total: 35 },
+                { name: '罗马尼亚',   open: 29,  total: 29 },
+                { name: '捷克',       open: 23,  total: 23 },
+                { name: '葡萄牙',     open: 22,  total: 22 },
+                { name: '斯洛伐克',   open: 12,  total: 12 },
+                { name: '爱沙尼亚',   open: 4,   total: 4 },
+                { name: '卢森堡',     open: 2,   total: 2 },
+                { name: '瑞典',       open: 153, total: 155 },
+                { name: '德国',       open: 413, total: 422 },
+                { name: '瑞士',       open: 46,  total: 47 },
+                { name: '丹麦',       open: 48,  total: 50 },
+                { name: '挪威',       open: 195, total: 203 },
+                { name: '西班牙',     open: 137, total: 143 },
+                { name: '荷兰',       open: 57,  total: 60 },
+                { name: '冰岛',       open: 19,  total: 20 },
+                { name: '法国',       open: 313, total: 332 },
+                { name: '奥地利',     open: 66,  total: 72 },
+                { name: '意大利',     open: 135, total: 149 },
+                { name: '比利时',     open: 29,  total: 32 },
+                { name: '芬兰',       open: 49,  total: 55 },
+                { name: '爱尔兰',     open: 15,  total: 18 },
+                { name: '波兰',       open: 35,  total: 46 },
+                { name: '克罗地亚',   open: 21,  total: 27 },
+                { name: '斯洛文尼亚', open: 8,   total: 12 },
+                { name: '英国',       open: 185, total: 302 },
+                { name: '希腊',       open: 6,   total: 10 },
+                { name: '立陶宛',     open: 1,   total: 5 },
+                { name: '塞尔维亚',   open: 1,   total: 5 },
+                { name: '以色列',     open: 1,   total: 25 }
+            ]
+        },
+        {
+            name: '亚太',
+            icon: '🌏',
+            countries: [
+                { name: '新西兰',   open: 30,   total: 37 },
+                { name: '韩国',     open: 129,  total: 194 },
+                { name: '澳大利亚', open: 113,  total: 185 },
+                { name: '印度',     open: 5,    total: 9 },
+                { name: '中国',     open: 1113, total: 2958 },
+                { name: '马来西亚', open: 4,    total: 25 },
+                { name: '台湾',     open: 17,   total: 133, isRegion: true }
+            ]
+        }
+    ],
+
+    // 月度变化（基准报告为空）
+    changes: []
+};
+
+// ============================================================
+//  模板代码 —— 请勿修改
+// ============================================================
+(function() {
+    const D = REPORT_DATA;
+    const app = document.getElementById('app');
+
+    // Helper: get bar color class
+    function barClass(pct) {
+        if (pct >= 80) return 'high';
+        if (pct >= 60) return 'mid';
+        if (pct >= 40) return 'low';
+        return 'very-low';
+    }
+
+    // Helper: format number with commas
+    function fmt(n) { return n.toLocaleString(); }
+
+    // Build header
+    let html = `
+    <div class="header">
+        <h1>⚡ 特斯拉超充站第三方开放${D.reportType}</h1>
+        <div class="subtitle">${D.reportDate} · 数据来源 ${D.dataSource}</div>
+    </div>`;
+
+    // Build stats
+    html += `
     <div class="stats-row">
         <div class="stat-card">
             <div class="label">总站点数</div>
-            <div class="value">10,546</div>
+            <div class="value">${fmt(D.totalSites)}</div>
         </div>
         <div class="stat-card">
             <div class="label">开放站点数</div>
-            <div class="value orange">6,434</div>
+            <div class="value orange">${fmt(D.openSites)}</div>
         </div>
         <div class="stat-card">
             <div class="label">全球开放率</div>
-            <div class="value green">61.0<span class="unit">%</span></div>
+            <div class="value green">${D.openRate.toFixed(1)}<span class="unit">%</span></div>
         </div>
         <div class="stat-card">
             <div class="label">覆盖国家/地区</div>
-            <div class="value blue">40</div>
+            <div class="value blue">${D.totalCountries}</div>
         </div>
-    </div>
+    </div>`;
 
-    <!-- 美洲 -->
+    // Build changes section (if any)
+    if (D.changes && D.changes.length > 0) {
+        html += `<div class="changes-section">
+            <div class="changes-header">
+                <span class="icon">📊</span>
+                <h2>本月变化</h2>
+            </div>
+            <div class="changes-body">`;
+        D.changes.forEach(c => {
+            html += `<div class="change-group">
+                <div class="change-group-title">${c.type}</div>`;
+            c.items.forEach(item => {
+                html += `<div class="change-item"><span class="flag">${c.flag}</span>${item}</div>`;
+            });
+            html += `</div>`;
+        });
+        html += `</div></div>`;
+    }
+
+    // Build regions
+    D.regions.forEach(region => {
+        if (!region.countries || region.countries.length === 0) return;
+
+        const countryList = region.countries.map(c => c.name).join('、');
+
+        html += `
     <div class="region-section">
         <div class="region-header">
-            <span class="icon">🌎</span>
-            <h2>美洲</h2>
-            <span class="count">3 个国家/地区</span>
+            <span class="icon">${region.icon}</span>
+            <h2>${region.name}</h2>
+            <span class="count">${region.countries.length} 个国家/地区</span>
         </div>
+        <div class="region-countries"><span>包含：</span>${countryList}</div>
         <table class="data-table">
             <thead>
                 <tr><th>国家/地区</th><th>开放站点</th><th>总站点</th><th class="pct-cell">开放率</th></tr>
             </thead>
-            <tbody>
-                <tr>
-                    <td class="country">美国</td>
-                    <td class="num">2,664</td>
-                    <td class="num">3,907</td>
-                    <td class="pct-cell"><div class="pct-bar-wrap"><div class="pct-bar-bg"><div class="pct-bar mid" style="width:68.2%"></div></div><span class="pct-val mid">68.2%</span></div></td>
-                </tr>
-                <tr>
-                    <td class="country">加拿大</td>
-                    <td class="num">228</td>
-                    <td class="num">374</td>
-                    <td class="pct-cell"><div class="pct-bar-wrap"><div class="pct-bar-bg"><div class="pct-bar mid" style="width:61.0%"></div></div><span class="pct-val mid">61.0%</span></div></td>
-                </tr>
-                <tr>
-                    <td class="country">墨西哥</td>
-                    <td class="num">24</td>
-                    <td class="num">41</td>
-                    <td class="pct-cell"><div class="pct-bar-wrap"><div class="pct-bar-bg"><div class="pct-bar low" style="width:58.5%"></div></div><span class="pct-val low">58.5%</span></div></td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+            <tbody>`;
 
-    <!-- 欧洲 -->
-    <div class="region-section">
-        <div class="region-header">
-            <span class="icon">🇪🇺</span>
-            <h2>欧洲</h2>
-            <span class="count">30 个国家/地区</span>
-        </div>
-        <table class="data-table">
-            <thead>
-                <tr><th>国家/地区</th><th>开放站点</th><th>总站点</th><th class="pct-cell">开放率</th></tr>
-            </thead>
-            <tbody>
-                <tr class="full-row"><td class="country">土耳其</td><td class="num">47</td><td class="num">47</td><td class="pct-cell"><div class="pct-bar-wrap"><div class="pct-bar-bg"><div class="pct-bar high" style="width:100%"></div></div><span class="pct-val high">100%</span></div></td></tr>
-                <tr class="full-row"><td class="country">匈牙利</td><td class="num">35</td><td class="num">35</td><td class="pct-cell"><div class="pct-bar-wrap"><div class="pct-bar-bg"><div class="pct-bar high" style="width:100%"></div></div><span class="pct-val high">100%</span></div></td></tr>
-                <tr class="full-row"><td class="country">罗马尼亚</td><td class="num">29</td><td class="num">29</td><td class="pct-cell"><div class="pct-bar-wrap"><div class="pct-bar-bg"><div class="pct-bar high" style="width:100%"></div></div><span class="pct-val high">100%</span></div></td></tr>
-                <tr class="full-row"><td class="country">捷克</td><td class="num">23</td><td class="num">23</td><td class="pct-cell"><div class="pct-bar-wrap"><div class="pct-bar-bg"><div class="pct-bar high" style="width:100%"></div></div><span class="pct-val high">100%</span></div></td></tr>
-                <tr class="full-row"><td class="country">葡萄牙</td><td class="num">22</td><td class="num">22</td><td class="pct-cell"><div class="pct-bar-wrap"><div class="pct-bar-bg"><div class="pct-bar high" style="width:100%"></div></div><span class="pct-val high">100%</span></div></td></tr>
-                <tr class="full-row"><td class="country">斯洛伐克</td><td class="num">12</td><td class="num">12</td><td class="pct-cell"><div class="pct-bar-wrap"><div class="pct-bar-bg"><div class="pct-bar high" style="width:100%"></div></div><span class="pct-val high">100%</span></div></td></tr>
-                <tr class="full-row"><td class="country">爱沙尼亚</td><td class="num">4</td><td class="num">4</td><td class="pct-cell"><div class="pct-bar-wrap"><div class="pct-bar-bg"><div class="pct-bar high" style="width:100%"></div></div><span class="pct-val high">100%</span></div></td></tr>
-                <tr class="full-row"><td class="country">卢森堡</td><td class="num">2</td><td class="num">2</td><td class="pct-cell"><div class="pct-bar-wrap"><div class="pct-bar-bg"><div class="pct-bar high" style="width:100%"></div></div><span class="pct-val high">100%</span></div></td></tr>
-                <tr><td class="country">瑞典</td><td class="num">153</td><td class="num">155</td><td class="pct-cell"><div class="pct-bar-wrap"><div class="pct-bar-bg"><div class="pct-bar high" style="width:98.7%"></div></div><span class="pct-val high">98.7%</span></div></td></tr>
-                <tr><td class="country">德国</td><td class="num">413</td><td class="num">422</td><td class="pct-cell"><div class="pct-bar-wrap"><div class="pct-bar-bg"><div class="pct-bar high" style="width:97.9%"></div></div><span class="pct-val high">97.9%</span></div></td></tr>
-                <tr><td class="country">瑞士</td><td class="num">46</td><td class="num">47</td><td class="pct-cell"><div class="pct-bar-wrap"><div class="pct-bar-bg"><div class="pct-bar high" style="width:97.9%"></div></div><span class="pct-val high">97.9%</span></div></td></tr>
-                <tr><td class="country">丹麦</td><td class="num">48</td><td class="num">50</td><td class="pct-cell"><div class="pct-bar-wrap"><div class="pct-bar-bg"><div class="pct-bar high" style="width:96.0%"></div></div><span class="pct-val high">96.0%</span></div></td></tr>
-                <tr><td class="country">挪威</td><td class="num">195</td><td class="num">203</td><td class="pct-cell"><div class="pct-bar-wrap"><div class="pct-bar-bg"><div class="pct-bar high" style="width:96.1%"></div></div><span class="pct-val high">96.1%</span></div></td></tr>
-                <tr><td class="country">西班牙</td><td class="num">137</td><td class="num">143</td><td class="pct-cell"><div class="pct-bar-wrap"><div class="pct-bar-bg"><div class="pct-bar high" style="width:95.8%"></div></div><span class="pct-val high">95.8%</span></div></td></tr>
-                <tr><td class="country">荷兰</td><td class="num">57</td><td class="num">60</td><td class="pct-cell"><div class="pct-bar-wrap"><div class="pct-bar-bg"><div class="pct-bar high" style="width:95.0%"></div></div><span class="pct-val high">95.0%</span></div></td></tr>
-                <tr><td class="country">冰岛</td><td class="num">19</td><td class="num">20</td><td class="pct-cell"><div class="pct-bar-wrap"><div class="pct-bar-bg"><div class="pct-bar high" style="width:95.0%"></div></div><span class="pct-val high">95.0%</span></div></td></tr>
-                <tr><td class="country">法国</td><td class="num">313</td><td class="num">332</td><td class="pct-cell"><div class="pct-bar-wrap"><div class="pct-bar-bg"><div class="pct-bar high" style="width:94.3%"></div></div><span class="pct-val high">94.3%</span></div></td></tr>
-                <tr><td class="country">奥地利</td><td class="num">66</td><td class="num">72</td><td class="pct-cell"><div class="pct-bar-wrap"><div class="pct-bar-bg"><div class="pct-bar high" style="width:91.7%"></div></div><span class="pct-val high">91.7%</span></div></td></tr>
-                <tr><td class="country">意大利</td><td class="num">135</td><td class="num">149</td><td class="pct-cell"><div class="pct-bar-wrap"><div class="pct-bar-bg"><div class="pct-bar high" style="width:90.6%"></div></div><span class="pct-val high">90.6%</span></div></td></tr>
-                <tr><td class="country">比利时</td><td class="num">29</td><td class="num">32</td><td class="pct-cell"><div class="pct-bar-wrap"><div class="pct-bar-bg"><div class="pct-bar high" style="width:90.6%"></div></div><span class="pct-val high">90.6%</span></div></td></tr>
-                <tr><td class="country">芬兰</td><td class="num">49</td><td class="num">55</td><td class="pct-cell"><div class="pct-bar-wrap"><div class="pct-bar-bg"><div class="pct-bar high" style="width:89.1%"></div></div><span class="pct-val high">89.1%</span></div></td></tr>
-                <tr><td class="country">爱尔兰</td><td class="num">15</td><td class="num">18</td><td class="pct-cell"><div class="pct-bar-wrap"><div class="pct-bar-bg"><div class="pct-bar high" style="width:83.3%"></div></div><span class="pct-val high">83.3%</span></div></td></tr>
-                <tr><td class="country">波兰</td><td class="num">35</td><td class="num">46</td><td class="pct-cell"><div class="pct-bar-wrap"><div class="pct-bar-bg"><div class="pct-bar high" style="width:76.1%"></div></div><span class="pct-val high">76.1%</span></div></td></tr>
-                <tr><td class="country">克罗地亚</td><td class="num">21</td><td class="num">27</td><td class="pct-cell"><div class="pct-bar-wrap"><div class="pct-bar-bg"><div class="pct-bar mid" style="width:77.8%"></div></div><span class="pct-val mid">77.8%</span></div></td></tr>
-                <tr><td class="country">斯洛文尼亚</td><td class="num">8</td><td class="num">12</td><td class="pct-cell"><div class="pct-bar-wrap"><div class="pct-bar-bg"><div class="pct-bar mid" style="width:66.7%"></div></div><span class="pct-val mid">66.7%</span></div></td></tr>
-                <tr><td class="country">英国</td><td class="num">185</td><td class="num">302</td><td class="pct-cell"><div class="pct-bar-wrap"><div class="pct-bar-bg"><div class="pct-bar mid" style="width:61.3%"></div></div><span class="pct-val mid">61.3%</span></div></td></tr>
-                <tr><td class="country">希腊</td><td class="num">6</td><td class="num">10</td><td class="pct-cell"><div class="pct-bar-wrap"><div class="pct-bar-bg"><div class="pct-bar mid" style="width:60.0%"></div></div><span class="pct-val mid">60.0%</span></div></td></tr>
-                <tr><td class="country">立陶宛</td><td class="num">1</td><td class="num">5</td><td class="pct-cell"><div class="pct-bar-wrap"><div class="pct-bar-bg"><div class="pct-bar low" style="width:20.0%"></div></div><span class="pct-val low">20.0%</span></div></td></tr>
-                <tr><td class="country">塞尔维亚</td><td class="num">1</td><td class="num">5</td><td class="pct-cell"><div class="pct-bar-wrap"><div class="pct-bar-bg"><div class="pct-bar low" style="width:20.0%"></div></div><span class="pct-val low">20.0%</span></div></td></tr>
-                <tr><td class="country">以色列</td><td class="num">1</td><td class="num">25</td><td class="pct-cell"><div class="pct-bar-wrap"><div class="pct-bar-bg"><div class="pct-bar very-low" style="width:4.0%"></div></div><span class="pct-val very-low">4.0%</span></div></td></tr>
-            </tbody>
-        </table>
-    </div>
+        region.countries.forEach(c => {
+            const pct = c.total > 0 ? (c.open / c.total * 100) : 0;
+            const cls = barClass(pct);
+            const isFull = (pct === 100);
+            const rowCls = isFull ? ' class="full-row"' : '';
+            html += `
+                <tr${rowCls}>
+                    <td class="country">${c.name}</td>
+                    <td class="num">${fmt(c.open)}</td>
+                    <td class="num">${fmt(c.total)}</td>
+                    <td class="pct-cell"><div class="pct-bar-wrap"><div class="pct-bar-bg"><div class="pct-bar ${cls}" style="width:${pct.toFixed(1)}%"></div></div><span class="pct-val ${cls}">${pct.toFixed(1)}%</span></div></td>
+                </tr>`;
+        });
 
-    <!-- 亚太 -->
-    <div class="region-section">
-        <div class="region-header">
-            <span class="icon">🌏</span>
-            <h2>亚太</h2>
-            <span class="count">7 个国家/地区</span>
-        </div>
-        <table class="data-table">
-            <thead>
-                <tr><th>国家/地区</th><th>开放站点</th><th>总站点</th><th class="pct-cell">开放率</th></tr>
-            </thead>
-            <tbody>
-                <tr><td class="country">新西兰</td><td class="num">30</td><td class="num">37</td><td class="pct-cell"><div class="pct-bar-wrap"><div class="pct-bar-bg"><div class="pct-bar high" style="width:81.1%"></div></div><span class="pct-val high">81.1%</span></div></td></tr>
-                <tr><td class="country">韩国</td><td class="num">129</td><td class="num">194</td><td class="pct-cell"><div class="pct-bar-wrap"><div class="pct-bar-bg"><div class="pct-bar mid" style="width:66.5%"></div></div><span class="pct-val mid">66.5%</span></div></td></tr>
-                <tr><td class="country">澳大利亚</td><td class="num">113</td><td class="num">185</td><td class="pct-cell"><div class="pct-bar-wrap"><div class="pct-bar-bg"><div class="pct-bar mid" style="width:61.1%"></div></div><span class="pct-val mid">61.1%</span></div></td></tr>
-                <tr><td class="country">印度</td><td class="num">5</td><td class="num">9</td><td class="pct-cell"><div class="pct-bar-wrap"><div class="pct-bar-bg"><div class="pct-bar mid" style="width:55.6%"></div></div><span class="pct-val mid">55.6%</span></div></td></tr>
-                <tr><td class="country">中国</td><td class="num">1,113</td><td class="num">2,958</td><td class="pct-cell"><div class="pct-bar-wrap"><div class="pct-bar-bg"><div class="pct-bar low" style="width:37.6%"></div></div><span class="pct-val low">37.6%</span></div></td></tr>
-                <tr><td class="country">马来西亚</td><td class="num">4</td><td class="num">25</td><td class="pct-cell"><div class="pct-bar-wrap"><div class="pct-bar-bg"><div class="pct-bar low" style="width:16.0%"></div></div><span class="pct-val low">16.0%</span></div></td></tr>
-                <tr><td class="country">台湾</td><td class="num">17</td><td class="num">133</td><td class="pct-cell"><div class="pct-bar-wrap"><div class="pct-bar-bg"><div class="pct-bar very-low" style="width:12.8%"></div></div><span class="pct-val very-low">12.8%</span></div></td></tr>
-            </tbody>
-        </table>
-    </div>
+        html += `</tbody></table></div>`;
+    });
 
+    // Build footer
+    const footerNote = D.isBaseline
+        ? `此为首次基准报告，无历史对比数据。共 ${D.totalCountries} 个国家/地区有超充站开放给第三方（otherEVs=true）。`
+        : `共 ${D.totalCountries} 个国家/地区有超充站开放给第三方（otherEVs=true）。`;
+
+    html += `
     <div class="footer">
-        此为首次基准报告，无历史对比数据。共 40 个国家/地区有超充站开放给第三方（otherEVs=true）。<br>
+        ${footerNote}<br>
         数据来源 <a href="https://supercharge.info/service/supercharge/allSites" target="_blank">supercharge.info</a>，otherEVs=true 表示该站点允许非特斯拉车辆使用。香港、台湾等在报告中列为地区。
-    </div>
-</div>
+    </div>`;
+
+    app.innerHTML = html;
+})();
+</script>
 </body>
 </html>
