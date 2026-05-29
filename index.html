@@ -4,6 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>特斯拉超充站第三方开放追踪</title>
+    <meta name="description" content="追踪全球特斯拉超级充电站向第三方车辆开放情况，按区域和国家/地区展示开放站点数、总站点数和开放率。">
+    <meta property="og:title" content="特斯拉超充站第三方开放追踪">
+    <meta property="og:description" content="2026年5月基准报告：全球特斯拉超充站第三方开放率、开放站点数和国家/地区分布。">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tesla.gann.ing/">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="特斯拉超充站第三方开放追踪">
+    <meta name="twitter:description" content="按区域和国家/地区追踪特斯拉超充站向第三方车辆开放情况。">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -128,14 +136,14 @@
             .stat-card .value { font-size: 24px; }
             .data-table th, .data-table td { padding: 10px 12px; }
             .data-table th:first-child { min-width: 5.5em; }
-            .pct-cell { width: 140px; }
+            .data-table .pct-cell { width: 140px; }
         }
         @media (max-width: 480px) {
             .stats-row { grid-template-columns: 1fr 1fr; }
             .header { padding: 24px 20px; }
             .data-table th, .data-table td { padding: 8px 8px; font-size: 13px; }
             .data-table th:first-child { min-width: 5em; }
-            .pct-cell { width: 110px; }
+            .data-table .pct-cell { width: 110px; }
             .pct-bar-wrap { gap: 6px; }
             .pct-val { min-width: 38px; font-size: 12px; }
         }
@@ -151,6 +159,7 @@
 const REPORT_DATA = {
     reportDate: '2026年5月',
     reportType: '基准报告',
+    isBaseline: true,
     dataSource: 'supercharge.info',
     totalSites: 10546,
     openSites: 6434,
