@@ -4,14 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>特斯拉超充站第三方开放追踪</title>
-    <meta name="description" content="追踪全球特斯拉超级充电站向第三方车辆开放情况，按区域和国家/地区展示开放站点数、总站点数和开放率。">
-    <meta property="og:title" content="特斯拉超充站第三方开放追踪">
-    <meta property="og:description" content="2026年5月基准报告：全球特斯拉超充站第三方开放率、开放站点数和国家/地区分布。">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://tesla.gann.ing/">
-    <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="特斯拉超充站第三方开放追踪">
-    <meta name="twitter:description" content="按区域和国家/地区追踪特斯拉超充站向第三方车辆开放情况。">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -50,11 +42,12 @@
             background: #141420; border: 1px solid #1e1e30; border-radius: 12px; padding: 20px; text-align: center;
         }
         .stat-card .label { color: #6a6a8a; font-size: 13px; margin-bottom: 6px; }
-        .stat-card .value { font-size: 32px; font-weight: 700; color: #fff; }
+        .stat-card .value { font-size: 28px; font-weight: 700; color: #fff; }
         .stat-card .value.orange { color: #e84118; }
         .stat-card .value.green { color: #00d2d3; }
         .stat-card .value.blue { color: #54a0ff; }
         .stat-card .unit { font-size: 14px; color: #6a6a8a; margin-left: 2px; }
+        .stat-card .value .slash { color: #4a4a6a; margin: 0 2px; }
 
         /* Changes Section */
         .changes-section {
@@ -95,16 +88,16 @@
         /* Table */
         .data-table { width: 100%; border-collapse: collapse; }
         .data-table th {
-            text-align: left; padding: 12px 24px; color: #6a6a8a; font-size: 12px;
+            text-align: left; padding: 12px 20px; color: #6a6a8a; font-size: 12px;
             font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;
             border-bottom: 1px solid #1e1e30;
         }
         .data-table th:first-child { min-width: 5.5em; }
-        .data-table td { padding: 10px 24px; font-size: 14px; border-bottom: 1px solid #12121e; }
+        .data-table td { padding: 10px 20px; font-size: 14px; border-bottom: 1px solid #12121e; }
         .data-table tr:hover { background: #1a1a28; }
         .data-table .country { font-weight: 500; color: #fff; white-space: nowrap; }
-        .data-table .num { font-variant-numeric: tabular-nums; color: #c0c0d0; }
-        .data-table .pct-cell { width: 200px; }
+        .data-table .num { font-variant-numeric: tabular-nums; color: #c0c0d0; text-align: right; }
+        .data-table .pct-cell { width: 180px; }
         .pct-bar-wrap { display: flex; align-items: center; gap: 10px; }
         .pct-bar-bg { flex: 1; height: 8px; background: #1e1e30; border-radius: 4px; overflow: hidden; }
         .pct-bar { height: 100%; border-radius: 4px; transition: width 0.6s ease; }
@@ -133,19 +126,19 @@
         @media (max-width: 768px) {
             .stats-row { grid-template-columns: repeat(2, 1fr); }
             .header h1 { font-size: 22px; }
-            .stat-card .value { font-size: 24px; }
-            .data-table th, .data-table td { padding: 10px 12px; }
-            .data-table th:first-child { min-width: 5.5em; }
-            .data-table .pct-cell { width: 140px; }
+            .stat-card .value { font-size: 22px; }
+            .data-table th, .data-table td { padding: 10px 10px; font-size: 13px; }
+            .data-table th:first-child { min-width: 5em; }
+            .pct-cell { width: 140px; }
         }
         @media (max-width: 480px) {
             .stats-row { grid-template-columns: 1fr 1fr; }
             .header { padding: 24px 20px; }
-            .data-table th, .data-table td { padding: 8px 8px; font-size: 13px; }
-            .data-table th:first-child { min-width: 5em; }
-            .data-table .pct-cell { width: 110px; }
-            .pct-bar-wrap { gap: 6px; }
-            .pct-val { min-width: 38px; font-size: 12px; }
+            .data-table th, .data-table td { padding: 8px 6px; font-size: 12px; }
+            .data-table th:first-child { min-width: 4.5em; }
+            .pct-cell { width: 100px; }
+            .pct-bar-wrap { gap: 4px; }
+            .pct-val { min-width: 36px; font-size: 11px; }
         }
     </style>
 </head>
@@ -157,13 +150,14 @@
 //  数据区域 —— 后续更新只需修改此部分，勿改模板代码
 // ============================================================
 const REPORT_DATA = {
-    reportDate: '2026年5月',
-    reportType: '基准报告',
-    isBaseline: true,
+    reportDate: '2026年6月',
+    reportType: '月度更新',
     dataSource: 'supercharge.info',
-    totalSites: 10546,
-    openSites: 6434,
-    openRate: 61.0,
+    totalSites: 6498,
+    openSites: 5299,
+    totalStalls: 68455,
+    openStalls: 57654,
+    openRate: 81.5,
     totalCountries: 40,
 
     regions: [
@@ -171,64 +165,99 @@ const REPORT_DATA = {
             name: '美洲',
             icon: '🌎',
             countries: [
-                { name: '美国',    open: 2664, total: 3907 },
-                { name: '加拿大',  open: 228,  total: 374 },
-                { name: '墨西哥',  open: 24,   total: 41 }
+                { name: '加拿大', open: 196, total: 232, openStalls: 2044, totalStalls: 2212 },
+                { name: '美国', open: 2193, total: 2710, openStalls: 28270, totalStalls: 34486 },
+                { name: '墨西哥', open: 19, total: 25, openStalls: 88, totalStalls: 108 }
             ]
         },
         {
             name: '欧洲',
             icon: '🌍',
             countries: [
-                { name: '土耳其',     open: 47,  total: 47 },
-                { name: '匈牙利',     open: 35,  total: 35 },
-                { name: '罗马尼亚',   open: 29,  total: 29 },
-                { name: '捷克',       open: 23,  total: 23 },
-                { name: '葡萄牙',     open: 22,  total: 22 },
-                { name: '斯洛伐克',   open: 12,  total: 12 },
-                { name: '爱沙尼亚',   open: 4,   total: 4 },
-                { name: '卢森堡',     open: 2,   total: 2 },
-                { name: '瑞典',       open: 153, total: 155 },
-                { name: '德国',       open: 413, total: 422 },
-                { name: '瑞士',       open: 46,  total: 47 },
-                { name: '丹麦',       open: 48,  total: 50 },
-                { name: '挪威',       open: 195, total: 203 },
-                { name: '西班牙',     open: 137, total: 143 },
-                { name: '荷兰',       open: 57,  total: 60 },
-                { name: '冰岛',       open: 19,  total: 20 },
-                { name: '法国',       open: 313, total: 332 },
-                { name: '奥地利',     open: 66,  total: 72 },
-                { name: '意大利',     open: 135, total: 149 },
-                { name: '比利时',     open: 29,  total: 32 },
-                { name: '芬兰',       open: 49,  total: 55 },
-                { name: '爱尔兰',     open: 15,  total: 18 },
-                { name: '波兰',       open: 35,  total: 46 },
-                { name: '克罗地亚',   open: 21,  total: 27 },
-                { name: '斯洛文尼亚', open: 8,   total: 12 },
-                { name: '英国',       open: 185, total: 302 },
-                { name: '希腊',       open: 6,   total: 10 },
-                { name: '立陶宛',     open: 1,   total: 5 },
-                { name: '塞尔维亚',   open: 1,   total: 5 },
-                { name: '以色列',     open: 1,   total: 25 }
+                { name: '以色列', open: 1, total: 1, openStalls: 8, totalStalls: 8 },
+                { name: '荷兰', open: 54, total: 57, openStalls: 940, totalStalls: 968 },
+                { name: '比利时', open: 24, total: 29, openStalls: 377, totalStalls: 443 },
+                { name: '法国', open: 257, total: 313, openStalls: 3866, totalStalls: 4179 },
+                { name: '挪威', open: 161, total: 197, openStalls: 2486, totalStalls: 2921 },
+                { name: '瑞士', open: 37, total: 46, openStalls: 444, totalStalls: 508 },
+                { name: '奥地利', open: 53, total: 66, openStalls: 614, totalStalls: 687 },
+                { name: '德国', open: 319, total: 413, openStalls: 3890, totalStalls: 4632 },
+                { name: '芬兰', open: 39, total: 52, openStalls: 362, totalStalls: 378 },
+                { name: '丹麦', open: 36, total: 48, openStalls: 720, totalStalls: 844 },
+                { name: '英国', open: 136, total: 186, openStalls: 1392, totalStalls: 1820 },
+                { name: '西班牙', open: 97, total: 137, openStalls: 1096, totalStalls: 1396 },
+                { name: '意大利', open: 95, total: 135, openStalls: 1102, totalStalls: 1332 },
+                { name: '冰岛', open: 14, total: 20, openStalls: 140, totalStalls: 146 },
+                { name: '希腊', open: 4, total: 6, openStalls: 28, totalStalls: 28 },
+                { name: '土耳其', open: 30, total: 47, openStalls: 276, totalStalls: 350 },
+                { name: '斯洛文尼亚', open: 5, total: 8, openStalls: 56, totalStalls: 84 },
+                { name: '瑞典', open: 85, total: 153, openStalls: 1302, totalStalls: 2023 },
+                { name: '捷克', open: 12, total: 23, openStalls: 120, totalStalls: 136 },
+                { name: '斯洛伐克', open: 6, total: 12, openStalls: 46, totalStalls: 46 },
+                { name: '爱沙尼亚', open: 2, total: 4, openStalls: 12, totalStalls: 24 },
+                { name: '卢森堡', open: 1, total: 2, openStalls: 16, totalStalls: 20 },
+                { name: '罗马尼亚', open: 14, total: 29, openStalls: 126, totalStalls: 190 },
+                { name: '波兰', open: 16, total: 35, openStalls: 205, totalStalls: 249 },
+                { name: '匈牙利', open: 14, total: 35, openStalls: 154, totalStalls: 210 },
+                { name: '爱尔兰', open: 6, total: 15, openStalls: 38, totalStalls: 46 },
+                { name: '克罗地亚', open: 9, total: 24, openStalls: 66, totalStalls: 170 },
+                { name: '葡萄牙', open: 7, total: 22, openStalls: 140, totalStalls: 216 },
+                { name: '立陶宛', open: 0, total: 1, openStalls: 0, totalStalls: 0 },
+                { name: '塞尔维亚', open: 0, total: 1, openStalls: 0, totalStalls: 0 }
             ]
         },
         {
             name: '亚太',
             icon: '🌏',
             countries: [
-                { name: '新西兰',   open: 30,   total: 37 },
-                { name: '韩国',     open: 129,  total: 194 },
-                { name: '澳大利亚', open: 113,  total: 185 },
-                { name: '印度',     open: 5,    total: 9 },
-                { name: '中国',     open: 1113, total: 2958 },
-                { name: '马来西亚', open: 4,    total: 25 },
-                { name: '台湾',     open: 17,   total: 133, isRegion: true }
+                { name: '台湾', open: 17, total: 17, openStalls: 125, totalStalls: 125, isRegion: true },
+                { name: '马来西亚', open: 4, total: 4, openStalls: 22, totalStalls: 22 },
+                { name: '韩国', open: 127, total: 129, openStalls: 879, totalStalls: 885 },
+                { name: '中国', open: 1073, total: 1114, openStalls: 5320, totalStalls: 5606 },
+                { name: '澳大利亚', open: 109, total: 115, openStalls: 740, totalStalls: 773 },
+                { name: '新西兰', open: 26, total: 30, openStalls: 140, totalStalls: 164 },
+                { name: '印度', open: 1, total: 5, openStalls: 4, totalStalls: 20 }
             ]
         }
     ],
 
-    // 月度变化（基准报告为空）
-    changes: []
+    // 月度变化
+    changes: [
+        {
+                type: '📋 方法论变更',
+                flag: '📋',
+                items: [
+                    '本月起统计口径变更：总站点/开放站点仅统计 otherEVs=True 的站点，开放率 = OPEN状态站点数 / otherEVs站点数',
+                '上月"开放站点"= otherEVs=True站点数（含非OPEN状态），本月"开放站点"= otherEVs=True且OPEN的站点数',
+                '可比口径：上月otherEVs站点数(6,434) → 本月(6,498)，净增64站'
+                ]
+            },
+        {
+                type: '📈 otherEVs站点增加',
+                flag: '📈',
+                items: [
+                    '中国 +1站（上月1113→本月1114）',
+                '克罗地亚 +3站（上月21→本月24）',
+                '冰岛 +1站（上月19→本月20）',
+                '加拿大 +4站（上月228→本月232）',
+                '墨西哥 +1站（上月24→本月25）',
+                '挪威 +2站（上月195→本月197）',
+                '澳大利亚 +2站（上月113→本月115）',
+                '美国 +46站（上月2664→本月2710）',
+                '芬兰 +3站（上月49→本月52）',
+                '英国 +1站（上月185→本月186）'
+                ]
+            },
+        {
+                type: '🎯 全部开放（100%）',
+                flag: '🎯',
+                items: [
+                    '以色列 开放率100%（1/1）',
+                '台湾 开放率100%（17/17）',
+                '马来西亚 开放率100%（4/4）'
+                ]
+            }
+    ]
 };
 
 // ============================================================
@@ -256,16 +285,16 @@ const REPORT_DATA = {
         <div class="subtitle">${D.reportDate} · 数据来源 ${D.dataSource}</div>
     </div>`;
 
-    // Build stats
+    // Build stats - 4 cards with combined metrics
     html += `
     <div class="stats-row">
         <div class="stat-card">
-            <div class="label">总站点数</div>
-            <div class="value">${fmt(D.totalSites)}</div>
+            <div class="label">总站点 / 充电枪数</div>
+            <div class="value">${fmt(D.totalSites)}<span class="slash">/</span>${fmt(D.totalStalls)}</div>
         </div>
         <div class="stat-card">
-            <div class="label">开放站点数</div>
-            <div class="value orange">${fmt(D.openSites)}</div>
+            <div class="label">开放站点 / 充电枪数</div>
+            <div class="value orange">${fmt(D.openSites)}<span class="slash">/</span>${fmt(D.openStalls)}</div>
         </div>
         <div class="stat-card">
             <div class="label">全球开放率</div>
@@ -312,7 +341,7 @@ const REPORT_DATA = {
         <div class="region-countries"><span>包含：</span>${countryList}</div>
         <table class="data-table">
             <thead>
-                <tr><th>国家/地区</th><th>开放站点</th><th>总站点</th><th class="pct-cell">开放率</th></tr>
+                <tr><th>国家/地区</th><th style="text-align:right">开放站点</th><th style="text-align:right">总站点</th><th style="text-align:right">开放充电枪</th><th style="text-align:right">总充电枪</th><th class="pct-cell">开放率</th></tr>
             </thead>
             <tbody>`;
 
@@ -326,6 +355,8 @@ const REPORT_DATA = {
                     <td class="country">${c.name}</td>
                     <td class="num">${fmt(c.open)}</td>
                     <td class="num">${fmt(c.total)}</td>
+                    <td class="num">${fmt(c.openStalls)}</td>
+                    <td class="num">${fmt(c.totalStalls)}</td>
                     <td class="pct-cell"><div class="pct-bar-wrap"><div class="pct-bar-bg"><div class="pct-bar ${cls}" style="width:${pct.toFixed(1)}%"></div></div><span class="pct-val ${cls}">${pct.toFixed(1)}%</span></div></td>
                 </tr>`;
         });
@@ -334,9 +365,7 @@ const REPORT_DATA = {
     });
 
     // Build footer
-    const footerNote = D.isBaseline
-        ? `此为首次基准报告，无历史对比数据。共 ${D.totalCountries} 个国家/地区有超充站开放给第三方（otherEVs=true）。`
-        : `共 ${D.totalCountries} 个国家/地区有超充站开放给第三方（otherEVs=true）。`;
+    const footerNote = `共 ${D.totalCountries} 个国家/地区有超充站开放给第三方（otherEVs=true）。`;
 
     html += `
     <div class="footer">
