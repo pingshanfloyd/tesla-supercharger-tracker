@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>特斯拉超充站第三方开放追踪</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            background: #0a0a0f;
+            color: #e0e0e0;
+            line-height: 1.6;
+        }
+        .container { max-width: 1100px; margin: 0 auto; padding: 20px; }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            border-radius: 16px;
+            padding: 40px;
+            margin-bottom: 24px;
+            position: relative;
+            overflow: hidden;
+        }
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(232, 65, 24, 0.15) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+        .header h1 { font-size: 28px; font-weight: 700; color: #fff; margin-bottom: 8px; position: relative; text-align: center; line-height: 1.4; }
+        .header .subtitle { color: #8a8ab0; font-size: 14px; position: relative; text-align: center; }
+
+        /* Tooltip */
+        .sub-wrapper { display: inline-flex; align-items: center; gap: 6px; cursor: pointer; position: relative; }
+        .info-icon {
+            display: inline-flex; align-items: center; justify-content: center;
+            width: 16px; height: 16px; background: #2a2a4a; border: 1px solid #4a4a6a;
+            border-radius: 50%; font-size: 10px; color: #8a8ab0; line-height: 1;
+        }
+        .sub-tooltip {
+            display: none; position: absolute; top: calc(100% + 8px); left: 50%; transform: translateX(-50%);
+            background: #1a1a28; border: 1px solid #2a2a4a; border-radius: 10px;
+            padding: 14px 18px; font-size: 13px; color: #c0c0d0; line-height: 1.8;
+            width: 420px; z-index: 100; box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+        }
+        .sub-wrapper:hover .sub-tooltip { display: block; }
+        .sub-tooltip::before {
+            content: ''; position: absolute; top: -6px; left: 50%; transform: translateX(-50%);
+            border-left: 6px solid transparent; border-right: 6px solid transparent; border-bottom: 6px solid #2a2a4a;
+        }
+        .sub-tooltip-title { color: #8a8ab0; font-size: 12px; margin-bottom: 6px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+        .sub-tooltip li { margin: 3px 0; list-style: none; }
+        .sub-tooltip li::before { content: '· '; color: #4a4a6a; }
+
+        /* Stats Row */
+        .stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px; }
+        .stat-card {
+            background: #141420; border: 1px solid #1e1e30; border-radius: 12px; padding: 20px; text-align: center;
+        }
+        .stat-card .label { color: #6a6a8a; font-size: 13px; margin-bottom: 6px; }
+        .stat-card .value { font-size: 28px; font-weight: 700; color: #fff; }
+        .stat-card .value.orange { color: #e84118; }
+        .stat-card .value.green { color: #00d2d3; }
+        .stat-card .value.blue { color: #54a0ff; }
+        .stat-card .unit { font-size: 14px; color: #6a6a8a; margin-left: 2px; }
+        .stat-card .value .slash { color: #4a4a6a; margin: 0 2px; }
+
+        /* Changes - collapsible */
+        .changes-section { background: #141420; border: 1px solid #1e1e30; border-radius: 12px; margin-bottom: 24px; overflow: hidden; }
+        .changes-section summary {
+            padding: 16px 24px; list-style: none; display: flex; align-items: center; gap: 10px;
+            cursor: pointer; user-select: none; border-bottom: 1px solid transparent; transition: border-color 0.2s;
+        }
+        .changes-section summary::-webkit-details-marker { display: none; }
+        .changes-section details[open] summary { border-bottom-color: #1e1e30; }
+        .changes-section summary .icon { font-size: 22px; }
+        .changes-section summary h2 { font-size: 18px; font-weight: 600; color: #fff; flex: 1; }
+        .changes-section summary .toggle-hint { font-size: 12px; color: #4a4a6a; transition: transform 0.2s; }
+        .changes-section details[open] summary .toggle-hint { transform: rotate(180deg); }
+        .changes-body { padding: 20px 24px; }
+        .change-group { margin-bottom: 16px; }
+        .change-group:last-child { margin-bottom: 0; }
+        .change-group-title { font-size: 14px; font-weight: 600; color: #8a8ab0; margin-bottom: 8px; }
+        .change-item { font-size: 14px; color: #c0c0d0; padding: 4px 0; }
+        .change-item .flag { margin-right: 6px; }
+
+        /* Region Section */
+        .region-section { background: #141420; border: 1px solid #1e1e30; border-radius: 12px; margin-bottom: 20px; overflow: hidden; }
+        .region-header {
+            padding: 16px 24px; display: flex; align-items: center; gap: 10px;
+            border-bottom: 1px solid #1e1e30; flex-wrap: wrap;
+        }
+        .region-header .icon { font-size: 22px; }
+        .region-header h2 { font-size: 18px; font-weight: 600; color: #fff; }
+        .region-header .count {
+            margin-left: auto; background: #1e1e30; color: #8a8ab0; padding: 2px 10px; border-radius: 20px; font-size: 13px;
+        }
+        .region-countries { padding: 10px 24px; color: #6a6a8a; font-size: 13px; border-bottom: 1px solid #12121e; line-height: 1.8; }
+        .region-countries span { color: #8a8ab0; margin-right: 4px; }
+
+        /* Table */
+        .data-table { width: 100%; border-collapse: collapse; }
+        .data-table th {
+            text-align: left; padding: 12px 20px; color: #6a6a8a; font-size: 12px;
+            font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 1px solid #1e1e30;
+        }
+        .data-table th:first-child { min-width: 5.5em; }
+        .data-table td { padding: 10px 20px; font-size: 14px; border-bottom: 1px solid #12121e; }
+        .data-table tbody tr { cursor: pointer; transition: background 0.15s; }
+        .data-table tbody tr:hover { background: #1a1a28; }
+        .data-table tbody tr.no-detail { cursor: default; }
+        .data-table tbody tr.no-detail:hover { background: transparent; }
+        .data-table .country { font-weight: 500; color: #fff; white-space: nowrap; }
+        .data-table .country.has-detail::after { content: ' ›'; color: #4a4a6a; font-size: 12px; margin-left: 2px; transition: color 0.15s; }
+        .data-table tbody tr:hover .country.has-detail::after { color: #8a8ab0; }
+        .data-table .num { font-variant-numeric: tabular-nums; color: #c0c0d0; text-align: right; }
+        .data-table .pct-cell { width: 180px; }
+        .pct-bar-wrap { display: flex; align-items: center; gap: 10px; }
+        .pct-bar-bg { flex: 1; height: 8px; background: #1e1e30; border-radius: 4px; overflow: hidden; }
+        .pct-bar { height: 100%; border-radius: 4px; }
+        .pct-bar.high { background: linear-gradient(90deg, #00d2d3, #01a3a4); }
+        .pct-bar.mid { background: linear-gradient(90deg, #54a0ff, #2e86de); }
+        .pct-bar.low { background: linear-gradient(90deg, #feca57, #ff9f43); }
+        .pct-bar.very-low { background: linear-gradient(90deg, #ff6b6b, #ee5a24); }
+        .pct-val { min-width: 48px; text-align: right; font-size: 13px; font-weight: 600; }
+        .pct-val.high { color: #00d2d3; }
+        .pct-val.mid { color: #54a0ff; }
+        .pct-val.low { color: #feca57; }
+        .pct-val.very-low { color: #ff6b6b; }
+        .full-row td { background: #0d1a0d; }
+        .full-row .country { color: #00d2d3; }
+
+        /* Footer */
+        .footer { text-align: center; padding: 30px 20px; color: #4a4a6a; font-size: 13px; line-height: 1.8; }
+        .footer a { color: #54a0ff; text-decoration: none; }
+        .footer a:hover { text-decoration: underline; }
+
+        /* ================================================================
+           Country Detail Page
+           ================================================================ */
+        .page-detail { animation: slideIn 0.25s ease; }
+        @keyframes slideIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .back-btn {
+            display: inline-flex; align-items: center; gap: 6px;
+            background: #141420; border: 1px solid #1e1e30; border-radius: 8px;
+            padding: 8px 16px; font-size: 14px; color: #8a8ab0; cursor: pointer;
+            margin-bottom: 16px; transition: background 0.15s, color 0.15s;
+        }
+        .back-btn:hover { background: #1e1e30; color: #fff; }
+
+        .detail-header {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            border-radius: 16px; padding: 36px 40px; margin-bottom: 24px;
+            position: relative; overflow: hidden;
+        }
+        .detail-header::before {
+            content: ''; position: absolute; top: -50%; right: -20%; width: 400px; height: 400px;
+            background: radial-gradient(circle, rgba(232, 65, 24, 0.15) 0%, transparent 70%); border-radius: 50%;
+        }
+        .detail-header h1 { font-size: 32px; font-weight: 700; color: #fff; margin-bottom: 4px; position: relative; }
+        .detail-header .sub { color: #8a8ab0; font-size: 14px; position: relative; }
+
+        .detail-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 24px; }
+        .d-stat {
+            background: #141420; border: 1px solid #1e1e30; border-radius: 12px; padding: 20px; text-align: center;
+        }
+        .d-stat .label { color: #6a6a8a; font-size: 13px; margin-bottom: 6px; }
+        .d-stat .value { font-size: 28px; font-weight: 700; color: #fff; }
+        .d-stat .value.orange { color: #e84118; }
+        .d-stat .value.green { color: #00d2d3; }
+        .d-stat .value .slash { color: #4a4a6a; margin: 0 2px; font-size: 20px; }
+
+        /* Detail section */
+        .detail-sec { background: #141420; border: 1px solid #1e1e30; border-radius: 12px; margin-bottom: 20px; overflow: hidden; }
+        .detail-sec-header { padding: 16px 24px; border-bottom: 1px solid #1e1e30; display: flex; align-items: center; gap: 10px; }
+        .detail-sec-header .icon { font-size: 20px; }
+        .detail-sec-header h3 { font-size: 16px; font-weight: 600; color: #fff; }
+        .detail-sec-body { padding: 20px 24px; }
+
+        /* Mini bar */
+        .mbar-row { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+        .mbar-row:last-child { margin-bottom: 0; }
+        .mbar-label { min-width: 90px; font-size: 13px; color: #8a8ab0; text-align: right; }
+        .mbar-bg { flex: 1; height: 14px; background: #1e1e30; border-radius: 7px; overflow: hidden; }
+        .mbar { height: 100%; border-radius: 7px; }
+        .mbar.blue { background: linear-gradient(90deg, #54a0ff, #2e86de); }
+        .mbar.orange { background: linear-gradient(90deg, #feca57, #ff9f43); }
+        .mbar.green { background: linear-gradient(90deg, #00d2d3, #01a3a4); }
+        .mbar-val { min-width: 80px; text-align: right; font-size: 13px; font-weight: 600; color: #c0c0d0; }
+        .mbar-sub { min-width: 80px; text-align: right; font-size: 11px; color: #4a4a6a; }
+
+        /* Tags */
+        .tag-row { display: flex; flex-wrap: wrap; gap: 10px; }
+        .tag { background: #1e1e30; border: 1px solid #2a2a4a; border-radius: 8px; padding: 8px 14px; display: flex; align-items: center; gap: 8px; }
+        .tag .tag-label { font-size: 13px; color: #6a6a8a; }
+        .tag .tag-val { font-size: 14px; font-weight: 600; color: #fff; }
+        .tag.green-tag { border-color: #00d2d3; background: #0a1a1a; }
+        .tag.green-tag .tag-val { color: #00d2d3; }
+
+        /* State table */
+        .state-table { width: 100%; border-collapse: collapse; }
+        .state-table th { text-align: left; padding: 10px 16px; color: #6a6a8a; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 1px solid #1e1e30; }
+        .state-table td { padding: 10px 16px; font-size: 13px; border-bottom: 1px solid #12121e; }
+        .state-table tbody tr:hover td { background: #1a1a28; }
+        .state-table .state-name { font-weight: 500; color: #fff; }
+        .state-table .num { font-variant-numeric: tabular-nums; color: #c0c0d0; text-align: right; }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .stats-row { grid-template-columns: repeat(2, 1fr); }
+            .detail-stats { grid-template-columns: repeat(2, 1fr); }
+            .header h1 { font-size: 22px; }
+            .stat-card .value { font-size: 22px; }
+            .data-table th, .data-table td { padding: 10px 10px; font-size: 13px; }
+            .pct-cell { width: 140px; }
+            .sub-tooltip { width: 320px; left: 0; transform: none; }
+        }
+        @media (max-width: 480px) {
+            .stats-row, .detail-stats { grid-template-columns: 1fr 1fr; }
+            .header, .detail-header { padding: 24px 20px; }
+            .detail-header h1 { font-size: 24px; }
+            .data-table th, .data-table td { padding: 8px 6px; font-size: 12px; }
+            .pct-cell { width: 100px; }
+            .pct-bar-wrap { gap: 4px; }
+            .pct-val { min-width: 36px; font-size: 11px; }
+            .state-table th, .state-table td { padding: 8px 10px; }
+        }
+    </style>
+</head>
+<body>
+<div class="container" id="app"></div>
+
+<script>
+// ============================================================
+//  数据区域
+// ============================================================
+const REPORT_DATA = {
+    reportDate: '2026年6月',
+    reportType: '月度更新',
+    dataSource: 'supercharge.info',
+    totalSites: 10079,
+    openSites: 6342,
+    totalStalls: 95044,
+    openStalls: 67773,
+    openRate: 62.9,
+    totalCountries: 44,
+
+    regions: [
+        {
+            name: '美洲', icon: '🌎',
+            countries: [
+                { name: '美国', open: 2681, total: 3858, openStalls: 34386, totalStalls: 47190 },
+                { name: '加拿大', open: 223, total: 357, openStalls: 2212, totalStalls: 3598 },
+                { name: '墨西哥', open: 24, total: 41, openStalls: 108, totalStalls: 210 }
+            ]
+        },
+        {
+            name: '欧洲', icon: '🌍',
+            countries: [
+                { name: '瑞典', open: 148, total: 148, openStalls: 1969, totalStalls: 1969 },
+                { name: '奥地利', open: 65, total: 65, openStalls: 679, totalStalls: 679 },
+                { name: '荷兰', open: 57, total: 57, openStalls: 968, totalStalls: 968 },
+                { name: '土耳其', open: 44, total: 44, openStalls: 350, totalStalls: 350 },
+                { name: '匈牙利', open: 28, total: 28, openStalls: 210, totalStalls: 210 },
+                { name: '罗马尼亚', open: 26, total: 26, openStalls: 182, totalStalls: 182 },
+                { name: '葡萄牙', open: 19, total: 19, openStalls: 216, totalStalls: 216 },
+                { name: '冰岛', open: 18, total: 18, openStalls: 140, totalStalls: 140 },
+                { name: '捷克', open: 18, total: 18, openStalls: 136, totalStalls: 136 },
+                { name: '斯洛伐克', open: 10, total: 10, openStalls: 46, totalStalls: 46 },
+                { name: '爱沙尼亚', open: 3, total: 3, openStalls: 24, totalStalls: 24 },
+                { name: '卢森堡', open: 1, total: 1, openStalls: 16, totalStalls: 16 },
+                { name: '德国', open: 406, total: 407, openStalls: 4584, totalStalls: 4596 },
+                { name: '丹麦', open: 48, total: 49, openStalls: 844, totalStalls: 850 },
+                { name: '挪威', open: 191, total: 195, openStalls: 2833, totalStalls: 2905 },
+                { name: '瑞士', open: 46, total: 47, openStalls: 508, totalStalls: 528 },
+                { name: '比利时', open: 29, total: 30, openStalls: 443, totalStalls: 451 },
+                { name: '法国', open: 309, total: 322, openStalls: 4163, totalStalls: 4288 },
+                { name: '西班牙', open: 136, total: 142, openStalls: 1392, totalStalls: 1436 },
+                { name: '意大利', open: 129, total: 139, openStalls: 1324, totalStalls: 1438 },
+                { name: '芬兰', open: 52, total: 58, openStalls: 378, totalStalls: 414 },
+                { name: '爱尔兰', open: 15, total: 18, openStalls: 46, totalStalls: 68 },
+                { name: '克罗地亚', open: 24, total: 29, openStalls: 170, totalStalls: 204 },
+                { name: '波兰', open: 27, total: 37, openStalls: 249, totalStalls: 307 },
+                { name: '斯洛文尼亚', open: 8, total: 11, openStalls: 84, totalStalls: 106 },
+                { name: '英国', open: 183, total: 291, openStalls: 1780, totalStalls: 3059 },
+                { name: '希腊', open: 4, total: 8, openStalls: 28, totalStalls: 44 },
+                { name: '以色列', open: 1, total: 26, openStalls: 8, totalStalls: 218 },
+                { name: '立陶宛', open: 0, total: 4, openStalls: 0, totalStalls: 32 },
+                { name: '塞尔维亚', open: 0, total: 3, openStalls: 0, totalStalls: 24 }
+            ]
+        },
+        {
+            name: '亚太', icon: '🌏',
+            countries: [
+                { name: '新西兰', open: 30, total: 36, openStalls: 164, totalStalls: 190 },
+                { name: '韩国', open: 127, total: 186, openStalls: 879, totalStalls: 1222 },
+                { name: '澳大利亚', open: 113, total: 175, openStalls: 767, totalStalls: 1133 },
+                { name: '印度', open: 5, total: 9, openStalls: 20, totalStalls: 36 },
+                { name: '中国', open: 1073, total: 2776, openStalls: 5320, totalStalls: 13676 },
+                { name: '马来西亚', open: 4, total: 24, openStalls: 22, totalStalls: 92 },
+                { name: '台湾', open: 17, total: 132, openStalls: 125, totalStalls: 748, isRegion: true }
+            ]
+        }
+    ],
+
+    changes: [
+        { type: '📋 方法论说明', flag: '📋', items: [
+            '总站点 = Status(Open/Expanding/Construction/Permit/Plan)的所有站点',
+            '开放站点 = 上述站点中 otherEVs=True 的站点',
+            '开放率 = 开放站点 / 总站点',
+            '上月口径不同：上月total=全部站点，open=otherEVs站点（任何status）',
+            '可比口径（开放站点）: 上月6,434 → 本月6,342（净增-92站）'
+        ]},
+        { type: '📈 开放站点增加', flag: '📈', items: [
+            '克罗地亚 +3站（开放21→24）', '美国 +17站（开放2664→2681）', '芬兰 +3站（开放49→52）'
+        ]},
+        { type: '📉 开放站点减少', flag: '📉', items: [
+            '中国 -40站（开放1113→1073）', '冰岛 -1站（开放19→18）', '加拿大 -5站（开放228→223）',
+            '匈牙利 -7站（开放35→28）', '卢森堡 -1站（开放2→1）', '土耳其 -3站（开放47→44）',
+            '塞尔维亚 -1站（开放1→0）', '奥地利 -1站（开放66→65）', '希腊 -2站（开放6→4）',
+            '德国 -7站（开放413→406）', '意大利 -6站（开放135→129）', '挪威 -4站（开放195→191）',
+            '捷克 -5站（开放23→18）', '斯洛伐克 -2站（开放12→10）', '法国 -4站（开放313→309）',
+            '波兰 -8站（开放35→27）', '爱沙尼亚 -1站（开放4→3）', '瑞典 -5站（开放153→148）',
+            '立陶宛 -1站（开放1→0）', '罗马尼亚 -3站（开放29→26）', '英国 -2站（开放185→183）',
+            '葡萄牙 -3站（开放22→19）', '西班牙 -1站（开放137→136）', '韩国 -2站（开放129→127）'
+        ]},
+        { type: '🎯 全部开放（100%）', flag: '🎯', items: [
+            '冰岛 开放率100%（18/18）', '奥地利 开放率100%（65/65）',
+            '瑞典 开放率100%（148/148）', '荷兰 开放率100%（57/57）'
+        ]}
+    ]
+};
+
+// 国家详情数据（当前仅美国）
+const COUNTRY_DETAIL = {
+    '美国': {
+        status: [
+            { label: '已开放', sites: 3111, stalls: 38438 },
+            { label: '规划中', sites: 455, stalls: 4697 },
+            { label: '建设中', sites: 178, stalls: 2272 },
+            { label: '审批中', sites: 109, stalls: 1723 },
+            { label: '扩建中', sites: 5, stalls: 60 }
+        ],
+        power: [
+            { label: '250 kW', sites: 1766, stalls: 21153 },
+            { label: '325 kW', sites: 1242, stalls: 17448 },
+            { label: '150 kW', sites: 512, stalls: 4751 },
+            { label: '72 kW', sites: 142, stalls: 1827 },
+            { label: '500 kW', sites: 99, stalls: 1615 }
+        ],
+        plugs: [
+            { label: 'NACS', stalls: 36572 },
+            { label: 'Tesla (TPC)', stalls: 10594 },
+            { label: 'CCS1', stalls: 3840 },
+            { label: 'Multi', stalls: 3832 }
+        ],
+        solar: 47, solarStalls: 2464,
+        battery: 45, batteryStalls: 2021,
+        avgAge: '4.3年',
+        newestOpen: '2026-06-10',
+        oldestOpen: '2012-11-19',
+        states: [
+            { name: '加州 CA', sites: 841, open: 591, rate: 70.3 },
+            { name: '佛罗里达 FL', sites: 316, open: 243, rate: 76.9 },
+            { name: '德州 TX', sites: 281, open: 219, rate: 77.9 },
+            { name: '纽约 NY', sites: 156, open: 86, rate: 55.1 },
+            { name: '弗吉尼亚 VA', sites: 127, open: 92, rate: 72.4 },
+            { name: '新泽西 NJ', sites: 125, open: 91, rate: 72.8 },
+            { name: '宾州 PA', sites: 123, open: 89, rate: 72.4 },
+            { name: '华盛顿 WA', sites: 122, open: 74, rate: 60.7 },
+            { name: '北卡 NC', sites: 103, open: 82, rate: 79.6 },
+            { name: '乔治亚 GA', sites: 102, open: 84, rate: 82.4 },
+            { name: '伊利诺伊 IL', sites: 94, open: 66, rate: 70.2 },
+            { name: '马里兰 MD', sites: 88, open: 64, rate: 72.7 },
+            { name: '俄勒冈 OR', sites: 86, open: 53, rate: 61.6 },
+            { name: '亚利桑那 AZ', sites: 85, open: 53, rate: 62.4 },
+            { name: '科罗拉多 CO', sites: 82, open: 65, rate: 79.3 }
+        ]
+    }
+};
+
+// ============================================================
+//  渲染引擎
+// ============================================================
+const D = REPORT_DATA;
+const app = document.getElementById('app');
+
+function fmt(n) { return n.toLocaleString(); }
+function barCls(pct) {
+    if (pct >= 80) return 'high';
+    if (pct >= 60) return 'mid';
+    if (pct >= 40) return 'low';
+    return 'very-low';
+}
+function findCountry(name) {
+    for (const r of D.regions) {
+        for (const c of r.countries) {
+            if (c.name === name) return c;
+        }
+    }
+    return null;
+}
+
+// ── 主页 ──────────────────────────────────────────────────
+function renderMain() {
+    let html = `
+    <div class="header">
+        <h1>⚡ 特斯拉超充站<br>第三方开放${D.reportType}</h1>
+        <div class="subtitle">
+            <span class="sub-wrapper" tabindex="0">
+                ${D.reportDate} · 数据来源 ${D.dataSource}
+                <span class="info-icon">i</span>
+                <div class="sub-tooltip">
+                    <div class="sub-tooltip-title">统计口径说明</div>
+                    <ul>
+                        <li>总站点 = Status(Open/Expanding/Construction/Permit/Plan)的所有站点</li>
+                        <li>开放站点 = 上述站点中 otherEVs=True 的站点</li>
+                        <li>开放率 = 开放站点 / 总站点</li>
+                        <li>数据不含香港、澳门</li>
+                    </ul>
+                </div>
+            </span>
+        </div>
+    </div>
+
+    <div class="stats-row">
+        <div class="stat-card">
+            <div class="label">总站点 / 充电枪数</div>
+            <div class="value">${fmt(D.totalSites)}<span class="slash">/</span>${fmt(D.totalStalls)}</div>
+        </div>
+        <div class="stat-card">
+            <div class="label">开放站点 / 充电枪数</div>
+            <div class="value orange">${fmt(D.openSites)}<span class="slash">/</span>${fmt(D.openStalls)}</div>
+        </div>
+        <div class="stat-card">
+            <div class="label">全球开放率</div>
+            <div class="value green">${D.openRate.toFixed(1)}<span class="unit">%</span></div>
+        </div>
+        <div class="stat-card">
+            <div class="label">覆盖国家/地区</div>
+            <div class="value blue">${D.totalCountries}</div>
+        </div>
+    </div>`;
+
+    // 本月变化（折叠）
+    if (D.changes && D.changes.length > 0) {
+        html += `<div class="changes-section"><details><summary>
+            <span class="icon">📊</span><h2>本月变化</h2>
+            <span class="toggle-hint">▾</span>
+        </summary><div class="changes-body">`;
+        D.changes.forEach(c => {
+            html += `<div class="change-group"><div class="change-group-title">${c.type}</div>`;
+            c.items.forEach(item => { html += `<div class="change-item"><span class="flag">${c.flag}</span>${item}</div>`; });
+            html += `</div>`;
+        });
+        html += `</div></details></div>`;
+    }
+
+    // 大区表格
+    D.regions.forEach(region => {
+        const countryList = region.countries.map(c => c.name).join('、');
+        html += `
+    <div class="region-section">
+        <div class="region-header">
+            <span class="icon">${region.icon}</span>
+            <h2>${region.name}</h2>
+            <span class="count">${region.countries.length} 个国家/地区</span>
+        </div>
+        <div class="region-countries"><span>包含：</span>${countryList}</div>
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>国家/地区</th>
+                    <th style="text-align:right">开放站点</th>
+                    <th style="text-align:right">总站点</th>
+                    <th style="text-align:right">开放充电枪</th>
+                    <th style="text-align:right">总充电枪</th>
+                    <th class="pct-cell">开放率</th>
+                </tr>
+            </thead>
+            <tbody>`;
+        region.countries.forEach(c => {
+            const pct = c.total > 0 ? (c.open / c.total * 100) : 0;
+            const cls = barCls(pct);
+            const isFull = pct === 100;
+            const hasDetail = !!COUNTRY_DETAIL[c.name];
+            const rowAttrs = isFull ? ` class="full-row"` : (!hasDetail ? ' class="no-detail"' : '');
+            const nameCls = hasDetail ? ' has-detail' : '';
+            const clickAttr = hasDetail ? ` onclick="renderDetail('${c.name}')"` : '';
+            html += `<tr${rowAttrs}${clickAttr}>
+                <td class="country${nameCls}">${c.name}</td>
+                <td class="num">${fmt(c.open)}</td>
+                <td class="num">${fmt(c.total)}</td>
+                <td class="num">${fmt(c.openStalls)}</td>
+                <td class="num">${fmt(c.totalStalls)}</td>
+                <td class="pct-cell"><div class="pct-bar-wrap"><div class="pct-bar-bg"><div class="pct-bar ${cls}" style="width:${pct.toFixed(1)}%"></div></div><span class="pct-val ${cls}">${pct.toFixed(1)}%</span></div></td>
+            </tr>`;
+        });
+        html += `</tbody></table></div>`;
+    });
+
+    html += `
+    <div class="footer">
+        共 ${D.totalCountries} 个国家/地区有超充站开放给第三方（otherEVs=true）。<br>
+        数据来源 <a href="https://supercharge.info/service/supercharge/allSites" target="_blank">supercharge.info</a>。
+    </div>`;
+
+    app.innerHTML = html;
+}
+
+// ── 国家详情页 ─────────────────────────────────────────────
+function renderDetail(name) {
+    const cd = COUNTRY_DETAIL[name];
+    const cd0 = findCountry(name);
+    if (!cd || !cd0) return;
+
+    const totalSites = cd0.total, openSites = cd0.open;
+    const totalStalls = cd0.totalStalls, openStalls = cd0.openStalls;
+    const openRate = totalSites > 0 ? (openSites / totalSites * 100) : 0;
+    const maxStatus = Math.max(...cd.status.map(s => s.sites));
+    const maxPower = Math.max(...cd.power.map(p => p.stalls));
+    const maxPlug = Math.max(...cd.plugs.map(p => p.stalls));
+    const maxState = Math.max(...cd.states.map(s => s.sites));
+    const flagMap = { '美国': '🇺🇸', '中国': '🇨🇳', '德国': '🇩🇪', '英国': '🇬🇧', '法国': '🇫🇷', '日本': '🇯🇵', '韩国': '🇰🇷', '澳大利亚': '🇦🇺', '加拿大': '🇨🇦' };
+
+    let html = `<div class="page-detail">`;
+
+    html += `<button class="back-btn" onclick="renderMain()">‹ 返回概览</button>`;
+
+    html += `
+    <div class="detail-header">
+        <h1>${flagMap[name] || '🌐'} ${name}</h1>
+        <div class="sub">超充站详情 · ${D.reportDate}</div>
+    </div>
+
+    <div class="detail-stats">
+        <div class="d-stat">
+            <div class="label">总站点 / 充电枪</div>
+            <div class="value">${fmt(totalSites)}<span class="slash">/</span>${fmt(totalStalls)}</div>
+        </div>
+        <div class="d-stat">
+            <div class="label">开放站点 / 充电枪</div>
+            <div class="value orange">${fmt(openSites)}<span class="slash">/</span>${fmt(openStalls)}</div>
+        </div>
+        <div class="d-stat">
+            <div class="label">全球开放率对比</div>
+            <div class="value green">${openRate.toFixed(1)}%</div>
+        </div>
+    </div>
+
+    <div class="detail-sec">
+        <div class="detail-sec-header"><span class="icon">📍</span><h3>Status 分布</h3></div>
+        <div class="detail-sec-body">`;
+    cd.status.forEach(s => {
+        const pct = (s.sites / maxStatus * 100).toFixed(1);
+        const share = (s.sites / totalSites * 100).toFixed(1);
+        html += `<div class="mbar-row">
+            <div class="mbar-label">${s.label}</div>
+            <div class="mbar-bg"><div class="mbar blue" style="width:${pct}%"></div></div>
+            <div class="mbar-val">${fmt(s.sites)}站</div>
+            <div class="mbar-sub">${share}%</div>
+        </div>`;
+    });
+    html += `</div></div>
+
+    <div class="detail-sec">
+        <div class="detail-sec-header"><span class="icon">⚡</span><h3>功率等级分布</h3></div>
+        <div class="detail-sec-body">`;
+    cd.power.forEach(p => {
+        const pct = (p.stalls / maxPower * 100).toFixed(1);
+        html += `<div class="mbar-row">
+            <div class="mbar-label">${p.label}</div>
+            <div class="mbar-bg"><div class="mbar orange" style="width:${pct}%"></div></div>
+            <div class="mbar-val">${fmt(p.stalls)}枪</div>
+            <div class="mbar-sub">${fmt(p.sites)}站</div>
+        </div>`;
+    });
+    html += `</div></div>
+
+    <div class="detail-sec">
+        <div class="detail-sec-header"><span class="icon">🔌</span><h3>插头标准分布</h3></div>
+        <div class="detail-sec-body">`;
+    cd.plugs.forEach(p => {
+        const pct = (p.stalls / maxPlug * 100).toFixed(1);
+        html += `<div class="mbar-row">
+            <div class="mbar-label">${p.label}</div>
+            <div class="mbar-bg"><div class="mbar green" style="width:${pct}%"></div></div>
+            <div class="mbar-val">${fmt(p.stalls)}枪</div>
+        </div>`;
+    });
+    html += `</div></div>
+
+    <div class="detail-sec">
+        <div class="detail-sec-header"><span class="icon">🌱</span><h3>绿色能源 & 站点年龄</h3></div>
+        <div class="detail-sec-body">
+            <div class="tag-row">
+                <div class="tag"><span class="tag-label">☀️ 光伏顶</span><span class="tag-val">${cd.solar}站 · ${fmt(cd.solarStalls)}枪</span></div>
+                <div class="tag"><span class="tag-label">🔋 储能</span><span class="tag-val">${cd.battery}站 · ${fmt(cd.batteryStalls)}枪</span></div>
+                <div class="tag green-tag"><span class="tag-label">📅 平均站龄</span><span class="tag-val">${cd.avgAge}</span></div>
+                <div class="tag"><span class="tag-label">🆕 最新开业</span><span class="tag-val">${cd.newestOpen}</span></div>
+                <div class="tag"><span class="tag-label">📆 最早开业</span><span class="tag-val">${cd.oldestOpen}</span></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="detail-sec">
+        <div class="detail-sec-header"><span class="icon">🗺️</span><h3>Top 15 州分布</h3></div>
+        <div class="detail-sec-body" style="padding:12px 0 8px">
+            <table class="state-table">
+                <thead>
+                    <tr><th>州</th><th style="text-align:right">站点</th><th style="text-align:right">开放</th><th style="text-align:right">开放率</th><th>占比</th></tr>
+                </thead>
+                <tbody>`;
+    cd.states.forEach(s => {
+        const pct = (s.sites / maxState * 100).toFixed(1);
+        const rcls = s.rate >= 80 ? 'high' : s.rate >= 60 ? 'mid' : s.rate >= 40 ? 'low' : 'very-low';
+        html += `<tr>
+            <td class="state-name">${s.name}</td>
+            <td class="num">${fmt(s.sites)}</td>
+            <td class="num">${fmt(s.open)}</td>
+            <td class="num"><span class="pct-val ${rcls}">${s.rate.toFixed(1)}%</span></td>
+            <td><div class="pct-bar-bg" style="width:100px"><div class="pct-bar blue" style="width:${pct}%"></div></div></td>
+        </tr>`;
+    });
+    html += `</tbody></table></div></div>`;
+
+    html += `</div>`;
+    app.innerHTML = html;
+}
+
+window.renderMain = renderMain;
+window.renderDetail = renderDetail;
+renderMain();
+</script>
+</body>
+</html>
