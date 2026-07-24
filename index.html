@@ -137,17 +137,123 @@
 <div class="container" id="app"></div>
 <script>
 const REPORT_DATA = {
-    reportDate: '2026年6月',
+    reportDate: '2026年7月',
     reportType: '月度更新',
     dataSource: 'supercharge.info',
-    totalSites: 10689,
-    openSites: 6558,
-    totalStalls: 98286,
-    openStalls: 69020,
-    openRate: 61.4,
-    totalCountries: 57,
-    regions: [{"name": "美洲", "icon": "🌎", "countries": [{"name": "美国", "open": 2744, "total": 3969, "rate": 69.1, "rate_str": "69.1%", "openStalls": 34748, "totalStalls": 47824, "isRegion": false}, {"name": "加拿大", "open": 237, "total": 378, "rate": 62.7, "rate_str": "62.7%", "openStalls": 2296, "totalStalls": 3652, "isRegion": false}, {"name": "墨西哥", "open": 25, "total": 42, "rate": 59.5, "rate_str": "59.5%", "openStalls": 108, "totalStalls": 210, "isRegion": false}, {"name": "哥伦比亚", "open": 0, "total": 4, "rate": 0.0, "rate_str": "0.0%", "openStalls": 0, "totalStalls": 12, "isRegion": false}, {"name": "智利", "open": 0, "total": 13, "rate": 0.0, "rate_str": "0.0%", "openStalls": 0, "totalStalls": 8, "isRegion": false}]}, {"name": "欧洲", "icon": "🌍", "countries": [{"name": "德国", "open": 414, "total": 423, "rate": 97.9, "rate_str": "97.9%", "openStalls": 4624, "totalStalls": 4662, "isRegion": false}, {"name": "法国", "open": 313, "total": 332, "rate": 94.3, "rate_str": "94.3%", "openStalls": 4181, "totalStalls": 4340, "isRegion": false}, {"name": "挪威", "open": 198, "total": 206, "rate": 96.1, "rate_str": "96.1%", "openStalls": 3015, "totalStalls": 3125, "isRegion": false}, {"name": "英国", "open": 189, "total": 307, "rate": 61.6, "rate_str": "61.6%", "openStalls": 1828, "totalStalls": 3139, "isRegion": false}, {"name": "瑞典", "open": 153, "total": 155, "rate": 98.7, "rate_str": "98.7%", "openStalls": 2031, "totalStalls": 2035, "isRegion": false}, {"name": "西班牙", "open": 138, "total": 144, "rate": 95.8, "rate_str": "95.8%", "openStalls": 1404, "totalStalls": 1448, "isRegion": false}, {"name": "意大利", "open": 136, "total": 150, "rate": 90.7, "rate_str": "90.7%", "openStalls": 1336, "totalStalls": 1482, "isRegion": false}, {"name": "奥地利", "open": 66, "total": 72, "rate": 91.7, "rate_str": "91.7%", "openStalls": 685, "totalStalls": 715, "isRegion": false}, {"name": "荷兰", "open": 57, "total": 60, "rate": 95.0, "rate_str": "95.0%", "openStalls": 972, "totalStalls": 1022, "isRegion": false}, {"name": "芬兰", "open": 53, "total": 59, "rate": 89.8, "rate_str": "89.8%", "openStalls": 390, "totalStalls": 426, "isRegion": false}, {"name": "丹麦", "open": 49, "total": 51, "rate": 96.1, "rate_str": "96.1%", "openStalls": 860, "totalStalls": 868, "isRegion": false}, {"name": "土耳其", "open": 49, "total": 49, "rate": 100.0, "rate_str": "100.0%", "openStalls": 362, "totalStalls": 362, "isRegion": false}, {"name": "瑞士", "open": 46, "total": 47, "rate": 97.9, "rate_str": "97.9%", "openStalls": 508, "totalStalls": 528, "isRegion": false}, {"name": "匈牙利", "open": 36, "total": 36, "rate": 100.0, "rate_str": "100.0%", "openStalls": 210, "totalStalls": 210, "isRegion": false}, {"name": "波兰", "open": 36, "total": 47, "rate": 76.6, "rate_str": "76.6%", "openStalls": 249, "totalStalls": 309, "isRegion": false}, {"name": "比利时", "open": 29, "total": 32, "rate": 90.6, "rate_str": "90.6%", "openStalls": 442, "totalStalls": 464, "isRegion": false}, {"name": "罗马尼亚", "open": 29, "total": 29, "rate": 100.0, "rate_str": "100.0%", "openStalls": 190, "totalStalls": 190, "isRegion": false}, {"name": "克罗地亚", "open": 24, "total": 30, "rate": 80.0, "rate_str": "80.0%", "openStalls": 173, "totalStalls": 215, "isRegion": false}, {"name": "捷克", "open": 23, "total": 23, "rate": 100.0, "rate_str": "100.0%", "openStalls": 136, "totalStalls": 136, "isRegion": false}, {"name": "葡萄牙", "open": 23, "total": 23, "rate": 100.0, "rate_str": "100.0%", "openStalls": 224, "totalStalls": 224, "isRegion": false}, {"name": "冰岛", "open": 20, "total": 21, "rate": 95.2, "rate_str": "95.2%", "openStalls": 148, "totalStalls": 150, "isRegion": false}, {"name": "爱尔兰", "open": 16, "total": 19, "rate": 84.2, "rate_str": "84.2%", "openStalls": 46, "totalStalls": 68, "isRegion": false}, {"name": "斯洛伐克", "open": 12, "total": 12, "rate": 100.0, "rate_str": "100.0%", "openStalls": 46, "totalStalls": 46, "isRegion": false}, {"name": "斯洛文尼亚", "open": 8, "total": 12, "rate": 66.7, "rate_str": "66.7%", "openStalls": 84, "totalStalls": 112, "isRegion": false}, {"name": "希腊", "open": 6, "total": 10, "rate": 60.0, "rate_str": "60.0%", "openStalls": 28, "totalStalls": 44, "isRegion": false}, {"name": "爱沙尼亚", "open": 4, "total": 4, "rate": 100.0, "rate_str": "100.0%", "openStalls": 24, "totalStalls": 24, "isRegion": false}, {"name": "卢森堡", "open": 2, "total": 2, "rate": 100.0, "rate_str": "100.0%", "openStalls": 20, "totalStalls": 20, "isRegion": false}, {"name": "以色列", "open": 1, "total": 26, "rate": 3.8, "rate_str": "3.8%", "openStalls": 8, "totalStalls": 218, "isRegion": false}, {"name": "塞尔维亚", "open": 1, "total": 5, "rate": 20.0, "rate_str": "20.0%", "openStalls": 0, "totalStalls": 28, "isRegion": false}, {"name": "立陶宛", "open": 1, "total": 5, "rate": 20.0, "rate_str": "20.0%", "openStalls": 0, "totalStalls": 32, "isRegion": false}, {"name": "保加利亚", "open": 0, "total": 4, "rate": 0.0, "rate_str": "0.0%", "openStalls": 0, "totalStalls": 18, "isRegion": false}, {"name": "列支敦士登", "open": 0, "total": 1, "rate": 0.0, "rate_str": "0.0%", "openStalls": 0, "totalStalls": 10, "isRegion": false}, {"name": "哈萨克斯坦", "open": 0, "total": 2, "rate": 0.0, "rate_str": "0.0%", "openStalls": 0, "totalStalls": 10, "isRegion": false}, {"name": "拉脱维亚", "open": 0, "total": 4, "rate": 0.0, "rate_str": "0.0%", "openStalls": 0, "totalStalls": 16, "isRegion": false}, {"name": "波黑", "open": 0, "total": 1, "rate": 0.0, "rate_str": "0.0%", "openStalls": 0, "totalStalls": 0, "isRegion": false}]}, {"name": "亚太", "icon": "🌏", "countries": [{"name": "中国", "open": 1115, "total": 2960, "rate": 37.7, "rate_str": "37.7%", "openStalls": 5609, "totalStalls": 14866, "isRegion": false}, {"name": "韩国", "open": 132, "total": 201, "rate": 65.7, "rate_str": "65.7%", "openStalls": 905, "totalStalls": 1250, "isRegion": false}, {"name": "澳大利亚", "open": 117, "total": 188, "rate": 62.2, "rate_str": "62.2%", "openStalls": 799, "totalStalls": 1201, "isRegion": false}, {"name": "新西兰", "open": 30, "total": 37, "rate": 81.1, "rate_str": "81.1%", "openStalls": 164, "totalStalls": 196, "isRegion": false}, {"name": "台湾", "open": 17, "total": 140, "rate": 12.1, "rate_str": "12.1%", "openStalls": 125, "totalStalls": 772, "isRegion": true}, {"name": "印度", "open": 5, "total": 9, "rate": 55.6, "rate_str": "55.6%", "openStalls": 20, "totalStalls": 36, "isRegion": false}, {"name": "马来西亚", "open": 4, "total": 27, "rate": 14.8, "rate_str": "14.8%", "openStalls": 22, "totalStalls": 92, "isRegion": false}, {"name": "新加坡", "open": 0, "total": 18, "rate": 0.0, "rate_str": "0.0%", "openStalls": 0, "totalStalls": 53, "isRegion": false}, {"name": "日本", "open": 0, "total": 169, "rate": 0.0, "rate_str": "0.0%", "openStalls": 0, "totalStalls": 744, "isRegion": false}, {"name": "泰国", "open": 0, "total": 56, "rate": 0.0, "rate_str": "0.0%", "openStalls": 0, "totalStalls": 245, "isRegion": false}, {"name": "菲律宾", "open": 0, "total": 4, "rate": 0.0, "rate_str": "0.0%", "openStalls": 0, "totalStalls": 16, "isRegion": false}]}, {"name": "中东", "icon": "🏜️", "countries": [{"name": "卡塔尔", "open": 0, "total": 2, "rate": 0.0, "rate_str": "0.0%", "openStalls": 0, "totalStalls": 16, "isRegion": false}, {"name": "沙特阿拉伯", "open": 0, "total": 11, "rate": 0.0, "rate_str": "0.0%", "openStalls": 0, "totalStalls": 48, "isRegion": false}, {"name": "约旦", "open": 0, "total": 4, "rate": 0.0, "rate_str": "0.0%", "openStalls": 0, "totalStalls": 14, "isRegion": false}, {"name": "阿曼", "open": 0, "total": 1, "rate": 0.0, "rate_str": "0.0%", "openStalls": 0, "totalStalls": 0, "isRegion": false}, {"name": "阿联酋", "open": 0, "total": 40, "rate": 0.0, "rate_str": "0.0%", "openStalls": 0, "totalStalls": 311, "isRegion": false}]}, {"name": "非洲", "icon": "🌍", "countries": [{"name": "摩洛哥", "open": 0, "total": 13, "rate": 0.0, "rate_str": "0.0%", "openStalls": 0, "totalStalls": 24, "isRegion": false}]}],
-    changes: [{"type": "📈 开放站点增加", "flag": "📈", "items": ["美国 +80站（开放2664→2744）", "加拿大 +9站（开放228→237）", "英国 +4站（开放185→189）", "澳大利亚 +4站（开放113→117）", "芬兰 +4站（开放49→53）", "挪威 +3站（开放195→198）", "克罗地亚 +3站（开放21→24）", "韩国 +3站（开放129→132）", "中国 +2站（开放1113→1115）", "土耳其 +2站（开放47→49）", "爱尔兰 +1站（开放15→16）", "匈牙利 +1站（开放35→36）", "波兰 +1站（开放35→36）", "德国 +1站（开放413→414）", "西班牙 +1站（开放137→138）"]}]
+    totalSites: 10217,
+    openSites: 6514,
+    totalStalls: 96154,
+    openStalls: 69334,
+    openRate: 63.8,
+    totalCountries: 44,
+
+    regions: [
+        {
+            name: '美洲',
+            icon: '🌎',
+            countries: [
+                { name: '美国', open: 2782, total: 3937, openStalls: 35132, totalStalls: 47645 },
+                { name: '加拿大', open: 236, total: 365, openStalls: 2344, totalStalls: 3662 },
+                { name: '墨西哥', open: 28, total: 46, openStalls: 108, totalStalls: 210 }
+            ]
+        },
+        {
+            name: '欧洲',
+            icon: '🌍',
+            countries: [
+                { name: '瑞典', open: 148, total: 148, openStalls: 1989, totalStalls: 1989 },
+                { name: '奥地利', open: 64, total: 64, openStalls: 665, totalStalls: 665 },
+                { name: '荷兰', open: 57, total: 57, openStalls: 984, totalStalls: 984 },
+                { name: '土耳其', open: 47, total: 47, openStalls: 374, totalStalls: 374 },
+                { name: '匈牙利', open: 30, total: 30, openStalls: 214, totalStalls: 214 },
+                { name: '罗马尼亚', open: 26, total: 26, openStalls: 190, totalStalls: 190 },
+                { name: '葡萄牙', open: 20, total: 20, openStalls: 232, totalStalls: 232 },
+                { name: '冰岛', open: 20, total: 20, openStalls: 157, totalStalls: 157 },
+                { name: '捷克', open: 18, total: 18, openStalls: 152, totalStalls: 152 },
+                { name: '斯洛伐克', open: 10, total: 10, openStalls: 46, totalStalls: 46 },
+                { name: '立陶宛', open: 3, total: 3, openStalls: 20, totalStalls: 20 },
+                { name: '爱沙尼亚', open: 3, total: 3, openStalls: 23, totalStalls: 23 },
+                { name: '卢森堡', open: 1, total: 1, openStalls: 16, totalStalls: 16 },
+                { name: '德国', open: 410, total: 411, openStalls: 4602, totalStalls: 4614 },
+                { name: '挪威', open: 194, total: 197, openStalls: 2975, totalStalls: 3031 },
+                { name: '丹麦', open: 48, total: 49, openStalls: 860, totalStalls: 866 },
+                { name: '瑞士', open: 46, total: 47, openStalls: 516, totalStalls: 536 },
+                { name: '比利时', open: 29, total: 30, openStalls: 442, totalStalls: 450 },
+                { name: '法国', open: 310, total: 323, openStalls: 4212, totalStalls: 4337 },
+                { name: '西班牙', open: 137, total: 143, openStalls: 1400, totalStalls: 1444 },
+                { name: '意大利', open: 132, total: 142, openStalls: 1352, totalStalls: 1466 },
+                { name: '芬兰', open: 53, total: 59, openStalls: 390, totalStalls: 426 },
+                { name: '爱尔兰', open: 22, total: 25, openStalls: 156, totalStalls: 178 },
+                { name: '克罗地亚', open: 23, total: 28, openStalls: 162, totalStalls: 196 },
+                { name: '波兰', open: 25, total: 34, openStalls: 253, totalStalls: 307 },
+                { name: '斯洛文尼亚', open: 8, total: 11, openStalls: 84, totalStalls: 106 },
+                { name: '英国', open: 193, total: 297, openStalls: 1858, totalStalls: 3093 },
+                { name: '希腊', open: 4, total: 8, openStalls: 28, totalStalls: 44 },
+                { name: '以色列', open: 1, total: 26, openStalls: 8, totalStalls: 222 },
+                { name: '塞尔维亚', open: 0, total: 3, openStalls: 0, totalStalls: 24 }
+            ]
+        },
+        {
+            name: '亚太',
+            icon: '🌏',
+            countries: [
+                { name: '新西兰', open: 30, total: 36, openStalls: 164, totalStalls: 190 },
+                { name: '韩国', open: 132, total: 186, openStalls: 912, totalStalls: 1239 },
+                { name: '澳大利亚', open: 118, total: 180, openStalls: 809, totalStalls: 1179 },
+                { name: '印度', open: 6, total: 10, openStalls: 20, totalStalls: 36 },
+                { name: '中国', open: 1079, total: 2781, openStalls: 5338, totalStalls: 13684 },
+                { name: '马来西亚', open: 4, total: 24, openStalls: 22, totalStalls: 92 },
+                { name: '台湾', open: 17, total: 139, openStalls: 125, totalStalls: 748, isRegion: true },
+                { name: '日本', open: 0, total: 157, openStalls: 0, totalStalls: 752 },
+                { name: '泰国', open: 0, total: 55, openStalls: 0, totalStalls: 249 },
+                { name: '新加坡', open: 0, total: 17, openStalls: 0, totalStalls: 50 },
+                { name: '菲律宾', open: 0, total: 4, openStalls: 0, totalStalls: 16 }
+            ]
+        }
+    ],
+
+    changes: [
+        {
+                type: '📈 开放站点增加',
+                flag: '📈',
+                items: [
+                    '中国 +5站（开放1074→1079）',
+                '冰岛 +1站（开放19→20）',
+                '加拿大 +9站（开放227→236）',
+                '匈牙利 +2站（开放28→30）',
+                '印度 +1站（开放5→6）',
+                '土耳其 +1站（开放46→47）',
+                '墨西哥 +4站（开放24→28）',
+                '德国 +2站（开放408→410）',
+                '意大利 +1站（开放131→132）',
+                '挪威 +1站（开放193→194）',
+                '法国 +1站（开放309→310）',
+                '澳大利亚 +1站（开放117→118）',
+                '爱尔兰 +6站（开放16→22）',
+                '立陶宛 +3站（开放0→3）',
+                '美国 +63站（开放2719→2782）',
+                '英国 +7站（开放186→193）',
+                '韩国 +2站（开放130→132）'
+                ]
+            },
+        {
+                type: '📉 开放站点减少',
+                flag: '📉',
+                items: [
+                    '丹麦 -1站（开放49→48）',
+                '克罗地亚 -1站（开放24→23）',
+                '奥地利 -1站（开放65→64）',
+                '波兰 -3站（开放28→25）'
+                ]
+            },
+        {
+                type: '🎯 全部开放（100%）',
+                flag: '🎯',
+                items: [
+                    '立陶宛 开放率100%（3/3）'
+                ]
+            }
+    ]
 };
 
 const D = REPORT_DATA;
