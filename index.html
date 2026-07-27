@@ -8,51 +8,22 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'PingFang SC', 'Microsoft YaHei', sans-serif;
-            background: #0a0a0f;
-            color: #e0e0e0;
-            line-height: 1.6;
+            background: #0a0a0f; color: #e0e0e0; line-height: 1.6;
         }
         .container { max-width: 1100px; margin: 0 auto; padding: 20px; }
         .header {
             background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
-            border-radius: 16px;
-            padding: 40px;
-            margin-bottom: 24px;
-            position: relative;
-            overflow: hidden;
+            border-radius: 16px; padding: 40px; margin-bottom: 24px;
+            position: relative; overflow: hidden;
         }
         .header::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -20%;
-            width: 400px;
-            height: 400px;
+            content: ''; position: absolute; top: -50%; right: -20%;
+            width: 400px; height: 400px;
             background: radial-gradient(circle, rgba(232, 65, 24, 0.15) 0%, transparent 70%);
             border-radius: 50%;
         }
         .header h1 { font-size: 28px; font-weight: 700; color: #fff; margin-bottom: 8px; position: relative; text-align: center; line-height: 1.4; }
         .header .subtitle { color: #8a8ab0; font-size: 14px; position: relative; text-align: center; }
-        .sub-wrapper { display: inline-flex; align-items: center; gap: 6px; cursor: pointer; position: relative; }
-        .info-icon {
-            display: inline-flex; align-items: center; justify-content: center;
-            width: 16px; height: 16px; background: #2a2a4a; border: 1px solid #4a4a6a;
-            border-radius: 50%; font-size: 10px; color: #8a8ab0; line-height: 1;
-        }
-        .sub-tooltip {
-            display: none; position: absolute; top: calc(100% + 8px); left: 50%; transform: translateX(-50%);
-            background: #1a1a28; border: 1px solid #2a2a4a; border-radius: 10px;
-            padding: 14px 18px; font-size: 13px; color: #c0c0d0; line-height: 1.8;
-            width: 420px; z-index: 100; box-shadow: 0 8px 32px rgba(0,0,0,0.5);
-        }
-        .sub-wrapper:hover .sub-tooltip { display: block; }
-        .sub-tooltip::before {
-            content: ''; position: absolute; top: -6px; left: 50%; transform: translateX(-50%);
-            border-left: 6px solid transparent; border-right: 6px solid transparent; border-bottom: 6px solid #2a2a4a;
-        }
-        .sub-tooltip-title { color: #8a8ab0; font-size: 12px; margin-bottom: 6px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
-        .sub-tooltip li { margin: 3px 0; list-style: none; }
-        .sub-tooltip li::before { content: '· '; color: #4a4a6a; }
         .stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px; }
         .stat-card {
             background: #141420; border: 1px solid #1e1e30; border-radius: 12px; padding: 20px; text-align: center;
@@ -91,14 +62,12 @@
         .region-header .count {
             margin-left: auto; background: #1e1e30; color: #8a8ab0; padding: 2px 10px; border-radius: 20px; font-size: 13px;
         }
-        .region-countries { padding: 10px 24px; color: #6a6a8a; font-size: 13px; border-bottom: 1px solid #12121e; line-height: 1.8; }
-        .region-countries span { color: #8a8ab0; margin-right: 4px; }
         .data-table { width: 100%; border-collapse: collapse; }
         .data-table th {
             text-align: left; padding: 12px 20px; color: #6a6a8a; font-size: 12px;
             font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 1px solid #1e1e30;
         }
-        .data-table th:first-child { min-width: 5.5em; }
+        .data-table th:not(:first-child) { text-align: right; }
         .data-table td { padding: 10px 20px; font-size: 14px; border-bottom: 1px solid #12121e; }
         .data-table tbody tr { transition: background 0.15s; }
         .data-table tbody tr:hover { background: #1a1a28; }
@@ -136,150 +105,7 @@
 <body>
 <div class="container" id="app"></div>
 <script>
-const REPORT_DATA = {
-    reportDate: '2026年7月',
-    reportType: '月度更新',
-    dataSource: 'supercharge.info',
-    totalSites: 10320,
-    openSites: 6514,
-    totalStalls: 96637,
-    openStalls: 69334,
-    openRate: 63.1,
-    totalCountries: 55,
-
-    regions: [
-        {
-            name: '美洲',
-            icon: '🌎',
-            countries: [
-                { name: '美国', open: 2782, total: 3937, openStalls: 35132, totalStalls: 47645 },
-                { name: '加拿大', open: 236, total: 365, openStalls: 2344, totalStalls: 3662 },
-                { name: '墨西哥', open: 28, total: 46, openStalls: 108, totalStalls: 210 },
-                { name: '智利', open: 0, total: 13, openStalls: 0, totalStalls: 8 },
-                { name: '哥伦比亚', open: 0, total: 4, openStalls: 0, totalStalls: 12 }
-            ]
-        },
-        {
-            name: '欧洲',
-            icon: '🌍',
-            countries: [
-                { name: '瑞典', open: 148, total: 148, openStalls: 1989, totalStalls: 1989 },
-                { name: '奥地利', open: 64, total: 64, openStalls: 665, totalStalls: 665 },
-                { name: '荷兰', open: 57, total: 57, openStalls: 984, totalStalls: 984 },
-                { name: '土耳其', open: 47, total: 47, openStalls: 374, totalStalls: 374 },
-                { name: '匈牙利', open: 30, total: 30, openStalls: 214, totalStalls: 214 },
-                { name: '罗马尼亚', open: 26, total: 26, openStalls: 190, totalStalls: 190 },
-                { name: '葡萄牙', open: 20, total: 20, openStalls: 232, totalStalls: 232 },
-                { name: '冰岛', open: 20, total: 20, openStalls: 157, totalStalls: 157 },
-                { name: '捷克', open: 18, total: 18, openStalls: 152, totalStalls: 152 },
-                { name: '斯洛伐克', open: 10, total: 10, openStalls: 46, totalStalls: 46 },
-                { name: '立陶宛', open: 3, total: 3, openStalls: 20, totalStalls: 20 },
-                { name: '爱沙尼亚', open: 3, total: 3, openStalls: 23, totalStalls: 23 },
-                { name: '卢森堡', open: 1, total: 1, openStalls: 16, totalStalls: 16 },
-                { name: '德国', open: 410, total: 411, openStalls: 4602, totalStalls: 4614 },
-                { name: '挪威', open: 194, total: 197, openStalls: 2975, totalStalls: 3031 },
-                { name: '丹麦', open: 48, total: 49, openStalls: 860, totalStalls: 866 },
-                { name: '瑞士', open: 46, total: 47, openStalls: 516, totalStalls: 536 },
-                { name: '比利时', open: 29, total: 30, openStalls: 442, totalStalls: 450 },
-                { name: '法国', open: 310, total: 323, openStalls: 4212, totalStalls: 4337 },
-                { name: '西班牙', open: 137, total: 143, openStalls: 1400, totalStalls: 1444 },
-                { name: '意大利', open: 132, total: 142, openStalls: 1352, totalStalls: 1466 },
-                { name: '芬兰', open: 53, total: 59, openStalls: 390, totalStalls: 426 },
-                { name: '爱尔兰', open: 22, total: 25, openStalls: 156, totalStalls: 178 },
-                { name: '克罗地亚', open: 23, total: 28, openStalls: 162, totalStalls: 196 },
-                { name: '波兰', open: 25, total: 34, openStalls: 253, totalStalls: 307 },
-                { name: '斯洛文尼亚', open: 8, total: 11, openStalls: 84, totalStalls: 106 },
-                { name: '英国', open: 193, total: 297, openStalls: 1858, totalStalls: 3093 },
-                { name: '希腊', open: 4, total: 8, openStalls: 28, totalStalls: 44 },
-                { name: '以色列', open: 1, total: 26, openStalls: 8, totalStalls: 222 },
-                { name: '保加利亚', open: 0, total: 5, openStalls: 0, totalStalls: 18 },
-                { name: '拉脱维亚', open: 0, total: 4, openStalls: 0, totalStalls: 16 },
-                { name: '塞尔维亚', open: 0, total: 3, openStalls: 0, totalStalls: 24 },
-                { name: '哈萨克斯坦', open: 0, total: 2, openStalls: 0, totalStalls: 10 },
-                { name: '列支敦士登', open: 0, total: 1, openStalls: 0, totalStalls: 10 }
-            ]
-        },
-        {
-            name: '亚太',
-            icon: '🌏',
-            countries: [
-                { name: '新西兰', open: 30, total: 36, openStalls: 164, totalStalls: 190 },
-                { name: '韩国', open: 132, total: 186, openStalls: 912, totalStalls: 1239 },
-                { name: '澳大利亚', open: 118, total: 180, openStalls: 809, totalStalls: 1179 },
-                { name: '印度', open: 6, total: 10, openStalls: 20, totalStalls: 36 },
-                { name: '中国', open: 1079, total: 2781, openStalls: 5338, totalStalls: 13684 },
-                { name: '马来西亚', open: 4, total: 24, openStalls: 22, totalStalls: 92 },
-                { name: '台湾', open: 17, total: 139, openStalls: 125, totalStalls: 748, isRegion: true },
-                { name: '日本', open: 0, total: 157, openStalls: 0, totalStalls: 752 },
-                { name: '泰国', open: 0, total: 55, openStalls: 0, totalStalls: 249 },
-                { name: '新加坡', open: 0, total: 17, openStalls: 0, totalStalls: 50 },
-                { name: '菲律宾', open: 0, total: 4, openStalls: 0, totalStalls: 16 }
-            ]
-        },
-        {
-            name: '中东',
-            icon: '🕌',
-            countries: [
-                { name: '阿联酋', open: 0, total: 43, openStalls: 0, totalStalls: 307 },
-                { name: '沙特阿拉伯', open: 0, total: 11, openStalls: 0, totalStalls: 48 },
-                { name: '约旦', open: 0, total: 4, openStalls: 0, totalStalls: 14 },
-                { name: '卡塔尔', open: 0, total: 3, openStalls: 0, totalStalls: 16 }
-            ]
-        },
-        {
-            name: '非洲',
-            icon: '🌍',
-            countries: [
-                { name: '摩洛哥', open: 0, total: 13, openStalls: 0, totalStalls: 24 }
-            ]
-        }
-    ],
-
-    changes: [
-        {
-                type: '📈 开放站点增加',
-                flag: '📈',
-                items: [
-                    '中国 +5站（开放1074→1079）',
-                '冰岛 +1站（开放19→20）',
-                '加拿大 +9站（开放227→236）',
-                '匈牙利 +2站（开放28→30）',
-                '印度 +1站（开放5→6）',
-                '土耳其 +1站（开放46→47）',
-                '墨西哥 +4站（开放24→28）',
-                '德国 +2站（开放408→410）',
-                '意大利 +1站（开放131→132）',
-                '挪威 +1站（开放193→194）',
-                '法国 +1站（开放309→310）',
-                '澳大利亚 +1站（开放117→118）',
-                '爱尔兰 +6站（开放16→22）',
-                '立陶宛 +3站（开放0→3）',
-                '美国 +63站（开放2719→2782）',
-                '英国 +7站（开放186→193）',
-                '韩国 +2站（开放130→132）'
-                ]
-            },
-        {
-                type: '📉 开放站点减少',
-                flag: '📉',
-                items: [
-                    '丹麦 -1站（开放49→48）',
-                '克罗地亚 -1站（开放24→23）',
-                '奥地利 -1站（开放65→64）',
-                '波兰 -3站（开放28→25）'
-                ]
-            },
-        {
-                type: '🎯 全部开放（100%）',
-                flag: '🎯',
-                items: [
-                    '立陶宛 开放率100%（3/3）'
-                ]
-            }
-    ]
-};
-
-const D = REPORT_DATA;
+const REPORT_DATA = {"reportDate": "2026年7月", "reportType": "月度更新", "dataSource": "supercharge.info", "totalSites": 10798, "openSites": 6682, "totalStalls": 99155, "openStalls": 70137, "openRate": 61.9, "totalCountries": 57, "regions": [{"name": "美洲", "icon": "🌎", "countries": [{"name": "加拿大", "open": 247, "total": 385, "openStalls": 2364, "totalStalls": 3712, "rate": 64.15584415584415}, {"name": "墨西哥", "open": 29, "total": 47, "openStalls": 108, "totalStalls": 210, "rate": 61.702127659574465}, {"name": "智利", "open": 0, "total": 13, "openStalls": 0, "totalStalls": 8, "rate": 0.0}, {"name": "哥伦比亚", "open": 0, "total": 4, "openStalls": 0, "totalStalls": 12, "rate": 0.0}]}, {"name": "欧洲", "icon": "🌍", "countries": [{"name": "葡萄牙", "open": 23, "total": 23, "openStalls": 232, "totalStalls": 232, "rate": 100.0}, {"name": "捷克", "open": 23, "total": 23, "openStalls": 152, "totalStalls": 152, "rate": 100.0}, {"name": "斯洛伐克", "open": 12, "total": 12, "openStalls": 46, "totalStalls": 46, "rate": 100.0}, {"name": "匈牙利", "open": 37, "total": 37, "openStalls": 214, "totalStalls": 214, "rate": 100.0}, {"name": "罗马尼亚", "open": 29, "total": 29, "openStalls": 198, "totalStalls": 198, "rate": 100.0}, {"name": "土耳其", "open": 50, "total": 50, "openStalls": 374, "totalStalls": 374, "rate": 100.0}, {"name": "卢森堡", "open": 2, "total": 2, "openStalls": 20, "totalStalls": 20, "rate": 100.0}, {"name": "爱沙尼亚", "open": 4, "total": 4, "openStalls": 23, "totalStalls": 23, "rate": 100.0}, {"name": "立陶宛", "open": 5, "total": 5, "openStalls": 32, "totalStalls": 32, "rate": 100.0}, {"name": "瑞典", "open": 153, "total": 155, "openStalls": 2031, "totalStalls": 2035, "rate": 98.70967741935483}, {"name": "德国", "open": 416, "total": 425, "openStalls": 4632, "totalStalls": 4670, "rate": 97.88235294117648}, {"name": "瑞士", "open": 46, "total": 47, "openStalls": 516, "totalStalls": 536, "rate": 97.87234042553192}, {"name": "挪威", "open": 199, "total": 206, "openStalls": 3051, "totalStalls": 3145, "rate": 96.60194174757282}, {"name": "丹麦", "open": 49, "total": 51, "openStalls": 876, "totalStalls": 884, "rate": 96.07843137254902}, {"name": "西班牙", "open": 138, "total": 144, "openStalls": 1404, "totalStalls": 1448, "rate": 95.83333333333334}, {"name": "冰岛", "open": 21, "total": 22, "openStalls": 159, "totalStalls": 161, "rate": 95.45454545454545}, {"name": "荷兰", "open": 57, "total": 60, "openStalls": 984, "totalStalls": 1034, "rate": 95.0}, {"name": "法国", "open": 313, "total": 332, "openStalls": 4235, "totalStalls": 4394, "rate": 94.27710843373494}, {"name": "奥地利", "open": 66, "total": 72, "openStalls": 685, "totalStalls": 715, "rate": 91.66666666666666}, {"name": "意大利", "open": 137, "total": 151, "openStalls": 1352, "totalStalls": 1498, "rate": 90.72847682119205}, {"name": "比利时", "open": 29, "total": 32, "openStalls": 442, "totalStalls": 464, "rate": 90.625}, {"name": "芬兰", "open": 53, "total": 59, "openStalls": 390, "totalStalls": 426, "rate": 89.83050847457628}, {"name": "爱尔兰", "open": 22, "total": 25, "openStalls": 156, "totalStalls": 178, "rate": 88.0}, {"name": "克罗地亚", "open": 24, "total": 30, "openStalls": 170, "totalStalls": 212, "rate": 80.0}, {"name": "波兰", "open": 33, "total": 43, "openStalls": 253, "totalStalls": 309, "rate": 76.74418604651163}, {"name": "斯洛文尼亚", "open": 8, "total": 12, "openStalls": 84, "totalStalls": 112, "rate": 66.66666666666666}, {"name": "英国", "open": 196, "total": 311, "openStalls": 1898, "totalStalls": 3163, "rate": 63.022508038585215}, {"name": "希腊", "open": 6, "total": 10, "openStalls": 28, "totalStalls": 44, "rate": 60.0}, {"name": "塞尔维亚", "open": 1, "total": 5, "openStalls": 0, "totalStalls": 28, "rate": 20.0}, {"name": "以色列", "open": 1, "total": 26, "openStalls": 8, "totalStalls": 222, "rate": 3.8461538461538463}, {"name": "保加利亚", "open": 0, "total": 5, "openStalls": 0, "totalStalls": 18, "rate": 0.0}, {"name": "拉脱维亚", "open": 0, "total": 4, "openStalls": 0, "totalStalls": 16, "rate": 0.0}, {"name": "哈萨克斯坦", "open": 0, "total": 2, "openStalls": 0, "totalStalls": 10, "rate": 0.0}]}, {"name": "亚太", "icon": "🌏", "countries": [{"name": "新西兰", "open": 30, "total": 37, "openStalls": 164, "totalStalls": 196, "rate": 81.08108108108108}, {"name": "韩国", "open": 134, "total": 201, "openStalls": 918, "totalStalls": 1263, "rate": 66.66666666666666}, {"name": "澳大利亚", "open": 119, "total": 189, "openStalls": 821, "totalStalls": 1209, "rate": 62.96296296296296}, {"name": "印度", "open": 6, "total": 10, "openStalls": 20, "totalStalls": 36, "rate": 60.0}, {"name": "中国", "open": 1120, "total": 2965, "openStalls": 5624, "totalStalls": 14881, "rate": 37.77403035413153}, {"name": "马来西亚", "open": 4, "total": 27, "openStalls": 22, "totalStalls": 92, "rate": 14.814814814814813}, {"name": "台湾地区", "open": 17, "total": 144, "openStalls": 125, "totalStalls": 772, "rate": 11.805555555555555}, {"name": "日本", "open": 0, "total": 170, "openStalls": 0, "totalStalls": 762, "rate": 0.0}, {"name": "泰国", "open": 0, "total": 56, "openStalls": 0, "totalStalls": 249, "rate": 0.0}, {"name": "新加坡", "open": 0, "total": 18, "openStalls": 0, "totalStalls": 53, "rate": 0.0}, {"name": "菲律宾", "open": 0, "total": 4, "openStalls": 0, "totalStalls": 16, "rate": 0.0}]}, {"name": "中东非", "icon": "🕌", "countries": [{"name": "沙特阿拉伯", "open": 0, "total": 11, "openStalls": 0, "totalStalls": 48, "rate": 0.0}, {"name": "阿联酋", "open": 0, "total": 44, "openStalls": 0, "totalStalls": 311, "rate": 0.0}, {"name": "卡塔尔", "open": 0, "total": 3, "openStalls": 0, "totalStalls": 16, "rate": 0.0}, {"name": "阿曼", "open": 0, "total": 1, "openStalls": 0, "totalStalls": 0, "rate": 0.0}, {"name": "约旦", "open": 0, "total": 4, "openStalls": 0, "totalStalls": 14, "rate": 0.0}, {"name": "摩洛哥", "open": 0, "total": 13, "openStalls": 0, "totalStalls": 24, "rate": 0.0}]}], "changes": [{"country": "USA", "prev": 2744, "curr": 2823, "diff": 79}, {"country": "加拿大", "prev": 237, "curr": 247, "diff": 10}, {"country": "英国", "prev": 189, "curr": 196, "diff": 7}, {"country": "爱尔兰", "prev": 16, "curr": 22, "diff": 6}, {"country": "中国", "prev": 1115, "curr": 1120, "diff": 5}, {"country": "墨西哥", "prev": 25, "curr": 29, "diff": 4}, {"country": "立陶宛", "prev": 1, "curr": 5, "diff": 4}, {"country": "波兰", "prev": 36, "curr": 33, "diff": -3}, {"country": "韩国", "prev": 132, "curr": 134, "diff": 2}, {"country": "澳大利亚", "prev": 117, "curr": 119, "diff": 2}, {"country": "德国", "prev": 414, "curr": 416, "diff": 2}, {"country": "意大利", "prev": 136, "curr": 137, "diff": 1}, {"country": "匈牙利", "prev": 36, "curr": 37, "diff": 1}, {"country": "土耳其", "prev": 49, "curr": 50, "diff": 1}, {"country": "印度", "prev": 5, "curr": 6, "diff": 1}, {"country": "冰岛", "prev": 20, "curr": 21, "diff": 1}, {"country": "挪威", "prev": 198, "curr": 199, "diff": 1}]};
 const app = document.getElementById('app');
 
 function fmt(n) { return n.toLocaleString(); }
@@ -293,58 +119,50 @@ function barCls(pct) {
 function renderMain() {
     let html = `
     <div class="header">
-        <h1>⚡ 特斯拉超充站<br>第三方开放${D.reportType}</h1>
-        <div class="subtitle">
-            <span class="sub-wrapper" tabindex="0">
-                ${D.reportDate} · 数据来源 ${D.dataSource}
-                <span class="info-icon">i</span>
-                <div class="sub-tooltip">
-                    <div class="sub-tooltip-title">统计口径说明</div>
-                    <ul>
-                        <li>总站点 = 所有站点的数量（含开放/扩建/建设中/审批中/规划中）</li>
-                        <li>开放站点 = otherEVs=True 的站点（对第三方品牌开放）</li>
-                        <li>开放率 = 开放站点 / 总站点</li>
-                        <li>数据不含香港、澳门</li>
-                    </ul>
-                </div>
-            </span>
-        </div>
+        <h1>⚡ 特斯拉超充站<br>第三方开放${REPORT_DATA.reportType}</h1>
+        <div class="subtitle">${REPORT_DATA.reportDate} · 数据来源 ${REPORT_DATA.dataSource}</div>
     </div>
 
     <div class="stats-row">
         <div class="stat-card">
             <div class="label">总站点 / 充电枪数</div>
-            <div class="value">${fmt(D.totalSites)}<span class="slash">/</span>${fmt(D.totalStalls)}</div>
+            <div class="value">${fmt(REPORT_DATA.totalSites)}<span class="slash">/</span>${fmt(REPORT_DATA.totalStalls)}</div>
         </div>
         <div class="stat-card">
             <div class="label">开放站点 / 充电枪数</div>
-            <div class="value orange">${fmt(D.openSites)}<span class="slash">/</span>${fmt(D.openStalls)}</div>
+            <div class="value orange">${fmt(REPORT_DATA.openSites)}<span class="slash">/</span>${fmt(REPORT_DATA.openStalls)}</div>
         </div>
         <div class="stat-card">
             <div class="label">全球开放率</div>
-            <div class="value green">${D.openRate}<span class="unit">%</span></div>
+            <div class="value green">${REPORT_DATA.openRate}<span class="unit">%</span></div>
         </div>
         <div class="stat-card">
             <div class="label">覆盖国家/地区</div>
-            <div class="value blue">${D.totalCountries}</div>
+            <div class="value blue">${REPORT_DATA.totalCountries}</div>
         </div>
     </div>`;
 
-    if (D.changes && D.changes.length > 0) {
+    if (REPORT_DATA.changes && REPORT_DATA.changes.length > 0) {
         html += `<div class="changes-section"><details><summary>
             <span class="icon">📊</span><h2>本月变化</h2>
             <span class="toggle-hint">▾</span>
         </summary><div class="changes-body">`;
-        D.changes.forEach(c => {
-            html += `<div class="change-group"><div class="change-group-title">${c.type}</div>`;
-            c.items.forEach(item => { html += `<div class="change-item"><span class="flag">${c.flag}</span>${item}</div>`; });
+        const inc = REPORT_DATA.changes.filter(c => c.diff > 0);
+        const dec = REPORT_DATA.changes.filter(c => c.diff < 0);
+        if (inc.length) {
+            html += `<div class="change-group"><div class="change-group-title">📈 开放站点增加</div>`;
+            inc.forEach(c => { html += `<div class="change-item"><span class="flag">📈</span>${c.country}: ${c.prev} → ${c.curr} (${'+'+c.diff})</div>`; });
             html += `</div>`;
-        });
+        }
+        if (dec.length) {
+            html += `<div class="change-group"><div class="change-group-title">📉 开放站点减少</div>`;
+            dec.forEach(c => { html += `<div class="change-item"><span class="flag">📉</span>${c.country}: ${c.prev} → ${c.curr} (${c.diff})</div>`; });
+            html += `</div>`;
+        }
         html += `</div></details></div>`;
     }
 
-    D.regions.forEach(region => {
-        const countryList = region.countries.map(c => c.name).join('、');
+    REPORT_DATA.regions.forEach(region => {
         html += `
     <div class="region-section">
         <div class="region-header">
@@ -352,15 +170,14 @@ function renderMain() {
             <h2>${region.name}</h2>
             <span class="count">${region.countries.length} 个国家/地区</span>
         </div>
-        <div class="region-countries"><span>包含：</span>${countryList}</div>
         <table class="data-table">
             <thead>
                 <tr>
                     <th>国家/地区</th>
-                    <th style="text-align:right">开放站点</th>
-                    <th style="text-align:right">总站点</th>
-                    <th style="text-align:right">开放充电枪</th>
-                    <th style="text-align:right">总充电枪</th>
+                    <th>开放站点</th>
+                    <th>总站点</th>
+                    <th>开放充电枪</th>
+                    <th>总充电枪</th>
                     <th class="pct-cell">开放率</th>
                 </tr>
             </thead>
@@ -369,8 +186,8 @@ function renderMain() {
             const pct = c.rate;
             const cls = barCls(pct);
             const isFull = pct === 100;
-            const rowAttrs = isFull ? ` class="full-row"` : ` class="no-detail"`;
-            html += `<tr${rowAttrs}>
+            const rowClass = isFull ? 'full-row' : 'no-detail';
+            html += `<tr class="${rowClass}">
                 <td class="country">${c.name}</td>
                 <td class="num">${fmt(c.open)}</td>
                 <td class="num">${fmt(c.total)}</td>
@@ -384,7 +201,7 @@ function renderMain() {
 
     html += `
     <div class="footer">
-        共 ${D.totalCountries} 个国家/地区有超充站开放给第三方（otherEVs=true）。<br>
+        共 ${REPORT_DATA.totalCountries} 个国家/地区有超充站开放给第三方（otherEVs=true）。<br>
         数据来源 <a href="https://supercharge.info/service/supercharge/allSites" target="_blank">supercharge.info</a>。
     </div>`;
 
