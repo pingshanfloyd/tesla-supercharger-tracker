@@ -3,47 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>特斯拉超充站第三方开放报告 - 历史报告</title>
+    <title>历史报告存档</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'PingFang SC', 'Microsoft YaHei', sans-serif;
-            background: #0a0a0f;
-            color: #e0e0e0;
-            line-height: 1.6;
-            padding: 40px 20px;
-        }
-        .container { max-width: 800px; margin: 0 auto; }
-        h1 { font-size: 24px; color: #fff; margin-bottom: 24px; }
-        .report-link {
-            display: block;
-            background: #141420;
-            border: 1px solid #1e1e30;
-            border-radius: 10px;
-            padding: 16px 20px;
-            margin-bottom: 12px;
-            text-decoration: none;
-            color: #e0e0e0;
-            transition: background 0.2s;
-        }
-        .report-link:hover { background: #1a1a28; }
-        .report-link .date { font-size: 14px; color: #54a0ff; font-weight: 600; }
-        .report-link .label { font-size: 13px; color: #6a6a8a; margin-top: 4px; }
-        .back { color: #54a0ff; text-decoration: none; font-size: 14px; display: inline-block; margin-top: 20px; }
-        .back:hover { text-decoration: underline; }
+        body { font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: #0a0a0f; color: #e0e0e0; }
+        .container { max-width: 800px; margin: 0 auto; padding: 40px 20px; }
+        h1 { color: #fff; margin-bottom: 24px; }
+        .back { color: #54a0ff; margin-bottom: 20px; display: inline-block; }
+        .archive-list { list-style: none; }
+        .archive-item { background: #141420; border-radius: 12px; padding: 20px; margin-bottom: 16px; }
+        .archive-item a { color: #fff; text-decoration: none; font-size: 18px; font-weight: 600; }
+        .archive-item a:hover { color: #54a0ff; }
+        .archive-meta { color: #6a6a8a; font-size: 14px; margin-top: 8px; }
     </style>
 </head>
 <body>
-<div class="container">
-    <h1>⚡ 特斯拉超充站第三方开放报告</h1>
-    <a class="report-link" href="index.html">
-        <div class="date">2026年6月（最新）</div>
-        <div class="label">月度更新 · 57个国家/地区 · 10,689站点 · 开放率61.4%</div>
-    </a>
-    <a class="report-link" href="archive/202605.html">
-        <div class="date">2026年5月（基准报告）</div>
-        <div class="label">首次基准 · 57个国家/地区 · 10,546站点</div>
-    </a>
-</div>
+    <div class="container">
+        <a href="index.html" class="back">← 返回首页</a>
+        <h1>📁 历史报告存档</h1>
+        <ul class="archive-list">
+            <li class="archive-item">
+                <a href="archive/202607_月度报告.html">2026年7月报告</a>
+                <div class="archive-meta">第三方开放站点: 6,682 | 开放率: 61.9%</div>
+            </li>
+            <li class="archive-item">
+                <a href="archive/202605_基准报告.html">2026年5月基准报告</a>
+                <div class="archive-meta">基准数据</div>
+            </li>
+        </ul>
+    </div>
 </body>
 </html>
