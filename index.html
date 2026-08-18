@@ -54,10 +54,15 @@
             background: #141420; border: 1px solid #1e1e30; border-radius: 12px;
             margin-bottom: 24px; overflow: hidden;
         }
-        .changes-header { padding: 16px 24px; border-bottom: 1px solid #1e1e30; display: flex; align-items: center; gap: 10px; }
+        .changes-header { padding: 16px 24px; border-bottom: 1px solid transparent; display: flex; align-items: center; gap: 10px; cursor: pointer; transition: background 0.2s; user-select: none; }
+        .changes-header:hover { background: #1a1a28; }
         .changes-header .icon { font-size: 22px; }
-        .changes-header h2 { font-size: 18px; font-weight: 600; color: #fff; }
-        .changes-body { padding: 20px 24px; }
+        .changes-header h2 { font-size: 18px; font-weight: 600; color: #fff; flex: 1; }
+        .changes-header .toggle-arrow { font-size: 14px; color: #6a6a8a; transition: transform 0.3s ease; margin-left: auto; }
+        .changes-header .toggle-arrow.open { transform: rotate(180deg); }
+        .changes-header.open { border-bottom-color: #1e1e30; }
+        .changes-body { padding: 20px 24px; display: none; }
+        .changes-body.show { display: block; }
         .change-group { margin-bottom: 16px; }
         .change-group:last-child { margin-bottom: 0; }
         .change-group-title { font-size: 14px; font-weight: 600; color: #8a8ab0; margin-bottom: 8px; }
@@ -402,11 +407,12 @@ const REPORT_DATA = {
 
     if (D.changes && D.changes.length > 0) {
         html += `<div class="changes-section">
-            <div class="changes-header">
+            <div class="changes-header" id="changes-toggle">
                 <span class="icon">📊</span>
                 <h2>本月变化</h2>
+                <span class="toggle-arrow" id="changes-arrow">▼</span>
             </div>
-            <div class="changes-body">`;
+            <div class="changes-body" id="changes-content">`;
         D.changes.forEach(c => {
             html += `<div class="change-group">
                 <div class="change-group-title">${c.type}</div>`;
@@ -466,6 +472,18 @@ const REPORT_DATA = {
     </div>`;
 
     app.innerHTML = html;
+
+    // 折叠/展开本月变化
+    const changesToggle = document.getElementById('changes-toggle');
+    const changesContent = document.getElementById('changes-content');
+    const changesArrow = document.getElementById('changes-arrow');
+    if (changesToggle && changesContent && changesArrow) {
+        changesToggle.addEventListener('click', function() {
+            changesContent.classList.toggle('show');
+            changesArrow.classList.toggle('open');
+            changesToggle.classList.toggle('open');
+        });
+    }
 })();
 </script>
 </body>
