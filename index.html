@@ -3,8 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>特斯拉超充站第三方开放追踪</title>
+    
+    <!-- SEO Meta -->
+    <title>特斯拉超充站第三方开放追踪 | Tesla Supercharger EV Accessibility Tracker - 2026年09月</title>
+    <meta name="description" content="追踪全球特斯拉超级充电站向第三方电动车品牌开放情况，覆盖55个国家/地区、10,521个站点的月度数据变化。数据来源 supercharge.info，每月更新。">
+    <meta name="keywords" content="特斯拉超充,Tesla Supercharger,第三方充电,EV充电,电动车充电网络,超充开放率,充电基础设施,supercharger tracking,EV charging,otherEVs,supercharge.info">
+    <meta name="author" content="tesla.gann.ing">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://tesla.gann.ing/">
+    
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tesla.gann.ing/">
+    <meta property="og:title" content="特斯拉超充站第三方开放追踪 | 2026年09月">
+    <meta property="og:description" content="全球55个国家/地区、10,521个特斯拉超充站点第三方开放数据月度追踪">
+    <meta property="og:site_name" content="Tesla Supercharger Tracker">
+    <meta property="og:locale" content="zh_CN">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="特斯拉超充站第三方开放追踪 | 2026年09月">
+    <meta name="twitter:description" content="全球55个国家/地区、10,521个特斯拉超充站点第三方开放数据月度追踪">
+    
+    <!-- Structured Data (JSON-LD) -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Dataset",
+        "name": "特斯拉超充站第三方开放追踪",
+        "description": "追踪全球特斯拉超级充电站向第三方电动车品牌开放的月度数据",
+        "url": "https://tesla.gann.ing/",
+        "keywords": "Tesla Supercharger, EV charging, 特斯拉超充, 第三方充电, supercharger tracking",
+        "creator": {
+            "@type": "Person",
+            "name": "tesla.gann.ing"
+        },
+        "dateModified": "2026-09-16",
+        "temporalCoverage": "2026-09",
+        "license": "https://creativecommons.org/licenses/by/4.0/"
+    }
+    </script>
+    
     <style>
+
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'PingFang SC', 'Microsoft YaHei', sans-serif;
@@ -126,544 +167,923 @@ body {
 .anchor-btn.active { background: #1a1a28; border-color: #e84118; color: #e84118; }
 .data-table th.sortable { cursor: pointer; user-select: none; transition: color 0.2s; position: relative; }
 .data-table th.sortable:hover { color: #fff; }
-.data-table th.sortable.sort-active { color: #54a0ff; }
-.data-table th .sort-arrow { font-size: 12px; margin-left: 4px; display: inline; }
-.archive-section { background: #141420; border: 1px solid #1e1e30; border-radius: 12px; margin-bottom: 20px; overflow: hidden; padding: 20px 24px; }
-.archive-section h3 { color: #fff; font-size: 16px; margin-bottom: 12px; }
-.archive-list { list-style: none; }
-.archive-list li { padding: 6px 0; font-size: 14px; }
-.archive-list li a { color: #54a0ff; text-decoration: none; }
-.archive-list li a:hover { text-decoration: underline; }
-.archive-list .arch-stats { color: #6a6a8a; font-size: 13px; margin-left: 8px; }
+
+/* noscript 降级样式 */
+.noscript-content { max-width: 1100px; margin: 0 auto; padding: 40px 20px; }
+.noscript-content h1 { font-size: 24px; color: #fff; margin-bottom: 16px; text-align: center; }
+.noscript-content h2 { font-size: 18px; color: #fff; margin: 24px 0 12px; border-bottom: 1px solid #2a2a4a; padding-bottom: 8px; }
+.noscript-summary { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 32px; }
+.noscript-stat { background: #141420; border: 1px solid #1e1e30; border-radius: 12px; padding: 20px; text-align: center; }
+.noscript-stat .ns-label { color: #6a6a8a; font-size: 13px; margin-bottom: 6px; }
+.noscript-stat .ns-value { font-size: 28px; font-weight: 700; color: #fff; }
+.noscript-stat .ns-value.orange { color: #e84118; }
+.noscript-stat .ns-value.green { color: #00d2d3; }
+.noscript-stat .ns-value.blue { color: #54a0ff; }
+.noscript-table { width: 100%; border-collapse: collapse; margin-bottom: 24px; }
+.noscript-table th { text-align: left; padding: 10px 16px; color: #6a6a8a; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 1px solid #1e1e30; background: #141420; }
+.noscript-table td { padding: 8px 16px; font-size: 14px; border-bottom: 1px solid #12121e; color: #c0c0d0; }
+.noscript-table .country-name { font-weight: 500; color: #fff; }
+.noscript-table .num-cell { text-align: right; font-variant-numeric: tabular-nums; }
+.noscript-table .pct-high { color: #00d2d3; font-weight: 600; }
+.noscript-table .pct-mid { color: #54a0ff; font-weight: 600; }
+.noscript-table .pct-low { color: #feca57; font-weight: 600; }
+.noscript-table .pct-very-low { color: #ff6b6b; font-weight: 600; }
+.noscript-footer { text-align: center; padding: 30px 20px; color: #4a4a6a; font-size: 13px; line-height: 1.8; }
+
 @media (max-width: 768px) {
     .stats-row { grid-template-columns: repeat(2, 1fr); }
-    .header h1 { font-size: 22px; }
-    .stat-card .value { font-size: 22px; }
-    .data-table th, .data-table td { padding: 10px 10px; font-size: 13px; }
-    .pct-cell { width: 140px; }
-    .sub-tooltip { width: 320px; left: 0; transform: none; }
+    .noscript-summary { grid-template-columns: repeat(2, 1fr); }
+    .data-table .pct-cell { width: 120px; }
 }
-@media (max-width: 480px) {
-    .stats-row { grid-template-columns: 1fr 1fr; }
-    .header { padding: 24px 20px; }
-    .data-table th, .data-table td { padding: 8px 6px; font-size: 12px; }
-    .pct-cell { width: 100px; }
-    .pct-bar-wrap { gap: 4px; }
-    .pct-val { min-width: 36px; font-size: 11px; }
-}
+
     </style>
 </head>
 <body>
 <div class="container" id="app"></div>
+
+<!-- SEO: Noscript降级内容 - 供搜索引擎爬虫和无JS环境使用 -->
+<noscript>
+
+<div class="noscript-content">
+    <h1>⚡ 特斯拉超充站第三方开放追踪</h1>
+    <p style="text-align:center;color:#8a8ab0;margin-bottom:24px;">
+        2026年09月 | 数据来源: supercharge.info | 每月更新
+    </p>
+    
+    <div class="noscript-summary">
+        <div class="noscript-stat">
+            <div class="ns-label">总站点数</div>
+            <div class="ns-value">10,521</div>
+        </div>
+        <div class="noscript-stat">
+            <div class="ns-label">开放站点</div>
+            <div class="ns-value green">6,733</div>
+        </div>
+        <div class="noscript-stat">
+            <div class="ns-label">开放率</div>
+            <div class="ns-value orange">64.0%</div>
+        </div>
+        <div class="noscript-stat">
+            <div class="ns-label">覆盖国家/地区</div>
+            <div class="ns-value blue">55</div>
+        </div>
+    </div>
+
+
+    <h2>🌎 美洲（5个国家/地区，4,488站点）</h2>
+    <p style="color:#6a6a8a;font-size:13px;margin-bottom:12px;">
+        包含: 美国、加拿大、墨西哥、智利、哥伦比亚
+    </p>
+    <table class="noscript-table">
+        <thead>
+            <tr>
+                <th>国家/地区</th>
+                <th style="text-align:right;">开放站点</th>
+                <th style="text-align:right;">总站点</th>
+                <th style="text-align:right;">开放率</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            <tr>
+                <td class="country-name">美国</td>
+                <td class="num-cell">2,932</td>
+                <td class="num-cell">4,055</td>
+                <td class="num-cell pct-mid">72.3%</td>
+            </tr>
+
+            <tr>
+                <td class="country-name">加拿大</td>
+                <td class="num-cell">246</td>
+                <td class="num-cell">369</td>
+                <td class="num-cell pct-mid">66.7%</td>
+            </tr>
+
+            <tr>
+                <td class="country-name">墨西哥</td>
+                <td class="num-cell">28</td>
+                <td class="num-cell">46</td>
+                <td class="num-cell pct-mid">60.9%</td>
+            </tr>
+
+            <tr>
+                <td class="country-name">智利</td>
+                <td class="num-cell">0</td>
+                <td class="num-cell">13</td>
+                <td class="num-cell pct-very-low">0.0%</td>
+            </tr>
+
+            <tr>
+                <td class="country-name">哥伦比亚</td>
+                <td class="num-cell">0</td>
+                <td class="num-cell">5</td>
+                <td class="num-cell pct-very-low">0.0%</td>
+            </tr>
+
+        </tbody>
+    </table>
+
+
+    <h2>🌍 欧洲（34个国家/地区，2,321站点）</h2>
+    <p style="color:#6a6a8a;font-size:13px;margin-bottom:12px;">
+        包含: 瑞典、奥地利、荷兰、土耳其、匈牙利、罗马尼亚、冰岛、葡萄牙、捷克、斯洛伐克、立陶宛、爱沙尼亚、卢森堡、德国、挪威、丹麦、瑞士、比利时、法国、西班牙、意大利、芬兰、爱尔兰、克罗地亚、波兰、斯洛文尼亚、英国、希腊、以色列、保加利亚、拉脱维亚、塞尔维亚、哈萨克斯坦、列支敦士登
+    </p>
+    <table class="noscript-table">
+        <thead>
+            <tr>
+                <th>国家/地区</th>
+                <th style="text-align:right;">开放站点</th>
+                <th style="text-align:right;">总站点</th>
+                <th style="text-align:right;">开放率</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            <tr>
+                <td class="country-name">瑞典</td>
+                <td class="num-cell">149</td>
+                <td class="num-cell">149</td>
+                <td class="num-cell pct-high">100.0%</td>
+            </tr>
+
+            <tr>
+                <td class="country-name">奥地利</td>
+                <td class="num-cell">66</td>
+                <td class="num-cell">66</td>
+                <td class="num-cell pct-high">100.0%</td>
+            </tr>
+
+            <tr>
+                <td class="country-name">荷兰</td>
+                <td class="num-cell">57</td>
+                <td class="num-cell">57</td>
+                <td class="num-cell pct-high">100.0%</td>
+            </tr>
+
+            <tr>
+                <td class="country-name">土耳其</td>
+                <td class="num-cell">53</td>
+                <td class="num-cell">53</td>
+                <td class="num-cell pct-high">100.0%</td>
+            </tr>
+
+            <tr>
+                <td class="country-name">匈牙利</td>
+                <td class="num-cell">30</td>
+                <td class="num-cell">30</td>
+                <td class="num-cell pct-high">100.0%</td>
+            </tr>
+
+            <tr>
+                <td class="country-name">罗马尼亚</td>
+                <td class="num-cell">27</td>
+                <td class="num-cell">27</td>
+                <td class="num-cell pct-high">100.0%</td>
+            </tr>
+
+            <tr>
+                <td class="country-name">冰岛</td>
+                <td class="num-cell">22</td>
+                <td class="num-cell">22</td>
+                <td class="num-cell pct-high">100.0%</td>
+            </tr>
+
+            <tr>
+                <td class="country-name">葡萄牙</td>
+                <td class="num-cell">20</td>
+                <td class="num-cell">20</td>
+                <td class="num-cell pct-high">100.0%</td>
+            </tr>
+
+            <tr>
+                <td class="country-name">捷克</td>
+                <td class="num-cell">18</td>
+                <td class="num-cell">18</td>
+                <td class="num-cell pct-high">100.0%</td>
+            </tr>
+
+            <tr>
+                <td class="country-name">斯洛伐克</td>
+                <td class="num-cell">10</td>
+                <td class="num-cell">10</td>
+                <td class="num-cell pct-high">100.0%</td>
+            </tr>
+
+            <tr>
+                <td class="country-name">立陶宛</td>
+                <td class="num-cell">3</td>
+                <td class="num-cell">3</td>
+                <td class="num-cell pct-high">100.0%</td>
+            </tr>
+
+            <tr>
+                <td class="country-name">爱沙尼亚</td>
+                <td class="num-cell">3</td>
+                <td class="num-cell">3</td>
+                <td class="num-cell pct-high">100.0%</td>
+            </tr>
+
+            <tr>
+                <td class="country-name">卢森堡</td>
+                <td class="num-cell">1</td>
+                <td class="num-cell">1</td>
+                <td class="num-cell pct-high">100.0%</td>
+            </tr>
+
+            <tr>
+                <td class="country-name">德国</td>
+                <td class="num-cell">413</td>
+                <td class="num-cell">414</td>
+                <td class="num-cell pct-high">99.8%</td>
+            </tr>
+
+            <tr>
+                <td class="country-name">挪威</td>
+                <td class="num-cell">196</td>
+                <td class="num-cell">199</td>
+                <td class="num-cell pct-high">98.5%</td>
+            </tr>
+
+            <tr>
+                <td class="country-name">丹麦</td>
+                <td class="num-cell">50</td>
+                <td class="num-cell">51</td>
+                <td class="num-cell pct-high">98.0%</td>
+            </tr>
+
+            <tr>
+                <td class="country-name">瑞士</td>
+                <td class="num-cell">46</td>
+                <td class="num-cell">47</td>
+                <td class="num-cell pct-high">97.9%</td>
+            </tr>
+
+            <tr>
+                <td class="country-name">比利时</td>
+                <td class="num-cell">29</td>
+                <td class="num-cell">30</td>
+                <td class="num-cell pct-high">96.7%</td>
+            </tr>
+
+            <tr>
+                <td class="country-name">法国</td>
+                <td class="num-cell">313</td>
+                <td class="num-cell">326</td>
+                <td class="num-cell pct-high">96.0%</td>
+            </tr>
+
+            <tr>
+                <td class="country-name">西班牙</td>
+                <td class="num-cell">137</td>
+                <td class="num-cell">143</td>
+                <td class="num-cell pct-high">95.8%</td>
+            </tr>
+
+            <tr>
+                <td class="country-name">意大利</td>
+                <td class="num-cell">134</td>
+                <td class="num-cell">144</td>
+                <td class="num-cell pct-high">93.1%</td>
+            </tr>
+
+            <tr>
+                <td class="country-name">芬兰</td>
+                <td class="num-cell">53</td>
+                <td class="num-cell">59</td>
+                <td class="num-cell pct-high">89.8%</td>
+            </tr>
+
+            <tr>
+                <td class="country-name">爱尔兰</td>
+                <td class="num-cell">22</td>
+                <td class="num-cell">25</td>
+                <td class="num-cell pct-high">88.0%</td>
+            </tr>
+
+            <tr>
+                <td class="country-name">克罗地亚</td>
+                <td class="num-cell">22</td>
+                <td class="num-cell">27</td>
+                <td class="num-cell pct-high">81.5%</td>
+            </tr>
+
+            <tr>
+                <td class="country-name">波兰</td>
+                <td class="num-cell">26</td>
+                <td class="num-cell">35</td>
+                <td class="num-cell pct-mid">74.3%</td>
+            </tr>
+
+            <tr>
+                <td class="country-name">斯洛文尼亚</td>
+                <td class="num-cell">8</td>
+                <td class="num-cell">11</td>
+                <td class="num-cell pct-mid">72.7%</td>
+            </tr>
+
+            <tr>
+                <td class="country-name">英国</td>
+                <td class="num-cell">199</td>
+                <td class="num-cell">302</td>
+                <td class="num-cell pct-mid">65.9%</td>
+            </tr>
+
+            <tr>
+                <td class="country-name">希腊</td>
+                <td class="num-cell">4</td>
+                <td class="num-cell">8</td>
+                <td class="num-cell pct-mid">50.0%</td>
+            </tr>
+
+            <tr>
+                <td class="country-name">以色列</td>
+                <td class="num-cell">1</td>
+                <td class="num-cell">26</td>
+                <td class="num-cell pct-very-low">3.8%</td>
+            </tr>
+
+            <tr>
+                <td class="country-name">保加利亚</td>
+                <td class="num-cell">0</td>
+                <td class="num-cell">5</td>
+                <td class="num-cell pct-very-low">0.0%</td>
+            </tr>
+
+            <tr>
+                <td class="country-name">拉脱维亚</td>
+                <td class="num-cell">0</td>
+                <td class="num-cell">4</td>
+                <td class="num-cell pct-very-low">0.0%</td>
+            </tr>
+
+            <tr>
+                <td class="country-name">塞尔维亚</td>
+                <td class="num-cell">0</td>
+                <td class="num-cell">3</td>
+                <td class="num-cell pct-very-low">0.0%</td>
+            </tr>
+
+            <tr>
+                <td class="country-name">哈萨克斯坦</td>
+                <td class="num-cell">0</td>
+                <td class="num-cell">2</td>
+                <td class="num-cell pct-very-low">0.0%</td>
+            </tr>
+
+            <tr>
+                <td class="country-name">列支敦士登</td>
+                <td class="num-cell">0</td>
+                <td class="num-cell">1</td>
+                <td class="num-cell pct-very-low">0.0%</td>
+            </tr>
+
+        </tbody>
+    </table>
+
+
+    <h2>🌏 亚太（11个国家/地区，3,635站点）</h2>
+    <p style="color:#6a6a8a;font-size:13px;margin-bottom:12px;">
+        包含: 新西兰、韩国、澳大利亚、印度、中国、马来西亚、台湾地区、日本、泰国、新加坡、菲律宾
+    </p>
+    <table class="noscript-table">
+        <thead>
+            <tr>
+                <th>国家/地区</th>
+                <th style="text-align:right;">开放站点</th>
+                <th style="text-align:right;">总站点</th>
+                <th style="text-align:right;">开放率</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            <tr>
+                <td class="country-name">新西兰</td>
+                <td class="num-cell">30</td>
+                <td class="num-cell">36</td>
+                <td class="num-cell pct-high">83.3%</td>
+            </tr>
+
+            <tr>
+                <td class="country-name">韩国</td>
+                <td class="num-cell">134</td>
+                <td class="num-cell">188</td>
+                <td class="num-cell pct-mid">71.3%</td>
+            </tr>
+
+            <tr>
+                <td class="country-name">澳大利亚</td>
+                <td class="num-cell">119</td>
+                <td class="num-cell">182</td>
+                <td class="num-cell pct-mid">65.4%</td>
+            </tr>
+
+            <tr>
+                <td class="country-name">印度</td>
+                <td class="num-cell">6</td>
+                <td class="num-cell">10</td>
+                <td class="num-cell pct-mid">60.0%</td>
+            </tr>
+
+            <tr>
+                <td class="country-name">中国</td>
+                <td class="num-cell">1,105</td>
+                <td class="num-cell">2,809</td>
+                <td class="num-cell pct-low">39.3%</td>
+            </tr>
+
+            <tr>
+                <td class="country-name">马来西亚</td>
+                <td class="num-cell">4</td>
+                <td class="num-cell">28</td>
+                <td class="num-cell pct-very-low">14.3%</td>
+            </tr>
+
+            <tr>
+                <td class="country-name">台湾地区</td>
+                <td class="num-cell">17</td>
+                <td class="num-cell">139</td>
+                <td class="num-cell pct-very-low">12.2%</td>
+            </tr>
+
+            <tr>
+                <td class="country-name">日本</td>
+                <td class="num-cell">0</td>
+                <td class="num-cell">161</td>
+                <td class="num-cell pct-very-low">0.0%</td>
+            </tr>
+
+            <tr>
+                <td class="country-name">泰国</td>
+                <td class="num-cell">0</td>
+                <td class="num-cell">55</td>
+                <td class="num-cell pct-very-low">0.0%</td>
+            </tr>
+
+            <tr>
+                <td class="country-name">新加坡</td>
+                <td class="num-cell">0</td>
+                <td class="num-cell">20</td>
+                <td class="num-cell pct-very-low">0.0%</td>
+            </tr>
+
+            <tr>
+                <td class="country-name">菲律宾</td>
+                <td class="num-cell">0</td>
+                <td class="num-cell">7</td>
+                <td class="num-cell pct-very-low">0.0%</td>
+            </tr>
+
+        </tbody>
+    </table>
+
+
+    <h2>🌍 中东及非洲（5个国家/地区，77站点）</h2>
+    <p style="color:#6a6a8a;font-size:13px;margin-bottom:12px;">
+        包含: 阿联酋、摩洛哥、沙特阿拉伯、约旦、卡塔尔
+    </p>
+    <table class="noscript-table">
+        <thead>
+            <tr>
+                <th>国家/地区</th>
+                <th style="text-align:right;">开放站点</th>
+                <th style="text-align:right;">总站点</th>
+                <th style="text-align:right;">开放率</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            <tr>
+                <td class="country-name">阿联酋</td>
+                <td class="num-cell">0</td>
+                <td class="num-cell">44</td>
+                <td class="num-cell pct-very-low">0.0%</td>
+            </tr>
+
+            <tr>
+                <td class="country-name">摩洛哥</td>
+                <td class="num-cell">0</td>
+                <td class="num-cell">13</td>
+                <td class="num-cell pct-very-low">0.0%</td>
+            </tr>
+
+            <tr>
+                <td class="country-name">沙特阿拉伯</td>
+                <td class="num-cell">0</td>
+                <td class="num-cell">13</td>
+                <td class="num-cell pct-very-low">0.0%</td>
+            </tr>
+
+            <tr>
+                <td class="country-name">约旦</td>
+                <td class="num-cell">0</td>
+                <td class="num-cell">4</td>
+                <td class="num-cell pct-very-low">0.0%</td>
+            </tr>
+
+            <tr>
+                <td class="country-name">卡塔尔</td>
+                <td class="num-cell">0</td>
+                <td class="num-cell">3</td>
+                <td class="num-cell pct-very-low">0.0%</td>
+            </tr>
+
+        </tbody>
+    </table>
+
+
+    <h2>📋 方法论说明</h2>
+    <ul style="color:#c0c0d0;font-size:14px;line-height:2;padding-left:20px;">
+        <li><strong>总站点</strong> = Status(Open/Expanding/Construction/Permit/Plan)的所有站点</li>
+        <li><strong>开放站点</strong> = 上述站点中 otherEVs=True（允许第三方电动车充电）的站点</li>
+        <li><strong>开放率</strong> = 开放站点 ÷ 总站点 × 100%</li>
+        <li><strong>数据来源</strong>: <a href="https://supercharge.info" style="color:#54a0ff;">supercharge.info</a>（第三方特斯拉超充数据库）</li>
+        <li><strong>更新频率</strong>: 每月1日自动更新</li>
+    </ul>
+    
+    <div class="noscript-footer">
+        <p>📊 完整交互式版本请启用 JavaScript 查看</p>
+        <p>本项目为第三方独立追踪，非特斯拉官方数据</p>
+        <p>
+            <a href="https://github.com/pingshanfloyd/tesla-supercharger-tracker" style="color:#54a0ff;">GitHub 仓库</a> |
+            <a href="https://tesla.gann.ing/" style="color:#54a0ff;">tesla.gann.ing</a>
+        </p>
+    </div>
+</div>
+
+</noscript>
+
 <script>
 const REPORT_DATA = {
-    "reportDate": "2026年9月",
+    "reportDate": "2026年09月",
     "reportType": "月度更新",
     "dataSource": "supercharge.info",
     "totalSites": 10521,
     "openSites": 6733,
-    "totalStalls": 98126,
-    "openStalls": 71188,
+    "totalStalls": 0,
+    "openStalls": 0,
     "openRate": 64.0,
     "totalCountries": 55,
     "regions": [
         {
             "name": "美洲",
-            "icon": "🌎",
             "countries": [
                 {
                     "name": "美国",
                     "open": 2932,
                     "total": 4055,
-                    "openStalls": 36584,
-                    "totalStalls": 48739
+                    "pct_str": "72.3%"
                 },
                 {
                     "name": "加拿大",
                     "open": 246,
                     "total": 369,
-                    "openStalls": 2420,
-                    "totalStalls": 3682
+                    "pct_str": "66.7%"
                 },
                 {
                     "name": "墨西哥",
                     "open": 28,
                     "total": 46,
-                    "openStalls": 108,
-                    "totalStalls": 210
+                    "pct_str": "60.9%"
                 },
                 {
                     "name": "智利",
                     "open": 0,
                     "total": 13,
-                    "openStalls": 0,
-                    "totalStalls": 8
+                    "pct_str": "0.0%"
                 },
                 {
                     "name": "哥伦比亚",
                     "open": 0,
                     "total": 5,
-                    "openStalls": 0,
-                    "totalStalls": 12
+                    "pct_str": "0.0%"
                 }
-            ]
+            ],
+            "icon": "🌎"
         },
         {
             "name": "欧洲",
-            "icon": "🌍",
             "countries": [
                 {
                     "name": "瑞典",
                     "open": 149,
                     "total": 149,
-                    "openStalls": 2017,
-                    "totalStalls": 2017
+                    "pct_str": "100.0%"
                 },
                 {
                     "name": "奥地利",
                     "open": 66,
                     "total": 66,
-                    "openStalls": 663,
-                    "totalStalls": 663
+                    "pct_str": "100.0%"
                 },
                 {
                     "name": "荷兰",
                     "open": 57,
                     "total": 57,
-                    "openStalls": 976,
-                    "totalStalls": 976
+                    "pct_str": "100.0%"
                 },
                 {
                     "name": "土耳其",
                     "open": 53,
                     "total": 53,
-                    "openStalls": 390,
-                    "totalStalls": 390
+                    "pct_str": "100.0%"
                 },
                 {
                     "name": "匈牙利",
                     "open": 30,
                     "total": 30,
-                    "openStalls": 226,
-                    "totalStalls": 226
+                    "pct_str": "100.0%"
                 },
                 {
                     "name": "罗马尼亚",
                     "open": 27,
                     "total": 27,
-                    "openStalls": 190,
-                    "totalStalls": 190
+                    "pct_str": "100.0%"
                 },
                 {
                     "name": "冰岛",
                     "open": 22,
                     "total": 22,
-                    "openStalls": 161,
-                    "totalStalls": 161
+                    "pct_str": "100.0%"
                 },
                 {
                     "name": "葡萄牙",
                     "open": 20,
                     "total": 20,
-                    "openStalls": 256,
-                    "totalStalls": 256
+                    "pct_str": "100.0%"
                 },
                 {
                     "name": "捷克",
                     "open": 18,
                     "total": 18,
-                    "openStalls": 152,
-                    "totalStalls": 152
+                    "pct_str": "100.0%"
                 },
                 {
                     "name": "斯洛伐克",
                     "open": 10,
                     "total": 10,
-                    "openStalls": 46,
-                    "totalStalls": 46
+                    "pct_str": "100.0%"
                 },
                 {
                     "name": "立陶宛",
                     "open": 3,
                     "total": 3,
-                    "openStalls": 28,
-                    "totalStalls": 28
+                    "pct_str": "100.0%"
                 },
                 {
                     "name": "爱沙尼亚",
                     "open": 3,
                     "total": 3,
-                    "openStalls": 23,
-                    "totalStalls": 23
+                    "pct_str": "100.0%"
                 },
                 {
                     "name": "卢森堡",
                     "open": 1,
                     "total": 1,
-                    "openStalls": 16,
-                    "totalStalls": 16
+                    "pct_str": "100.0%"
                 },
                 {
                     "name": "德国",
                     "open": 413,
                     "total": 414,
-                    "openStalls": 4617,
-                    "totalStalls": 4629
+                    "pct_str": "99.8%"
                 },
                 {
                     "name": "挪威",
                     "open": 196,
                     "total": 199,
-                    "openStalls": 2993,
-                    "totalStalls": 3049
+                    "pct_str": "98.5%"
                 },
                 {
                     "name": "丹麦",
                     "open": 50,
                     "total": 51,
-                    "openStalls": 842,
-                    "totalStalls": 848
+                    "pct_str": "98.0%"
                 },
                 {
                     "name": "瑞士",
                     "open": 46,
                     "total": 47,
-                    "openStalls": 516,
-                    "totalStalls": 536
+                    "pct_str": "97.9%"
                 },
                 {
                     "name": "比利时",
                     "open": 29,
                     "total": 30,
-                    "openStalls": 442,
-                    "totalStalls": 450
+                    "pct_str": "96.7%"
                 },
                 {
                     "name": "法国",
                     "open": 313,
                     "total": 326,
-                    "openStalls": 4247,
-                    "totalStalls": 4372
+                    "pct_str": "96.0%"
                 },
                 {
                     "name": "西班牙",
                     "open": 137,
                     "total": 143,
-                    "openStalls": 1396,
-                    "totalStalls": 1440
+                    "pct_str": "95.8%"
                 },
                 {
                     "name": "意大利",
                     "open": 134,
                     "total": 144,
-                    "openStalls": 1368,
-                    "totalStalls": 1482
+                    "pct_str": "93.1%"
                 },
                 {
                     "name": "芬兰",
                     "open": 53,
                     "total": 59,
-                    "openStalls": 402,
-                    "totalStalls": 438
+                    "pct_str": "89.8%"
                 },
                 {
                     "name": "爱尔兰",
                     "open": 22,
                     "total": 25,
-                    "openStalls": 156,
-                    "totalStalls": 178
+                    "pct_str": "88.0%"
                 },
                 {
                     "name": "克罗地亚",
                     "open": 22,
                     "total": 27,
-                    "openStalls": 154,
-                    "totalStalls": 188
+                    "pct_str": "81.5%"
                 },
                 {
                     "name": "波兰",
                     "open": 26,
                     "total": 35,
-                    "openStalls": 263,
-                    "totalStalls": 317
+                    "pct_str": "74.3%"
                 },
                 {
                     "name": "斯洛文尼亚",
                     "open": 8,
                     "total": 11,
-                    "openStalls": 84,
-                    "totalStalls": 106
+                    "pct_str": "72.7%"
                 },
                 {
                     "name": "英国",
                     "open": 199,
                     "total": 302,
-                    "openStalls": 1906,
-                    "totalStalls": 3126
+                    "pct_str": "65.9%"
                 },
                 {
                     "name": "希腊",
                     "open": 4,
                     "total": 8,
-                    "openStalls": 28,
-                    "totalStalls": 44
+                    "pct_str": "50.0%"
                 },
                 {
                     "name": "以色列",
                     "open": 1,
                     "total": 26,
-                    "openStalls": 8,
-                    "totalStalls": 222
+                    "pct_str": "3.8%"
                 },
                 {
                     "name": "保加利亚",
                     "open": 0,
                     "total": 5,
-                    "openStalls": 0,
-                    "totalStalls": 18
+                    "pct_str": "0.0%"
                 },
                 {
                     "name": "拉脱维亚",
                     "open": 0,
                     "total": 4,
-                    "openStalls": 0,
-                    "totalStalls": 16
+                    "pct_str": "0.0%"
                 },
                 {
                     "name": "塞尔维亚",
                     "open": 0,
                     "total": 3,
-                    "openStalls": 0,
-                    "totalStalls": 24
+                    "pct_str": "0.0%"
                 },
                 {
                     "name": "哈萨克斯坦",
                     "open": 0,
                     "total": 2,
-                    "openStalls": 0,
-                    "totalStalls": 10
+                    "pct_str": "0.0%"
                 },
                 {
                     "name": "列支敦士登",
                     "open": 0,
                     "total": 1,
-                    "openStalls": 0,
-                    "totalStalls": 10
+                    "pct_str": "0.0%"
                 }
-            ]
+            ],
+            "icon": "🌍"
         },
         {
             "name": "亚太",
-            "icon": "🌏",
             "countries": [
                 {
                     "name": "新西兰",
                     "open": 30,
                     "total": 36,
-                    "openStalls": 164,
-                    "totalStalls": 190
+                    "pct_str": "83.3%"
                 },
                 {
                     "name": "韩国",
                     "open": 134,
                     "total": 188,
-                    "openStalls": 924,
-                    "totalStalls": 1251
+                    "pct_str": "71.3%"
                 },
                 {
                     "name": "澳大利亚",
                     "open": 119,
                     "total": 182,
-                    "openStalls": 826,
-                    "totalStalls": 1205
+                    "pct_str": "65.4%"
                 },
                 {
                     "name": "印度",
                     "open": 6,
                     "total": 10,
-                    "openStalls": 20,
-                    "totalStalls": 36
+                    "pct_str": "60.0%"
                 },
                 {
                     "name": "中国",
                     "open": 1105,
                     "total": 2809,
-                    "openStalls": 5429,
-                    "totalStalls": 13788
+                    "pct_str": "39.3%"
                 },
                 {
                     "name": "马来西亚",
                     "open": 4,
                     "total": 28,
-                    "openStalls": 22,
-                    "totalStalls": 100
+                    "pct_str": "14.3%"
                 },
                 {
                     "name": "台湾地区",
                     "open": 17,
                     "total": 139,
-                    "openStalls": 125,
-                    "totalStalls": 766,
-                    "isRegion": true
+                    "pct_str": "12.2%"
                 },
                 {
                     "name": "日本",
                     "open": 0,
                     "total": 161,
-                    "openStalls": 0,
-                    "totalStalls": 756
+                    "pct_str": "0.0%"
                 },
                 {
                     "name": "泰国",
                     "open": 0,
                     "total": 55,
-                    "openStalls": 0,
-                    "totalStalls": 261
+                    "pct_str": "0.0%"
                 },
                 {
                     "name": "新加坡",
                     "open": 0,
                     "total": 20,
-                    "openStalls": 0,
-                    "totalStalls": 50
+                    "pct_str": "0.0%"
                 },
                 {
                     "name": "菲律宾",
                     "open": 0,
                     "total": 7,
-                    "openStalls": 0,
-                    "totalStalls": 16
+                    "pct_str": "0.0%"
                 }
-            ]
+            ],
+            "icon": "🌏"
         },
         {
             "name": "中东及非洲",
-            "icon": "🌍",
             "countries": [
                 {
                     "name": "阿联酋",
                     "open": 0,
                     "total": 44,
-                    "openStalls": 0,
-                    "totalStalls": 307
+                    "pct_str": "0.0%"
                 },
                 {
                     "name": "摩洛哥",
                     "open": 0,
                     "total": 13,
-                    "openStalls": 0,
-                    "totalStalls": 24
+                    "pct_str": "0.0%"
                 },
                 {
                     "name": "沙特阿拉伯",
                     "open": 0,
                     "total": 13,
-                    "openStalls": 0,
-                    "totalStalls": 48
+                    "pct_str": "0.0%"
                 },
                 {
                     "name": "约旦",
                     "open": 0,
                     "total": 4,
-                    "openStalls": 0,
-                    "totalStalls": 14
+                    "pct_str": "0.0%"
                 },
                 {
                     "name": "卡塔尔",
                     "open": 0,
                     "total": 3,
-                    "openStalls": 0,
-                    "totalStalls": 16
+                    "pct_str": "0.0%"
                 }
-            ]
+            ],
+            "icon": "🌍"
         }
     ],
-    "changes": [
-        {
-            "type": "📋 方法论说明",
-            "flag": "📋",
-            "items": [
-                "总站点 = Status(Open/Expanding/Construction/Permit/Plan)的所有站点",
-                "开放站点 = 上述站点中 otherEVs=True 的站点",
-                "开放率 = 开放站点 / 总站点",
-                "可比口径（开放站点）: 上月6,619 → 本月6,733（净增+114站）"
-            ]
-        },
-        {
-            "type": "📈 开放站点增加",
-            "flag": "📈",
-            "items": [
-                "中国 +13站（开放1092→1105）",
-                "丹麦 +2站（开放48→50）",
-                "冰岛 +1站（开放21→22）",
-                "加拿大 +4站（开放242→246）",
-                "土耳其 +5站（开放48→53）",
-                "德国 +1站（开放412→413）",
-                "意大利 +2站（开放132→134）",
-                "挪威 +2站（开放194→196）",
-                "法国 +2站（开放311→313）",
-                "波兰 +1站（开放25→26）",
-                "瑞典 +1站（开放148→149）",
-                "美国 +76站（开放2856→2932）",
-                "英国 +3站（开放196→199）",
-                "韩国 +2站（开放132→134）"
-            ]
-        },
-        {
-            "type": "📉 开放站点减少",
-            "flag": "📉",
-            "items": [
-                "克罗地亚 -1站（开放23→22）"
-            ]
-        },
-        {
-            "type": "🏗️ 总站点增加",
-            "flag": "🏗️",
-            "items": [
-                "中国 +13站",
-                "丹麦 +2站",
-                "冰岛 +1站",
-                "加拿大 +2站",
-                "哥伦比亚 +1站",
-                "土耳其 +5站",
-                "德国 +1站",
-                "意大利 +2站",
-                "挪威 +2站",
-                "新加坡 +3站",
-                "沙特阿拉伯 +2站",
-                "法国 +2站",
-                "波兰 +1站",
-                "澳大利亚 +2站",
-                "瑞典 +1站",
-                "美国 +53站",
-                "英国 +2站",
-                "菲律宾 +3站",
-                "韩国 +2站",
-                "马来西亚 +1站"
-            ]
-        },
-        {
-            "type": "📉 总站点减少",
-            "flag": "📉",
-            "items": [
-                "克罗地亚 -1站"
-            ]
-        }
-    ],
-    "archive": [
-        {
-            "label": "2026年9月",
-            "stats": "55个国家/地区 · 10,521站 · 开放率64.0%",
-            "ym": "202609",
-            "url": "https://tesla.gann.ing"
-        },
-        {
-            "label": "2026年8月",
-            "stats": "55个国家/地区 · 10,421站 · 开放率63.5%",
-            "ym": "202608",
-            "url": "https://tesla.gann.ing"
-        }
-    ]
+    "changes": [],
+    "archive": [],
+    "year_month": "202609",
+    "year": "2026",
+    "month": "09"
 };
 
 const COUNTRY_DETAIL = {};
