@@ -3,395 +3,976 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>特斯拉超充站第三方开放追踪</title>
+    <title>特斯拉超充开放追踪 | Tesla Supercharger EV Accessibility Tracker - 2026年10月</title>
+    <meta name="description" content="追踪全球特斯拉超充站对第三方电动车开放情况，覆盖56个国家/地区、10,753个站点。每月更新开放率、站点变化数据。Tracking global Tesla Supercharger accessibility for non-Tesla EVs across 56 countries.">
+    <meta name="keywords" content="特斯拉超充站,Tesla Supercharger,第三方开放,otherEVs,电动车充电,EV charging,超充追踪,开放率,新能源充电,supercharger tracker,EV accessibility,充电枪,supercharger info">
+    <meta name="author" content="tesla.gann.ing">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://tesla.gann.ing/">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tesla.gann.ing/">
+    <meta property="og:title" content="特斯拉超充开放追踪 | Tesla Supercharger EV Accessibility Tracker - 2026年10月">
+    <meta property="og:description" content="全球56个国家/地区、10,753个特斯拉超充站开放追踪。本月开放率65.1%，开放站点6,996个。">
+    <meta property="og:site_name" content="Tesla Supercharger Tracker">
+    <meta property="og:locale" content="zh_CN">
+    <meta property="og:locale:alternate" content="en_US">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="特斯拉超充开放追踪 | Tesla Supercharger Tracker - 2026年10月">
+    <meta name="twitter:description" content="全球56个国家/地区、10,753个特斯拉超充站开放追踪。本月开放率65.1%。">
+    <script type="application/ld+json">
+    {{
+        "@context": "https://schema.org",
+        "@type": "Dataset",
+        "name": "Tesla Supercharger EV Accessibility Tracker",
+        "alternateName": "特斯拉超充开放追踪",
+        "description": "Monthly tracking of Tesla Supercharger station accessibility for non-Tesla electric vehicles across 56 countries and regions.",
+        "url": "https://tesla.gann.ing/",
+        "keywords": ["Tesla Supercharger", "EV charging", "third-party access", "otherEVs", "特斯拉超充", "电动车充电"],
+        "creator": {{
+            "@type": "Organization",
+            "name": "tesla.gann.ing",
+            "url": "https://tesla.gann.ing/"
+        }},
+        "dateModified": "2026-10-10",
+        "temporalCoverage": "2026-10",
+        "license": "https://creativecommons.org/licenses/by/4.0/",
+        "distribution": {{
+            "@type": "DataDownload",
+            "encodingFormat": "text/html",
+            "contentUrl": "https://tesla.gann.ing/"
+        }},
+        "variableMeasured": [
+            {{"@type": "PropertyValue", "name": "totalSites", "value": 10753}},
+            {{"@type": "PropertyValue", "name": "openSites", "value": 6996}},
+            {{"@type": "PropertyValue", "name": "openRate", "value": "65.1%"}},
+            {{"@type": "PropertyValue", "name": "totalCountries", "value": 56}}
+        ]
+    }}
+    </script>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'PingFang SC', 'Microsoft YaHei', sans-serif;
-            background: #0a0a0f;
-            color: #e0e0e0;
-            line-height: 1.6;
-        }
-        .container { max-width: 1100px; margin: 0 auto; padding: 20px; }
-
-        /* Header */
-        .header {
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
-            border-radius: 16px;
-            padding: 40px;
-            margin-bottom: 24px;
-            position: relative;
-            overflow: hidden;
-        }
-        .header::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -20%;
-            width: 400px;
-            height: 400px;
-            background: radial-gradient(circle, rgba(232, 65, 24, 0.15) 0%, transparent 70%);
-            border-radius: 50%;
-        }
-        .header h1 { font-size: 28px; font-weight: 700; color: #fff; margin-bottom: 8px; position: relative; text-align: center; line-height: 1.4; }
-        .header .subtitle { color: #8a8ab0; font-size: 14px; position: relative; text-align: center; }
-
-        /* Tooltip */
-        .sub-wrapper { display: inline-flex; align-items: center; gap: 6px; cursor: pointer; position: relative; }
-        .info-icon {
-            display: inline-flex; align-items: center; justify-content: center;
-            width: 16px; height: 16px; background: #2a2a4a; border: 1px solid #4a4a6a;
-            border-radius: 50%; font-size: 10px; color: #8a8ab0; line-height: 1;
-        }
-        .sub-tooltip {
-            display: none; position: absolute; top: calc(100% + 8px); left: 50%; transform: translateX(-50%);
-            background: #1a1a28; border: 1px solid #2a2a4a; border-radius: 10px;
-            padding: 14px 18px; font-size: 13px; color: #c0c0d0; line-height: 1.8;
-            width: 420px; z-index: 100; box-shadow: 0 8px 32px rgba(0,0,0,0.5);
-        }
-        .sub-wrapper:hover .sub-tooltip { display: block; }
-        .sub-tooltip::before {
-            content: ''; position: absolute; top: -6px; left: 50%; transform: translateX(-50%);
-            border-left: 6px solid transparent; border-right: 6px solid transparent; border-bottom: 6px solid #2a2a4a;
-        }
-        .sub-tooltip-title { color: #8a8ab0; font-size: 12px; margin-bottom: 6px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
-        .sub-tooltip li { margin: 3px 0; list-style: none; }
-        .sub-tooltip li::before { content: '· '; color: #4a4a6a; }
-
-        /* Stats Row */
-        .stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px; }
-        .stat-card {
-            background: #141420; border: 1px solid #1e1e30; border-radius: 12px; padding: 20px; text-align: center;
-        }
-        .stat-card .label { color: #6a6a8a; font-size: 13px; margin-bottom: 6px; }
-        .stat-card .value { font-size: 28px; font-weight: 700; color: #fff; }
-        .stat-card .value.orange { color: #e84118; }
-        .stat-card .value.green { color: #00d2d3; }
-        .stat-card .value.blue { color: #54a0ff; }
-        .stat-card .unit { font-size: 14px; color: #6a6a8a; margin-left: 2px; }
-        .stat-card .value .slash { color: #4a4a6a; margin: 0 2px; }
-
-        /* Changes - collapsible */
-        .changes-section { background: #141420; border: 1px solid #1e1e30; border-radius: 12px; margin-bottom: 24px; overflow: hidden; }
-        .changes-section summary {
-            padding: 16px 24px; list-style: none; display: flex; align-items: center; gap: 10px;
-            cursor: pointer; user-select: none; border-bottom: 1px solid transparent; transition: border-color 0.2s;
-        }
-        .changes-section summary::-webkit-details-marker { display: none; }
-        .changes-section details[open] summary { border-bottom-color: #1e1e30; }
-        .changes-section summary .icon { font-size: 22px; }
-        .changes-section summary h2 { font-size: 18px; font-weight: 600; color: #fff; flex: 1; }
-        .changes-section summary .toggle-hint { font-size: 12px; color: #4a4a6a; transition: transform 0.2s; }
-        .changes-section details[open] summary .toggle-hint { transform: rotate(180deg); }
-        .changes-body { padding: 20px 24px; }
-        .change-group { margin-bottom: 16px; }
-        .change-group:last-child { margin-bottom: 0; }
-        .change-group-title { font-size: 14px; font-weight: 600; color: #8a8ab0; margin-bottom: 8px; }
-        .change-item { font-size: 14px; color: #c0c0d0; padding: 4px 0; }
-        .change-item .flag { margin-right: 6px; }
-
-        /* Region Section */
-        .region-section { background: #141420; border: 1px solid #1e1e30; border-radius: 12px; margin-bottom: 20px; overflow: hidden; }
-        .region-header {
-            padding: 16px 24px; display: flex; align-items: center; gap: 10px;
-            border-bottom: 1px solid #1e1e30; flex-wrap: wrap;
-        }
-        .region-header .icon { font-size: 22px; }
-        .region-header h2 { font-size: 18px; font-weight: 600; color: #fff; }
-        .region-header .count {
-            margin-left: auto; background: #1e1e30; color: #8a8ab0; padding: 2px 10px; border-radius: 20px; font-size: 13px;
-        }
-        .region-countries { padding: 10px 24px; color: #6a6a8a; font-size: 13px; border-bottom: 1px solid #12121e; line-height: 1.8; }
-        .region-countries span { color: #8a8ab0; margin-right: 4px; }
-
-        /* Table */
-        .data-table { width: 100%; border-collapse: collapse; }
-        .data-table th {
-            text-align: left; padding: 12px 20px; color: #6a6a8a; font-size: 12px;
-            font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 1px solid #1e1e30;
-        }
-        .data-table th:first-child { min-width: 5.5em; }
-        .data-table td { padding: 10px 20px; font-size: 14px; border-bottom: 1px solid #12121e; }
-        .data-table tbody tr { cursor: pointer; transition: background 0.15s; }
-        .data-table tbody tr:hover { background: #1a1a28; }
-        .data-table tbody tr.no-detail { cursor: default; }
-        .data-table tbody tr.no-detail:hover { background: transparent; }
-        .data-table .country { font-weight: 500; color: #fff; white-space: nowrap; }
-        .data-table .country.has-detail::after { content: ' ›'; color: #4a4a6a; font-size: 12px; margin-left: 2px; transition: color 0.15s; }
-        .data-table tbody tr:hover .country.has-detail::after { color: #8a8ab0; }
-        .data-table .num { font-variant-numeric: tabular-nums; color: #c0c0d0; text-align: right; }
-        .data-table .pct-cell { width: 180px; }
-        .pct-bar-wrap { display: flex; align-items: center; gap: 10px; }
-        .pct-bar-bg { flex: 1; height: 8px; background: #1e1e30; border-radius: 4px; overflow: hidden; }
-        .pct-bar { height: 100%; border-radius: 4px; }
-        .pct-bar.high { background: linear-gradient(90deg, #00d2d3, #01a3a4); }
-        .pct-bar.mid { background: linear-gradient(90deg, #54a0ff, #2e86de); }
-        .pct-bar.low { background: linear-gradient(90deg, #feca57, #ff9f43); }
-        .pct-bar.very-low { background: linear-gradient(90deg, #ff6b6b, #ee5a24); }
-        .pct-val { min-width: 48px; text-align: right; font-size: 13px; font-weight: 600; }
-        .pct-val.high { color: #00d2d3; }
-        .pct-val.mid { color: #54a0ff; }
-        .pct-val.low { color: #feca57; }
-        .pct-val.very-low { color: #ff6b6b; }
-        .full-row td { background: #0d1a0d; }
-        .full-row .country { color: #00d2d3; }
-
-        /* Footer */
-        .footer { text-align: center; padding: 30px 20px; color: #4a4a6a; font-size: 13px; line-height: 1.8; }
-        .footer a { color: #54a0ff; text-decoration: none; }
-        .footer a:hover { text-decoration: underline; }
-
-        /* ================================================================
-           Country Detail Page
-           ================================================================ */
-        .page-detail { animation: slideIn 0.25s ease; }
-        @keyframes slideIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-        .back-btn {
-            display: inline-flex; align-items: center; gap: 6px;
-            background: #141420; border: 1px solid #1e1e30; border-radius: 8px;
-            padding: 8px 16px; font-size: 14px; color: #8a8ab0; cursor: pointer;
-            margin-bottom: 16px; transition: background 0.15s, color 0.15s;
-        }
-        .back-btn:hover { background: #1e1e30; color: #fff; }
-
-        .detail-header {
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
-            border-radius: 16px; padding: 36px 40px; margin-bottom: 24px;
-            position: relative; overflow: hidden;
-        }
-        .detail-header::before {
-            content: ''; position: absolute; top: -50%; right: -20%; width: 400px; height: 400px;
-            background: radial-gradient(circle, rgba(232, 65, 24, 0.15) 0%, transparent 70%); border-radius: 50%;
-        }
-        .detail-header h1 { font-size: 32px; font-weight: 700; color: #fff; margin-bottom: 4px; position: relative; }
-        .detail-header .sub { color: #8a8ab0; font-size: 14px; position: relative; }
-
-        .detail-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 24px; }
-        .d-stat {
-            background: #141420; border: 1px solid #1e1e30; border-radius: 12px; padding: 20px; text-align: center;
-        }
-        .d-stat .label { color: #6a6a8a; font-size: 13px; margin-bottom: 6px; }
-        .d-stat .value { font-size: 28px; font-weight: 700; color: #fff; }
-        .d-stat .value.orange { color: #e84118; }
-        .d-stat .value.green { color: #00d2d3; }
-        .d-stat .value .slash { color: #4a4a6a; margin: 0 2px; font-size: 20px; }
-
-        /* Detail section */
-        .detail-sec { background: #141420; border: 1px solid #1e1e30; border-radius: 12px; margin-bottom: 20px; overflow: hidden; }
-        .detail-sec-header { padding: 16px 24px; border-bottom: 1px solid #1e1e30; display: flex; align-items: center; gap: 10px; }
-        .detail-sec-header .icon { font-size: 20px; }
-        .detail-sec-header h3 { font-size: 16px; font-weight: 600; color: #fff; }
-        .detail-sec-body { padding: 20px 24px; }
-
-        /* Mini bar */
-        .mbar-row { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
-        .mbar-row:last-child { margin-bottom: 0; }
-        .mbar-label { min-width: 90px; font-size: 13px; color: #8a8ab0; text-align: right; }
-        .mbar-bg { flex: 1; height: 14px; background: #1e1e30; border-radius: 7px; overflow: hidden; }
-        .mbar { height: 100%; border-radius: 7px; }
-        .mbar.blue { background: linear-gradient(90deg, #54a0ff, #2e86de); }
-        .mbar.orange { background: linear-gradient(90deg, #feca57, #ff9f43); }
-        .mbar.green { background: linear-gradient(90deg, #00d2d3, #01a3a4); }
-        .mbar-val { min-width: 80px; text-align: right; font-size: 13px; font-weight: 600; color: #c0c0d0; }
-        .mbar-sub { min-width: 80px; text-align: right; font-size: 11px; color: #4a4a6a; }
-
-        /* Tags */
-        .tag-row { display: flex; flex-wrap: wrap; gap: 10px; }
-        .tag { background: #1e1e30; border: 1px solid #2a2a4a; border-radius: 8px; padding: 8px 14px; display: flex; align-items: center; gap: 8px; }
-        .tag .tag-label { font-size: 13px; color: #6a6a8a; }
-        .tag .tag-val { font-size: 14px; font-weight: 600; color: #fff; }
-        .tag.green-tag { border-color: #00d2d3; background: #0a1a1a; }
-        .tag.green-tag .tag-val { color: #00d2d3; }
-
-        /* State table */
-        .state-table { width: 100%; border-collapse: collapse; }
-        .state-table th { text-align: left; padding: 10px 16px; color: #6a6a8a; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 1px solid #1e1e30; }
-        .state-table td { padding: 10px 16px; font-size: 13px; border-bottom: 1px solid #12121e; }
-        .state-table tbody tr:hover td { background: #1a1a28; }
-        .state-table .state-name { font-weight: 500; color: #fff; }
-        .state-table .num { font-variant-numeric: tabular-nums; color: #c0c0d0; text-align: right; }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .stats-row { grid-template-columns: repeat(2, 1fr); }
-            .detail-stats { grid-template-columns: repeat(2, 1fr); }
-            .header h1 { font-size: 22px; }
-            .stat-card .value { font-size: 22px; }
-            .data-table th, .data-table td { padding: 10px 10px; font-size: 13px; }
-            .pct-cell { width: 140px; }
-            .sub-tooltip { width: 320px; left: 0; transform: none; }
-        }
-        @media (max-width: 480px) {
-            .stats-row, .detail-stats { grid-template-columns: 1fr 1fr; }
-            .header, .detail-header { padding: 24px 20px; }
-            .detail-header h1 { font-size: 24px; }
-            .data-table th, .data-table td { padding: 8px 6px; font-size: 12px; }
-            .pct-cell { width: 100px; }
-            .pct-bar-wrap { gap: 4px; }
-            .pct-val { min-width: 36px; font-size: 11px; }
-            .state-table th, .state-table td { padding: 8px 10px; }
-        }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background: #0a0a0f; color: #e0e0e0; line-height: 1.6;
+}
+.container { max-width: 1100px; margin: 0 auto; padding: 20px; }
+.header {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    border-radius: 16px; padding: 40px; margin-bottom: 24px;
+    position: relative; overflow: visible;
+}
+.header::before {
+    content: ''; position: absolute; top: -50%; right: -20%;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(232, 65, 24, 0.15) 0%, transparent 70%);
+    border-radius: 50%;
+}
+.header h1 { font-size: 28px; font-weight: 700; color: #fff; margin-bottom: 8px; position: relative; text-align: center; line-height: 1.4; }
+.header .subtitle { color: #8a8ab0; font-size: 14px; position: relative; text-align: center; }
+.sub-wrapper { display: inline-flex; align-items: center; gap: 6px; cursor: pointer; position: relative; }
+.info-icon {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 16px; height: 16px; background: #2a2a4a; border: 1px solid #4a4a6a;
+    border-radius: 50%; font-size: 10px; color: #8a8ab0; line-height: 1;
+}
+.sub-tooltip {
+    display: none; position: absolute; top: calc(100% + 8px); left: 50%; transform: translateX(-50%);
+    background: #1a1a28; border: 1px solid #2a2a4a; border-radius: 10px;
+    padding: 14px 18px; font-size: 13px; color: #c0c0d0; line-height: 1.8;
+    width: 420px; z-index: 100; box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+}
+.sub-wrapper:hover .sub-tooltip { display: block; }
+.sub-tooltip::before {
+    content: ''; position: absolute; top: -6px; left: 50%; transform: translateX(-50%);
+    border-left: 6px solid transparent; border-right: 6px solid transparent; border-bottom: 6px solid #2a2a4a;
+}
+.sub-tooltip-title { color: #8a8ab0; font-size: 12px; margin-bottom: 6px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+.sub-tooltip li { margin: 3px 0; list-style: none; }
+.sub-tooltip li::before { content: '· '; color: #4a4a6a; }
+.stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px; }
+.stat-card { background: #141420; border: 1px solid #1e1e30; border-radius: 12px; padding: 20px; text-align: center; }
+.stat-card .label { color: #6a6a8a; font-size: 13px; margin-bottom: 6px; }
+.stat-card .value { font-size: 28px; font-weight: 700; color: #fff; }
+.stat-card .value.orange { color: #e84118; }
+.stat-card .value.green { color: #00d2d3; }
+.stat-card .value.blue { color: #54a0ff; }
+.stat-card .unit { font-size: 14px; color: #6a6a8a; margin-left: 2px; }
+.stat-card .value .slash { color: #4a4a6a; margin: 0 2px; }
+.changes-section { background: #141420; border: 1px solid #1e1e30; border-radius: 12px; margin-bottom: 24px; overflow: hidden; }
+.changes-section summary {
+    padding: 16px 24px; list-style: none; display: flex; align-items: center; gap: 10px;
+    cursor: pointer; user-select: none; border-bottom: 1px solid transparent; transition: border-color 0.2s;
+}
+.changes-section summary::-webkit-details-marker { display: none; }
+.changes-section details[open] summary { border-bottom-color: #1e1e30; }
+.changes-section summary .icon { font-size: 22px; }
+.changes-section summary h2 { font-size: 18px; font-weight: 600; color: #fff; flex: 1; }
+.changes-section summary .toggle-hint { font-size: 12px; color: #4a4a6a; transition: transform 0.2s; }
+.changes-section details[open] summary .toggle-hint { transform: rotate(180deg); }
+.changes-body { padding: 20px 24px; }
+.change-group { margin-bottom: 16px; }
+.change-group:last-child { margin-bottom: 0; }
+.change-group-title { font-size: 14px; font-weight: 600; color: #8a8ab0; margin-bottom: 8px; }
+.change-item { font-size: 14px; color: #c0c0d0; padding: 4px 0; }
+.change-item .flag { margin-right: 6px; }
+.region-section { background: #141420; border: 1px solid #1e1e30; border-radius: 12px; margin-bottom: 20px; overflow: hidden; scroll-margin-top: 20px; }
+.region-header { padding: 16px 24px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid #1e1e30; flex-wrap: wrap; }
+.region-header .icon { font-size: 22px; }
+.region-header h2 { font-size: 18px; font-weight: 600; color: #fff; }
+.region-header .count { margin-left: auto; background: #1e1e30; color: #8a8ab0; padding: 2px 10px; border-radius: 20px; font-size: 13px; }
+.region-countries { padding: 10px 24px; color: #6a6a8a; font-size: 13px; border-bottom: 1px solid #12121e; line-height: 1.8; }
+.region-countries span { color: #8a8ab0; margin-right: 4px; }
+.data-table { width: 100%; border-collapse: collapse; }
+.data-table th { text-align: left; padding: 12px 20px; color: #6a6a8a; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 1px solid #1e1e30; }
+.data-table th:first-child { min-width: 5.5em; }
+.data-table td { padding: 10px 20px; font-size: 14px; border-bottom: 1px solid #12121e; }
+.data-table tbody tr { cursor: pointer; transition: background 0.15s; }
+.data-table tbody tr:hover { background: #1a1a28; }
+.data-table .country { font-weight: 500; color: #fff; white-space: nowrap; }
+.data-table .num { font-variant-numeric: tabular-nums; color: #c0c0d0; text-align: right; }
+.data-table .pct-cell { width: 180px; }
+.pct-bar-wrap { display: flex; align-items: center; gap: 10px; }
+.pct-bar-bg { flex: 1; height: 8px; background: #1e1e30; border-radius: 4px; overflow: hidden; }
+.pct-bar { height: 100%; border-radius: 4px; }
+.pct-bar.high { background: linear-gradient(90deg, #00d2d3, #01a3a4); }
+.pct-bar.mid { background: linear-gradient(90deg, #54a0ff, #2e86de); }
+.pct-bar.low { background: linear-gradient(90deg, #feca57, #ff9f43); }
+.pct-bar.very-low { background: linear-gradient(90deg, #ff6b6b, #ee5a24); }
+.pct-val { min-width: 48px; text-align: right; font-size: 13px; font-weight: 600; }
+.pct-val.high { color: #00d2d3; }
+.pct-val.mid { color: #54a0ff; }
+.pct-val.low { color: #feca57; }
+.pct-val.very-low { color: #ff6b6b; }
+.full-row td { background: #0d1a0d; }
+.full-row .country { color: #00d2d3; }
+.footer { text-align: center; padding: 30px 20px; color: #4a4a6a; font-size: 13px; line-height: 1.8; }
+.footer a { color: #54a0ff; text-decoration: none; }
+.footer a:hover { text-decoration: underline; }
+.data-table tr.country-row { cursor: pointer; }
+.data-table tr.country-row:hover { background: #1a1a28; }
+.data-table tr.country-row td .expand-arrow { display: inline-block; transition: transform 0.2s; margin-right: 4px; font-size: 12px; color: #6a6a8a; }
+.data-table tr.country-row.expanded td .expand-arrow { transform: rotate(90deg); }
+.detail-expand-row { display: none; }
+.detail-expand-row td { padding: 0 !important; background: #111118; }
+.detail-expand-content { padding: 16px 24px 20px; border-left: 3px solid #e84118; margin: 0 12px 12px; background: #0f0f18; border-radius: 0 12px 12px 0; }
+.detail-expand-content h4 { color: #fff; font-size: 15px; margin-bottom: 10px; }
+.detail-expand-content .detail-field { margin-bottom: 8px; font-size: 13px; color: #c0c0d0; line-height: 1.6; }
+.detail-expand-content .detail-label { color: #6a6a8a; margin-right: 8px; }
+.search-bar { margin-bottom: 24px; display: flex; justify-content: center; }
+.search-input { width: 100%; max-width: 480px; padding: 12px 20px 12px 44px; background: #141420; border: 1px solid #1e1e30; border-radius: 12px; color: #fff; font-size: 15px; outline: none; transition: border-color 0.2s, box-shadow 0.2s; }
+.search-input:focus { border-color: #54a0ff; box-shadow: 0 0 0 3px rgba(84, 160, 255, 0.15); }
+.search-input::placeholder { color: #6a6a8a; }
+.search-wrapper { position: relative; width: 100%; max-width: 480px; }
+.search-icon { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: #6a6a8a; font-size: 16px; pointer-events: none; }
+.search-empty { text-align: center; color: #6a6a8a; padding: 40px 20px; font-size: 15px; display: none; }
+.anchor-nav { display: flex; justify-content: center; gap: 12px; margin-bottom: 24px; }
+.anchor-btn { padding: 10px 24px; background: #141420; border: 1px solid #1e1e30; border-radius: 12px; color: #c0c0d0; font-size: 14px; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; gap: 6px; }
+.anchor-btn:hover { background: #1a1a28; border-color: #2a2a4a; color: #fff; }
+.anchor-btn.active { background: #1a1a28; border-color: #e84118; color: #e84118; }
+.data-table th.sortable { cursor: pointer; user-select: none; transition: color 0.2s; position: relative; }
+.data-table th.sortable:hover { color: #fff; }
+.data-table th.sortable.sort-active { color: #54a0ff; }
+.data-table th .sort-arrow { font-size: 12px; margin-left: 4px; display: inline; }
+.archive-section { background: #141420; border: 1px solid #1e1e30; border-radius: 12px; margin-bottom: 20px; overflow: hidden; padding: 20px 24px; }
+.archive-section h3 { color: #fff; font-size: 16px; margin-bottom: 12px; }
+.archive-list { list-style: none; }
+.archive-list li { padding: 6px 0; font-size: 14px; }
+.archive-list li a { color: #54a0ff; text-decoration: none; }
+.archive-list li a:hover { text-decoration: underline; }
+.archive-list .arch-stats { color: #6a6a8a; font-size: 13px; margin-left: 8px; }
+@media (max-width: 768px) {
+    .stats-row { grid-template-columns: repeat(2, 1fr); }
+    .header h1 { font-size: 22px; }
+    .stat-card .value { font-size: 22px; }
+    .data-table th, .data-table td { padding: 10px 10px; font-size: 13px; }
+    .pct-cell { width: 140px; }
+    .sub-tooltip { width: 320px; left: 0; transform: none; }
+}
+@media (max-width: 480px) {
+    .stats-row { grid-template-columns: 1fr 1fr; }
+    .header { padding: 24px 20px; }
+    .data-table th, .data-table td { padding: 8px 6px; font-size: 12px; }
+    .pct-cell { width: 100px; }
+    .pct-bar-wrap { gap: 4px; }
+    .pct-val { min-width: 36px; font-size: 11px; }
+}
+/* ── Header Tech Redesign ── */
+.header-tech {
+    position: relative; overflow: visible;
+    background: linear-gradient(135deg, #0a0e1a 0%, #0d1528 25%, #111d38 50%, #0a1628 75%, #060a14 100%);
+    border: 1px solid rgba(84, 160, 255, 0.12);
+    border-radius: 20px; padding: 48px 40px 36px; margin-bottom: 28px;
+}
+.header-tech::before {
+    content: ''; position: absolute; inset: 0;
+    background-image:
+        linear-gradient(rgba(84, 160, 255, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(84, 160, 255, 0.04) 1px, transparent 1px);
+    background-size: 40px 40px;
+    mask-image: radial-gradient(ellipse 80% 70% at 50% 40%, black 20%, transparent 100%);
+}
+.header-tech::after {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 100%;
+    background: 
+        radial-gradient(ellipse 500px 300px at 20% 30%, rgba(232, 65, 24, 0.12), transparent),
+        radial-gradient(ellipse 400px 250px at 80% 60%, rgba(84, 160, 255, 0.10), transparent),
+        radial-gradient(ellipse 300px 200px at 50% 80%, rgba(0, 210, 211, 0.06), transparent);
+}
+.header-tech > * { position: relative; z-index: 1; }
+.header-tech .tech-tag {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(84, 160, 255, 0.1); border: 1px solid rgba(84, 160, 255, 0.2);
+    border-radius: 20px; padding: 4px 14px; font-size: 12px; color: #54a0ff;
+    letter-spacing: 1px; text-transform: uppercase; font-weight: 600; margin-bottom: 16px;
+}
+.header-tech .tech-tag .pulse {
+    width: 6px; height: 6px; background: #00d2d3; border-radius: 50%;
+    animation: pulse 2s ease-in-out infinite;
+}
+@keyframes pulse {
+    0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(0,210,211,0.4); }
+    50% { opacity: 0.6; box-shadow: 0 0 0 6px rgba(0,210,211,0); }
+}
+.header-tech h1 {
+    font-size: 32px; font-weight: 800; color: #fff;
+    letter-spacing: -0.5px; line-height: 1.3; text-align: center; margin-bottom: 4px;
+}
+.header-tech h1 .gradient-text {
+    background: linear-gradient(135deg, #e84118 0%, #ff6b6b 50%, #feca57 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+.header-tech .tech-subtitle {
+    font-size: 15px; color: rgba(255,255,255,0.5); text-align: center;
+    margin: 8px 0 18px; font-weight: 400;
+}
+.header-tech .tech-meta {
+    display: flex; justify-content: center; align-items: center; gap: 16px;
+    flex-wrap: wrap;
+}
+.header-tech .tech-meta-item {
+    display: inline-flex; align-items: center; gap: 6px;
+    color: rgba(255,255,255,0.4); font-size: 13px;
+}
+.header-tech .tech-meta-item svg { width: 14px; height: 14px; opacity: 0.5; }
+/* Theme Toggle Button */
+.theme-toggle {
+    position: absolute; top: 16px; right: 16px; z-index: 10;
+    width: 40px; height: 40px; border-radius: 12px;
+    background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
+    color: rgba(255,255,255,0.6); font-size: 18px;
+    cursor: pointer; display: flex; align-items: center; justify-content: center;
+    transition: all 0.25s;
+    backdrop-filter: blur(8px);
+}
+.theme-toggle:hover { background: rgba(255,255,255,0.12); color: #fff; transform: scale(1.05); }
+/* ── Light Theme ── */
+[data-theme="light"] body { background: #f0f2f5; color: #2c3e50; }
+[data-theme="light"] .container { }
+[data-theme="light"] .header-tech {
+    background: linear-gradient(135deg, #e8f0fe 0%, #f0f4ff 30%, #f5f0ff 60%, #fef5f0 100%);
+    border-color: rgba(84, 120, 255, 0.15);
+}
+[data-theme="light"] .header-tech::before {
+    background-image:
+        linear-gradient(rgba(84, 120, 255, 0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(84, 120, 255, 0.06) 1px, transparent 1px);
+}
+[data-theme="light"] .header-tech::after {
+    background:
+        radial-gradient(ellipse 500px 300px at 20% 30%, rgba(232, 65, 24, 0.06), transparent),
+        radial-gradient(ellipse 400px 250px at 80% 60%, rgba(84, 120, 255, 0.06), transparent);
+}
+[data-theme="light"] .header-tech h1 { color: #1a1a2e; }
+[data-theme="light"] .header-tech h1 .gradient-text {
+    background: linear-gradient(135deg, #e84118 0%, #c0392b 100%);
+    -webkit-background-clip: text; background-clip: text;
+}
+[data-theme="light"] .header-tech .tech-tag {
+    background: rgba(84, 120, 255, 0.08); border-color: rgba(84, 120, 255, 0.2); color: #2e6cdb;
+}
+[data-theme="light"] .header-tech .tech-subtitle { color: rgba(26, 26, 46, 0.5); }
+[data-theme="light"] .header-tech .tech-meta-item { color: rgba(26, 26, 46, 0.45); }
+[data-theme="light"] .theme-toggle {
+    background: rgba(0,0,0,0.04); border-color: rgba(0,0,0,0.1); color: rgba(0,0,0,0.5);
+}
+[data-theme="light"] .theme-toggle:hover { background: rgba(0,0,0,0.08); color: #1a1a2e; }
+[data-theme="light"] .stat-card { background: #fff; border-color: #e0e4ea; box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
+[data-theme="light"] .stat-card .label { color: #6b7280; }
+[data-theme="light"] .stat-card .value { color: #1a1a2e; }
+[data-theme="light"] .stat-card .unit { color: #6b7280; }
+[data-theme="light"] .stat-card .value .slash { color: #c0c4cc; }
+[data-theme="light"] .changes-section,
+[data-theme="light"] .region-section,
+[data-theme="light"] .archive-section { background: #fff; border-color: #e0e4ea; }
+[data-theme="light"] .changes-section summary h2,
+[data-theme="light"] .region-header h2,
+[data-theme="light"] .archive-section h3 { color: #1a1a2e; }
+[data-theme="light"] .changes-section details[open] summary { border-bottom-color: #e0e4ea; }
+[data-theme="light"] .changes-section summary .toggle-hint { color: #9ca3af; }
+[data-theme="light"] .change-group-title { color: #6b7280; }
+[data-theme="light"] .change-item { color: #374151; }
+[data-theme="light"] .region-header { border-bottom-color: #e0e4ea; }
+[data-theme="light"] .region-header .count { background: #f0f2f5; color: #6b7280; }
+[data-theme="light"] .region-countries { color: #9ca3af; border-bottom-color: #f0f2f5; }
+[data-theme="light"] .region-countries span { color: #6b7280; }
+[data-theme="light"] .data-table th { color: #9ca3af; border-bottom-color: #e0e4ea; }
+[data-theme="light"] .data-table td { color: #374151; border-bottom-color: #f0f2f5; }
+[data-theme="light"] .data-table .country { color: #1a1a2e; }
+[data-theme="light"] .data-table .num { color: #374151; }
+[data-theme="light"] .data-table tbody tr:hover { background: #f8f9fb; }
+[data-theme="light"] .data-table tr.country-row:hover { background: #f8f9fb; }
+[data-theme="light"] .pct-bar-bg { background: #e5e7eb; }
+[data-theme="light"] .full-row td { background: #ecfdf5; }
+[data-theme="light"] .full-row .country { color: #059669; }
+[data-theme="light"] .footer { color: #9ca3af; }
+[data-theme="light"] .footer a { color: #2e6cdb; }
+[data-theme="light"] .search-input { background: #fff; border-color: #e0e4ea; color: #1a1a2e; }
+[data-theme="light"] .search-input:focus { border-color: #54a0ff; box-shadow: 0 0 0 3px rgba(84,160,255,0.1); }
+[data-theme="light"] .search-input::placeholder { color: #9ca3af; }
+[data-theme="light"] .search-icon { color: #9ca3af; }
+[data-theme="light"] .search-empty { color: #9ca3af; }
+[data-theme="light"] .anchor-btn { background: #fff; border-color: #e0e4ea; color: #374151; }
+[data-theme="light"] .anchor-btn:hover { background: #f8f9fb; border-color: #c0c4cc; color: #1a1a2e; }
+[data-theme="light"] .anchor-btn.active { background: #fef2f0; border-color: #e84118; color: #e84118; }
+[data-theme="light"] .detail-expand-row td { background: #f8f9fb; }
+[data-theme="light"] .detail-expand-content { background: #fff; border-left-color: #e84118; }
+[data-theme="light"] .detail-expand-content h4 { color: #1a1a2e; }
+[data-theme="light"] .detail-expand-content .detail-field { color: #374151; }
+[data-theme="light"] .detail-expand-content .detail-label { color: #9ca3af; }
+[data-theme="light"] .sub-tooltip { background: #fff; border-color: #e0e4ea; color: #374151; box-shadow: 0 8px 32px rgba(0,0,0,0.1); }
+[data-theme="light"] .sub-tooltip-title { color: #6b7280; }
+[data-theme="light"] .sub-tooltip li::before { color: #c0c4cc; }
+[data-theme="light"] .info-icon { background: rgba(0,0,0,0.04); border-color: rgba(0,0,0,0.12); color: #6b7280; }
+[data-theme="light"] .sub-tooltip::before { border-bottom-color: #e0e4ea; }
+[data-theme="light"] .data-table tr.country-row td .expand-arrow { color: #9ca3af; }
+[data-theme="light"] .archive-list li a { color: #2e6cdb; }
+[data-theme="light"] .archive-list .arch-stats { color: #9ca3af; }
+@media (max-width: 768px) {
+    .header-tech { padding: 32px 20px 28px; }
+    .header-tech h1 { font-size: 24px; }
+}
     </style>
 </head>
 <body>
 <div class="container" id="app"></div>
-
+<noscript>
+<div style="max-width:1100px;margin:0 auto;padding:20px;background:#fff;color:#333;font-family:sans-serif;">
+<h1>特斯拉超充开放追踪 - 2026年10月</h1>
+<p>本站需要JavaScript才能完整显示。以下是核心统计数据：</p>
+<p>截至2026年10月，全球共有 <strong>56</strong> 个国家/地区拥有特斯拉超充站，总计 <strong>10,753</strong> 个站点、<strong>99,974</strong> 个充电枪。其中开放给第三方电动车使用的站点 <strong>6,996</strong> 个，充电枪 <strong>72,951</strong> 个，全球开放率 <strong>65.1%</strong>。</p>
+<h3>🌎 美洲（6个国家/地区）</h3>
+<table border='1' style='border-collapse:collapse;width:100%;margin-bottom:16px;'>
+<tr><th>国家/地区</th><th>开放站点</th><th>总站点</th><th>开放充电枪</th><th>总充电枪</th><th>开放率</th></tr>
+<tr><td>美国</td><td>3,126</td><td>4,228</td><td>37,252</td><td>49,281</td><td>73.9%</td></tr>
+<tr><td>加拿大</td><td>253</td><td>373</td><td>2,496</td><td>3,718</td><td>67.8%</td></tr>
+<tr><td>墨西哥</td><td>28</td><td>46</td><td>108</td><td>210</td><td>60.9%</td></tr>
+<tr><td>智利</td><td>0</td><td>14</td><td>0</td><td>12</td><td>0.0%</td></tr>
+<tr><td>哥伦比亚</td><td>0</td><td>5</td><td>0</td><td>12</td><td>0.0%</td></tr>
+<tr><td>乌拉圭</td><td>0</td><td>2</td><td>0</td><td>8</td><td>0.0%</td></tr>
+</table>
+<h3>🌍 欧洲（34个国家/地区）</h3>
+<table border='1' style='border-collapse:collapse;width:100%;margin-bottom:16px;'>
+<tr><th>国家/地区</th><th>开放站点</th><th>总站点</th><th>开放充电枪</th><th>总充电枪</th><th>开放率</th></tr>
+<tr><td>瑞典</td><td>150</td><td>150</td><td>2,023</td><td>2,023</td><td>100.0%</td></tr>
+<tr><td>奥地利</td><td>67</td><td>67</td><td>695</td><td>695</td><td>100.0%</td></tr>
+<tr><td>荷兰</td><td>57</td><td>57</td><td>976</td><td>976</td><td>100.0%</td></tr>
+<tr><td>土耳其</td><td>54</td><td>54</td><td>390</td><td>390</td><td>100.0%</td></tr>
+<tr><td>匈牙利</td><td>31</td><td>31</td><td>262</td><td>262</td><td>100.0%</td></tr>
+<tr><td>罗马尼亚</td><td>27</td><td>27</td><td>230</td><td>230</td><td>100.0%</td></tr>
+<tr><td>冰岛</td><td>23</td><td>23</td><td>181</td><td>181</td><td>100.0%</td></tr>
+<tr><td>葡萄牙</td><td>20</td><td>20</td><td>268</td><td>268</td><td>100.0%</td></tr>
+<tr><td>捷克</td><td>19</td><td>19</td><td>188</td><td>188</td><td>100.0%</td></tr>
+<tr><td>斯洛伐克</td><td>10</td><td>10</td><td>66</td><td>66</td><td>100.0%</td></tr>
+<tr><td>爱沙尼亚</td><td>4</td><td>4</td><td>23</td><td>23</td><td>100.0%</td></tr>
+<tr><td>立陶宛</td><td>3</td><td>3</td><td>36</td><td>36</td><td>100.0%</td></tr>
+<tr><td>卢森堡</td><td>1</td><td>1</td><td>16</td><td>16</td><td>100.0%</td></tr>
+<tr><td>德国</td><td>416</td><td>417</td><td>4,847</td><td>4,859</td><td>99.8%</td></tr>
+<tr><td>挪威</td><td>199</td><td>202</td><td>3,053</td><td>3,109</td><td>98.5%</td></tr>
+<tr><td>丹麦</td><td>51</td><td>52</td><td>874</td><td>880</td><td>98.1%</td></tr>
+<tr><td>瑞士</td><td>46</td><td>47</td><td>516</td><td>536</td><td>97.9%</td></tr>
+<tr><td>比利时</td><td>29</td><td>30</td><td>442</td><td>450</td><td>96.7%</td></tr>
+<tr><td>法国</td><td>318</td><td>330</td><td>4,443</td><td>4,560</td><td>96.4%</td></tr>
+<tr><td>西班牙</td><td>138</td><td>144</td><td>1,456</td><td>1,500</td><td>95.8%</td></tr>
+<tr><td>意大利</td><td>135</td><td>146</td><td>1,408</td><td>1,546</td><td>92.5%</td></tr>
+<tr><td>芬兰</td><td>55</td><td>61</td><td>450</td><td>486</td><td>90.2%</td></tr>
+<tr><td>爱尔兰</td><td>22</td><td>25</td><td>164</td><td>186</td><td>88.0%</td></tr>
+<tr><td>克罗地亚</td><td>22</td><td>27</td><td>166</td><td>200</td><td>81.5%</td></tr>
+<tr><td>波兰</td><td>26</td><td>35</td><td>291</td><td>345</td><td>74.3%</td></tr>
+<tr><td>斯洛文尼亚</td><td>8</td><td>11</td><td>84</td><td>106</td><td>72.7%</td></tr>
+<tr><td>英国</td><td>207</td><td>309</td><td>1,920</td><td>3,140</td><td>67.0%</td></tr>
+<tr><td>希腊</td><td>5</td><td>9</td><td>36</td><td>52</td><td>55.6%</td></tr>
+<tr><td>以色列</td><td>1</td><td>26</td><td>8</td><td>230</td><td>3.8%</td></tr>
+<tr><td>保加利亚</td><td>0</td><td>5</td><td>0</td><td>34</td><td>0.0%</td></tr>
+<tr><td>拉脱维亚</td><td>0</td><td>4</td><td>0</td><td>16</td><td>0.0%</td></tr>
+<tr><td>塞尔维亚</td><td>0</td><td>3</td><td>0</td><td>24</td><td>0.0%</td></tr>
+<tr><td>哈萨克斯坦</td><td>0</td><td>2</td><td>0</td><td>10</td><td>0.0%</td></tr>
+<tr><td>列支敦士登</td><td>0</td><td>1</td><td>0</td><td>10</td><td>0.0%</td></tr>
+</table>
+<h3>🌏 亚太（11个国家/地区）</h3>
+<table border='1' style='border-collapse:collapse;width:100%;margin-bottom:16px;'>
+<tr><th>国家/地区</th><th>开放站点</th><th>总站点</th><th>开放充电枪</th><th>总充电枪</th><th>开放率</th></tr>
+<tr><td>新西兰</td><td>30</td><td>36</td><td>164</td><td>190</td><td>83.3%</td></tr>
+<tr><td>韩国</td><td>140</td><td>194</td><td>957</td><td>1,300</td><td>72.2%</td></tr>
+<tr><td>澳大利亚</td><td>120</td><td>185</td><td>842</td><td>1,286</td><td>64.9%</td></tr>
+<tr><td>印度</td><td>6</td><td>10</td><td>20</td><td>36</td><td>60.0%</td></tr>
+<tr><td>中国</td><td>1,126</td><td>2,811</td><td>5,449</td><td>13,690</td><td>40.1%</td></tr>
+<tr><td>马来西亚</td><td>4</td><td>29</td><td>22</td><td>122</td><td>13.8%</td></tr>
+<tr><td>台湾地区</td><td>18</td><td>140</td><td>125</td><td>798</td><td>12.9%</td></tr>
+<tr><td>新加坡</td><td>1</td><td>22</td><td>4</td><td>66</td><td>4.5%</td></tr>
+<tr><td>日本</td><td>0</td><td>164</td><td>0</td><td>802</td><td>0.0%</td></tr>
+<tr><td>泰国</td><td>0</td><td>58</td><td>0</td><td>305</td><td>0.0%</td></tr>
+<tr><td>菲律宾</td><td>0</td><td>7</td><td>0</td><td>28</td><td>0.0%</td></tr>
+</table>
+<h3>🌍 中东及非洲（5个国家/地区）</h3>
+<table border='1' style='border-collapse:collapse;width:100%;margin-bottom:16px;'>
+<tr><th>国家/地区</th><th>开放站点</th><th>总站点</th><th>开放充电枪</th><th>总充电枪</th><th>开放率</th></tr>
+<tr><td>阿联酋</td><td>0</td><td>44</td><td>0</td><td>331</td><td>0.0%</td></tr>
+<tr><td>摩洛哥</td><td>0</td><td>13</td><td>0</td><td>24</td><td>0.0%</td></tr>
+<tr><td>沙特阿拉伯</td><td>0</td><td>13</td><td>0</td><td>80</td><td>0.0%</td></tr>
+<tr><td>约旦</td><td>0</td><td>4</td><td>0</td><td>14</td><td>0.0%</td></tr>
+<tr><td>卡塔尔</td><td>0</td><td>3</td><td>0</td><td>28</td><td>0.0%</td></tr>
+</table>
+<p style="color:#666;font-size:13px;">数据来源 <a href="https://supercharge.info/service/supercharge/allSites">supercharge.info</a> | <a href="https://tesla.gann.ing">tesla.gann.ing</a></p>
+</div>
+</noscript>
 <script>
-// ============================================================
-//  数据区域
-// ============================================================
 const REPORT_DATA = {
-    reportDate: '2026年6月',
-    reportType: '月度更新',
-    dataSource: 'supercharge.info',
-    totalSites: 10079,
-    openSites: 6342,
-    totalStalls: 95044,
-    openStalls: 67773,
-    openRate: 62.9,
-    totalCountries: 44,
-
-    regions: [
+    "reportDate": "2026年10月",
+    "reportType": "月度更新",
+    "dataSource": "supercharge.info",
+    "totalSites": 10753,
+    "openSites": 6996,
+    "totalStalls": 99974,
+    "openStalls": 72951,
+    "openRate": 65.1,
+    "totalCountries": 56,
+    "regions": [
         {
-            name: '美洲', icon: '🌎',
-            countries: [
-                { name: '美国', open: 2681, total: 3858, openStalls: 34386, totalStalls: 47190 },
-                { name: '加拿大', open: 223, total: 357, openStalls: 2212, totalStalls: 3598 },
-                { name: '墨西哥', open: 24, total: 41, openStalls: 108, totalStalls: 210 }
+            "name": "美洲",
+            "icon": "🌎",
+            "countries": [
+                {
+                    "name": "美国",
+                    "open": 3126,
+                    "total": 4228,
+                    "openStalls": 37252,
+                    "totalStalls": 49281
+                },
+                {
+                    "name": "加拿大",
+                    "open": 253,
+                    "total": 373,
+                    "openStalls": 2496,
+                    "totalStalls": 3718
+                },
+                {
+                    "name": "墨西哥",
+                    "open": 28,
+                    "total": 46,
+                    "openStalls": 108,
+                    "totalStalls": 210
+                },
+                {
+                    "name": "智利",
+                    "open": 0,
+                    "total": 14,
+                    "openStalls": 0,
+                    "totalStalls": 12
+                },
+                {
+                    "name": "哥伦比亚",
+                    "open": 0,
+                    "total": 5,
+                    "openStalls": 0,
+                    "totalStalls": 12
+                },
+                {
+                    "name": "乌拉圭",
+                    "open": 0,
+                    "total": 2,
+                    "openStalls": 0,
+                    "totalStalls": 8
+                }
             ]
         },
         {
-            name: '欧洲', icon: '🌍',
-            countries: [
-                { name: '瑞典', open: 148, total: 148, openStalls: 1969, totalStalls: 1969 },
-                { name: '奥地利', open: 65, total: 65, openStalls: 679, totalStalls: 679 },
-                { name: '荷兰', open: 57, total: 57, openStalls: 968, totalStalls: 968 },
-                { name: '土耳其', open: 44, total: 44, openStalls: 350, totalStalls: 350 },
-                { name: '匈牙利', open: 28, total: 28, openStalls: 210, totalStalls: 210 },
-                { name: '罗马尼亚', open: 26, total: 26, openStalls: 182, totalStalls: 182 },
-                { name: '葡萄牙', open: 19, total: 19, openStalls: 216, totalStalls: 216 },
-                { name: '冰岛', open: 18, total: 18, openStalls: 140, totalStalls: 140 },
-                { name: '捷克', open: 18, total: 18, openStalls: 136, totalStalls: 136 },
-                { name: '斯洛伐克', open: 10, total: 10, openStalls: 46, totalStalls: 46 },
-                { name: '爱沙尼亚', open: 3, total: 3, openStalls: 24, totalStalls: 24 },
-                { name: '卢森堡', open: 1, total: 1, openStalls: 16, totalStalls: 16 },
-                { name: '德国', open: 406, total: 407, openStalls: 4584, totalStalls: 4596 },
-                { name: '丹麦', open: 48, total: 49, openStalls: 844, totalStalls: 850 },
-                { name: '挪威', open: 191, total: 195, openStalls: 2833, totalStalls: 2905 },
-                { name: '瑞士', open: 46, total: 47, openStalls: 508, totalStalls: 528 },
-                { name: '比利时', open: 29, total: 30, openStalls: 443, totalStalls: 451 },
-                { name: '法国', open: 309, total: 322, openStalls: 4163, totalStalls: 4288 },
-                { name: '西班牙', open: 136, total: 142, openStalls: 1392, totalStalls: 1436 },
-                { name: '意大利', open: 129, total: 139, openStalls: 1324, totalStalls: 1438 },
-                { name: '芬兰', open: 52, total: 58, openStalls: 378, totalStalls: 414 },
-                { name: '爱尔兰', open: 15, total: 18, openStalls: 46, totalStalls: 68 },
-                { name: '克罗地亚', open: 24, total: 29, openStalls: 170, totalStalls: 204 },
-                { name: '波兰', open: 27, total: 37, openStalls: 249, totalStalls: 307 },
-                { name: '斯洛文尼亚', open: 8, total: 11, openStalls: 84, totalStalls: 106 },
-                { name: '英国', open: 183, total: 291, openStalls: 1780, totalStalls: 3059 },
-                { name: '希腊', open: 4, total: 8, openStalls: 28, totalStalls: 44 },
-                { name: '以色列', open: 1, total: 26, openStalls: 8, totalStalls: 218 },
-                { name: '立陶宛', open: 0, total: 4, openStalls: 0, totalStalls: 32 },
-                { name: '塞尔维亚', open: 0, total: 3, openStalls: 0, totalStalls: 24 }
+            "name": "欧洲",
+            "icon": "🌍",
+            "countries": [
+                {
+                    "name": "瑞典",
+                    "open": 150,
+                    "total": 150,
+                    "openStalls": 2023,
+                    "totalStalls": 2023
+                },
+                {
+                    "name": "奥地利",
+                    "open": 67,
+                    "total": 67,
+                    "openStalls": 695,
+                    "totalStalls": 695
+                },
+                {
+                    "name": "荷兰",
+                    "open": 57,
+                    "total": 57,
+                    "openStalls": 976,
+                    "totalStalls": 976
+                },
+                {
+                    "name": "土耳其",
+                    "open": 54,
+                    "total": 54,
+                    "openStalls": 390,
+                    "totalStalls": 390
+                },
+                {
+                    "name": "匈牙利",
+                    "open": 31,
+                    "total": 31,
+                    "openStalls": 262,
+                    "totalStalls": 262
+                },
+                {
+                    "name": "罗马尼亚",
+                    "open": 27,
+                    "total": 27,
+                    "openStalls": 230,
+                    "totalStalls": 230
+                },
+                {
+                    "name": "冰岛",
+                    "open": 23,
+                    "total": 23,
+                    "openStalls": 181,
+                    "totalStalls": 181
+                },
+                {
+                    "name": "葡萄牙",
+                    "open": 20,
+                    "total": 20,
+                    "openStalls": 268,
+                    "totalStalls": 268
+                },
+                {
+                    "name": "捷克",
+                    "open": 19,
+                    "total": 19,
+                    "openStalls": 188,
+                    "totalStalls": 188
+                },
+                {
+                    "name": "斯洛伐克",
+                    "open": 10,
+                    "total": 10,
+                    "openStalls": 66,
+                    "totalStalls": 66
+                },
+                {
+                    "name": "爱沙尼亚",
+                    "open": 4,
+                    "total": 4,
+                    "openStalls": 23,
+                    "totalStalls": 23
+                },
+                {
+                    "name": "立陶宛",
+                    "open": 3,
+                    "total": 3,
+                    "openStalls": 36,
+                    "totalStalls": 36
+                },
+                {
+                    "name": "卢森堡",
+                    "open": 1,
+                    "total": 1,
+                    "openStalls": 16,
+                    "totalStalls": 16
+                },
+                {
+                    "name": "德国",
+                    "open": 416,
+                    "total": 417,
+                    "openStalls": 4847,
+                    "totalStalls": 4859
+                },
+                {
+                    "name": "挪威",
+                    "open": 199,
+                    "total": 202,
+                    "openStalls": 3053,
+                    "totalStalls": 3109
+                },
+                {
+                    "name": "丹麦",
+                    "open": 51,
+                    "total": 52,
+                    "openStalls": 874,
+                    "totalStalls": 880
+                },
+                {
+                    "name": "瑞士",
+                    "open": 46,
+                    "total": 47,
+                    "openStalls": 516,
+                    "totalStalls": 536
+                },
+                {
+                    "name": "比利时",
+                    "open": 29,
+                    "total": 30,
+                    "openStalls": 442,
+                    "totalStalls": 450
+                },
+                {
+                    "name": "法国",
+                    "open": 318,
+                    "total": 330,
+                    "openStalls": 4443,
+                    "totalStalls": 4560
+                },
+                {
+                    "name": "西班牙",
+                    "open": 138,
+                    "total": 144,
+                    "openStalls": 1456,
+                    "totalStalls": 1500
+                },
+                {
+                    "name": "意大利",
+                    "open": 135,
+                    "total": 146,
+                    "openStalls": 1408,
+                    "totalStalls": 1546
+                },
+                {
+                    "name": "芬兰",
+                    "open": 55,
+                    "total": 61,
+                    "openStalls": 450,
+                    "totalStalls": 486
+                },
+                {
+                    "name": "爱尔兰",
+                    "open": 22,
+                    "total": 25,
+                    "openStalls": 164,
+                    "totalStalls": 186
+                },
+                {
+                    "name": "克罗地亚",
+                    "open": 22,
+                    "total": 27,
+                    "openStalls": 166,
+                    "totalStalls": 200
+                },
+                {
+                    "name": "波兰",
+                    "open": 26,
+                    "total": 35,
+                    "openStalls": 291,
+                    "totalStalls": 345
+                },
+                {
+                    "name": "斯洛文尼亚",
+                    "open": 8,
+                    "total": 11,
+                    "openStalls": 84,
+                    "totalStalls": 106
+                },
+                {
+                    "name": "英国",
+                    "open": 207,
+                    "total": 309,
+                    "openStalls": 1920,
+                    "totalStalls": 3140
+                },
+                {
+                    "name": "希腊",
+                    "open": 5,
+                    "total": 9,
+                    "openStalls": 36,
+                    "totalStalls": 52
+                },
+                {
+                    "name": "以色列",
+                    "open": 1,
+                    "total": 26,
+                    "openStalls": 8,
+                    "totalStalls": 230
+                },
+                {
+                    "name": "保加利亚",
+                    "open": 0,
+                    "total": 5,
+                    "openStalls": 0,
+                    "totalStalls": 34
+                },
+                {
+                    "name": "拉脱维亚",
+                    "open": 0,
+                    "total": 4,
+                    "openStalls": 0,
+                    "totalStalls": 16
+                },
+                {
+                    "name": "塞尔维亚",
+                    "open": 0,
+                    "total": 3,
+                    "openStalls": 0,
+                    "totalStalls": 24
+                },
+                {
+                    "name": "哈萨克斯坦",
+                    "open": 0,
+                    "total": 2,
+                    "openStalls": 0,
+                    "totalStalls": 10
+                },
+                {
+                    "name": "列支敦士登",
+                    "open": 0,
+                    "total": 1,
+                    "openStalls": 0,
+                    "totalStalls": 10
+                }
             ]
         },
         {
-            name: '亚太', icon: '🌏',
-            countries: [
-                { name: '新西兰', open: 30, total: 36, openStalls: 164, totalStalls: 190 },
-                { name: '韩国', open: 127, total: 186, openStalls: 879, totalStalls: 1222 },
-                { name: '澳大利亚', open: 113, total: 175, openStalls: 767, totalStalls: 1133 },
-                { name: '印度', open: 5, total: 9, openStalls: 20, totalStalls: 36 },
-                { name: '中国', open: 1073, total: 2776, openStalls: 5320, totalStalls: 13676 },
-                { name: '马来西亚', open: 4, total: 24, openStalls: 22, totalStalls: 92 },
-                { name: '台湾', open: 17, total: 132, openStalls: 125, totalStalls: 748, isRegion: true }
+            "name": "亚太",
+            "icon": "🌏",
+            "countries": [
+                {
+                    "name": "新西兰",
+                    "open": 30,
+                    "total": 36,
+                    "openStalls": 164,
+                    "totalStalls": 190
+                },
+                {
+                    "name": "韩国",
+                    "open": 140,
+                    "total": 194,
+                    "openStalls": 957,
+                    "totalStalls": 1300
+                },
+                {
+                    "name": "澳大利亚",
+                    "open": 120,
+                    "total": 185,
+                    "openStalls": 842,
+                    "totalStalls": 1286
+                },
+                {
+                    "name": "印度",
+                    "open": 6,
+                    "total": 10,
+                    "openStalls": 20,
+                    "totalStalls": 36
+                },
+                {
+                    "name": "中国",
+                    "open": 1126,
+                    "total": 2811,
+                    "openStalls": 5449,
+                    "totalStalls": 13690
+                },
+                {
+                    "name": "马来西亚",
+                    "open": 4,
+                    "total": 29,
+                    "openStalls": 22,
+                    "totalStalls": 122
+                },
+                {
+                    "name": "台湾地区",
+                    "open": 18,
+                    "total": 140,
+                    "openStalls": 125,
+                    "totalStalls": 798,
+                    "isRegion": true
+                },
+                {
+                    "name": "新加坡",
+                    "open": 1,
+                    "total": 22,
+                    "openStalls": 4,
+                    "totalStalls": 66
+                },
+                {
+                    "name": "日本",
+                    "open": 0,
+                    "total": 164,
+                    "openStalls": 0,
+                    "totalStalls": 802
+                },
+                {
+                    "name": "泰国",
+                    "open": 0,
+                    "total": 58,
+                    "openStalls": 0,
+                    "totalStalls": 305
+                },
+                {
+                    "name": "菲律宾",
+                    "open": 0,
+                    "total": 7,
+                    "openStalls": 0,
+                    "totalStalls": 28
+                }
+            ]
+        },
+        {
+            "name": "中东及非洲",
+            "icon": "🌍",
+            "countries": [
+                {
+                    "name": "阿联酋",
+                    "open": 0,
+                    "total": 44,
+                    "openStalls": 0,
+                    "totalStalls": 331
+                },
+                {
+                    "name": "摩洛哥",
+                    "open": 0,
+                    "total": 13,
+                    "openStalls": 0,
+                    "totalStalls": 24
+                },
+                {
+                    "name": "沙特阿拉伯",
+                    "open": 0,
+                    "total": 13,
+                    "openStalls": 0,
+                    "totalStalls": 80
+                },
+                {
+                    "name": "约旦",
+                    "open": 0,
+                    "total": 4,
+                    "openStalls": 0,
+                    "totalStalls": 14
+                },
+                {
+                    "name": "卡塔尔",
+                    "open": 0,
+                    "total": 3,
+                    "openStalls": 0,
+                    "totalStalls": 28
+                }
             ]
         }
     ],
-
-    changes: [
-        { type: '📋 方法论说明', flag: '📋', items: [
-            '总站点 = Status(Open/Expanding/Construction/Permit/Plan)的所有站点',
-            '开放站点 = 上述站点中 otherEVs=True 的站点',
-            '开放率 = 开放站点 / 总站点',
-            '上月口径不同：上月total=全部站点，open=otherEVs站点（任何status）',
-            '可比口径（开放站点）: 上月6,434 → 本月6,342（净增-92站）'
-        ]},
-        { type: '📈 开放站点增加', flag: '📈', items: [
-            '克罗地亚 +3站（开放21→24）', '美国 +17站（开放2664→2681）', '芬兰 +3站（开放49→52）'
-        ]},
-        { type: '📉 开放站点减少', flag: '📉', items: [
-            '中国 -40站（开放1113→1073）', '冰岛 -1站（开放19→18）', '加拿大 -5站（开放228→223）',
-            '匈牙利 -7站（开放35→28）', '卢森堡 -1站（开放2→1）', '土耳其 -3站（开放47→44）',
-            '塞尔维亚 -1站（开放1→0）', '奥地利 -1站（开放66→65）', '希腊 -2站（开放6→4）',
-            '德国 -7站（开放413→406）', '意大利 -6站（开放135→129）', '挪威 -4站（开放195→191）',
-            '捷克 -5站（开放23→18）', '斯洛伐克 -2站（开放12→10）', '法国 -4站（开放313→309）',
-            '波兰 -8站（开放35→27）', '爱沙尼亚 -1站（开放4→3）', '瑞典 -5站（开放153→148）',
-            '立陶宛 -1站（开放1→0）', '罗马尼亚 -3站（开放29→26）', '英国 -2站（开放185→183）',
-            '葡萄牙 -3站（开放22→19）', '西班牙 -1站（开放137→136）', '韩国 -2站（开放129→127）'
-        ]},
-        { type: '🎯 全部开放（100%）', flag: '🎯', items: [
-            '冰岛 开放率100%（18/18）', '奥地利 开放率100%（65/65）',
-            '瑞典 开放率100%（148/148）', '荷兰 开放率100%（57/57）'
-        ]}
+    "changes": [
+        {
+            "type": "📋 方法论说明",
+            "flag": "📋",
+            "items": [
+                "总站点 = Status(Open/Expanding/Construction/Permit/Plan)的所有站点",
+                "开放站点 = 上述站点中 otherEVs=True 的站点",
+                "开放率 = 开放站点 / 总站点",
+                "可比口径（开放站点）: 上月6,733 → 本月6,996（净增+263站）"
+            ]
+        },
+        {
+            "type": "🆕 新增追踪国家/地区",
+            "flag": "🆕",
+            "items": [
+                "乌拉圭 新增（开放0/2）"
+            ]
+        },
+        {
+            "type": "📈 开放站点增加",
+            "flag": "📈",
+            "items": [
+                "中国 +21站（开放1105→1126）",
+                "丹麦 +1站（开放50→51）",
+                "冰岛 +1站（开放22→23）",
+                "加拿大 +7站（开放246→253）",
+                "匈牙利 +1站（开放30→31）",
+                "台湾地区 +1站（开放17→18）",
+                "土耳其 +1站（开放53→54）",
+                "奥地利 +1站（开放66→67）",
+                "希腊 +1站（开放4→5）",
+                "德国 +3站（开放413→416）",
+                "意大利 +1站（开放134→135）",
+                "挪威 +3站（开放196→199）",
+                "捷克 +1站（开放18→19）",
+                "新加坡 +1站（开放0→1）",
+                "法国 +5站（开放313→318）",
+                "澳大利亚 +1站（开放119→120）",
+                "爱沙尼亚 +1站（开放3→4）",
+                "瑞典 +1站（开放149→150）",
+                "美国 +194站（开放2932→3126）",
+                "芬兰 +2站（开放53→55）",
+                "英国 +8站（开放199→207）",
+                "西班牙 +1站（开放137→138）",
+                "韩国 +6站（开放134→140）"
+            ]
+        },
+        {
+            "type": "🏗️ 总站点增加",
+            "flag": "🏗️",
+            "items": [
+                "中国 +2站",
+                "丹麦 +1站",
+                "乌拉圭 +2站",
+                "冰岛 +1站",
+                "加拿大 +4站",
+                "匈牙利 +1站",
+                "台湾地区 +1站",
+                "土耳其 +1站",
+                "奥地利 +1站",
+                "希腊 +1站",
+                "德国 +3站",
+                "意大利 +2站",
+                "挪威 +3站",
+                "捷克 +1站",
+                "新加坡 +2站",
+                "日本 +3站",
+                "智利 +1站",
+                "法国 +4站",
+                "泰国 +3站",
+                "澳大利亚 +3站",
+                "爱沙尼亚 +1站",
+                "瑞典 +1站",
+                "美国 +173站",
+                "芬兰 +2站",
+                "英国 +7站",
+                "西班牙 +1站",
+                "韩国 +6站",
+                "马来西亚 +1站"
+            ]
+        }
+    ],
+    "archive": [
+        {
+            "label": "2026年10月",
+            "stats": "56个国家/地区 · 10,753站 · 开放率65.1%",
+            "ym": "202610",
+            "url": "https://tesla.gann.ing"
+        },
+        {
+            "label": "2026年9月",
+            "stats": "55个国家/地区 · 10,521站 · 开放率64.0%",
+            "ym": "202609",
+            "url": "https://tesla.gann.ing"
+        },
+        {
+            "label": "2026年8月",
+            "stats": "55个国家/地区 · 10,421站 · 开放率63.5%",
+            "ym": "202608",
+            "url": "https://tesla.gann.ing"
+        }
     ]
 };
 
-// 国家详情数据（当前仅美国）
-const COUNTRY_DETAIL = {
-    '美国': {
-        status: [
-            { label: '已开放', sites: 3111, stalls: 38438 },
-            { label: '规划中', sites: 455, stalls: 4697 },
-            { label: '建设中', sites: 178, stalls: 2272 },
-            { label: '审批中', sites: 109, stalls: 1723 },
-            { label: '扩建中', sites: 5, stalls: 60 }
-        ],
-        power: [
-            { label: '250 kW', sites: 1766, stalls: 21153 },
-            { label: '325 kW', sites: 1242, stalls: 17448 },
-            { label: '150 kW', sites: 512, stalls: 4751 },
-            { label: '72 kW', sites: 142, stalls: 1827 },
-            { label: '500 kW', sites: 99, stalls: 1615 }
-        ],
-        plugs: [
-            { label: 'NACS', stalls: 36572 },
-            { label: 'Tesla (TPC)', stalls: 10594 },
-            { label: 'CCS1', stalls: 3840 },
-            { label: 'Multi', stalls: 3832 }
-        ],
-        solar: 47, solarStalls: 2464,
-        battery: 45, batteryStalls: 2021,
-        avgAge: '4.3年',
-        newestOpen: '2026-06-10',
-        oldestOpen: '2012-11-19',
-        states: [
-            { name: '加州 CA', sites: 841, open: 591, rate: 70.3 },
-            { name: '佛罗里达 FL', sites: 316, open: 243, rate: 76.9 },
-            { name: '德州 TX', sites: 281, open: 219, rate: 77.9 },
-            { name: '纽约 NY', sites: 156, open: 86, rate: 55.1 },
-            { name: '弗吉尼亚 VA', sites: 127, open: 92, rate: 72.4 },
-            { name: '新泽西 NJ', sites: 125, open: 91, rate: 72.8 },
-            { name: '宾州 PA', sites: 123, open: 89, rate: 72.4 },
-            { name: '华盛顿 WA', sites: 122, open: 74, rate: 60.7 },
-            { name: '北卡 NC', sites: 103, open: 82, rate: 79.6 },
-            { name: '乔治亚 GA', sites: 102, open: 84, rate: 82.4 },
-            { name: '伊利诺伊 IL', sites: 94, open: 66, rate: 70.2 },
-            { name: '马里兰 MD', sites: 88, open: 64, rate: 72.7 },
-            { name: '俄勒冈 OR', sites: 86, open: 53, rate: 61.6 },
-            { name: '亚利桑那 AZ', sites: 85, open: 53, rate: 62.4 },
-            { name: '科罗拉多 CO', sites: 82, open: 65, rate: 79.3 }
-        ]
-    }
-};
-
-// ============================================================
-//  渲染引擎
-// ============================================================
+const COUNTRY_DETAIL = {};
 const D = REPORT_DATA;
 const app = document.getElementById('app');
-
 function fmt(n) { return n.toLocaleString(); }
 function barCls(pct) {
     if (pct >= 80) return 'high';
@@ -399,23 +980,26 @@ function barCls(pct) {
     if (pct >= 40) return 'low';
     return 'very-low';
 }
-function findCountry(name) {
-    for (const r of D.regions) {
-        for (const c of r.countries) {
-            if (c.name === name) return c;
-        }
-    }
-    return null;
-}
 
-// ── 主页 ──────────────────────────────────────────────────
 function renderMain() {
     let html = `
-    <div class="header">
-        <h1>⚡ 特斯拉超充站<br>第三方开放${D.reportType}</h1>
-        <div class="subtitle">
-            <span class="sub-wrapper" tabindex="0">
-                ${D.reportDate} · 数据来源 ${D.dataSource}
+    <div class="header-tech">
+        <button class="theme-toggle" id="themeToggle" title="切换亮色/暗色模式">${document.documentElement.getAttribute('data-theme')==='light'?'🌙':'☀️'}</button>
+        <div style="text-align:center"><span class="tech-tag"><span class="pulse"></span>LIVE DATA · ${D.reportDate}</span></div>
+        <h1>⚡ 特斯拉超充<span class="gradient-text">开放</span>追踪</h1>
+        <p class="tech-subtitle">全球哪些超充站对其他电动车品牌开放？</p>
+        <div class="tech-meta">
+            <span class="tech-meta-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                ${D.totalCountries} 个国家/地区
+            </span>
+            <span class="tech-meta-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                ${D.reportDate}
+            </span>
+            <span class="tech-meta-item sub-wrapper" tabindex="0">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                数据来源 ${D.dataSource}
                 <span class="info-icon">i</span>
                 <div class="sub-tooltip">
                     <div class="sub-tooltip-title">统计口径说明</div>
@@ -423,37 +1007,21 @@ function renderMain() {
                         <li>总站点 = Status(Open/Expanding/Construction/Permit/Plan)的所有站点</li>
                         <li>开放站点 = 上述站点中 otherEVs=True 的站点</li>
                         <li>开放率 = 开放站点 / 总站点</li>
-                        <li>数据不含香港、澳门</li>
+                        <li>香港、台湾等在报告中列为地区</li>
                     </ul>
                 </div>
             </span>
         </div>
     </div>
-
     <div class="stats-row">
-        <div class="stat-card">
-            <div class="label">总站点 / 充电枪数</div>
-            <div class="value">${fmt(D.totalSites)}<span class="slash">/</span>${fmt(D.totalStalls)}</div>
-        </div>
-        <div class="stat-card">
-            <div class="label">开放站点 / 充电枪数</div>
-            <div class="value orange">${fmt(D.openSites)}<span class="slash">/</span>${fmt(D.openStalls)}</div>
-        </div>
-        <div class="stat-card">
-            <div class="label">全球开放率</div>
-            <div class="value green">${D.openRate.toFixed(1)}<span class="unit">%</span></div>
-        </div>
-        <div class="stat-card">
-            <div class="label">覆盖国家/地区</div>
-            <div class="value blue">${D.totalCountries}</div>
-        </div>
+        <div class="stat-card"><div class="label">总站点 / 充电枪数</div><div class="value">${fmt(D.totalSites)}<span class="slash">/</span>${fmt(D.totalStalls)}</div></div>
+        <div class="stat-card"><div class="label">开放站点 / 充电枪数</div><div class="value orange">${fmt(D.openSites)}<span class="slash">/</span>${fmt(D.openStalls)}</div></div>
+        <div class="stat-card"><div class="label">全球开放率</div><div class="value green">${D.openRate.toFixed(1)}<span class="unit">%</span></div></div>
+        <div class="stat-card"><div class="label">覆盖国家/地区</div><div class="value blue">${D.totalCountries}</div></div>
     </div>`;
-
-    // 本月变化（折叠）
     if (D.changes && D.changes.length > 0) {
         html += `<div class="changes-section"><details><summary>
-            <span class="icon">📊</span><h2>本月变化</h2>
-            <span class="toggle-hint">▾</span>
+            <span class="icon">📊</span><h2>本月变化</h2><span class="toggle-hint">▾</span>
         </summary><div class="changes-body">`;
         D.changes.forEach(c => {
             html += `<div class="change-group"><div class="change-group-title">${c.type}</div>`;
@@ -462,181 +1030,140 @@ function renderMain() {
         });
         html += `</div></details></div>`;
     }
-
-    // 大区表格
-    D.regions.forEach(region => {
+    html += `<div class="search-bar"><div class="search-wrapper"><span class="search-icon">🔍</span><input type="text" class="search-input" id="countrySearch" placeholder="搜索国家/地区..." oninput="handleSearch(this.value)"></div></div>`;
+    html += `<div class="search-empty" id="searchEmpty">未找到匹配的国家/地区</div>`;
+    html += `<div class="anchor-nav">`;
+    D.regions.forEach((region, idx) => { html += `<button class="anchor-btn" data-region="${idx}" onclick="scrollToRegion(${idx})">${region.icon} ${region.name}</button>`; });
+    html += `</div>`;
+    D.regions.forEach((region, ridx) => {
         const countryList = region.countries.map(c => c.name).join('、');
-        html += `
-    <div class="region-section">
-        <div class="region-header">
-            <span class="icon">${region.icon}</span>
-            <h2>${region.name}</h2>
-            <span class="count">${region.countries.length} 个国家/地区</span>
-        </div>
-        <div class="region-countries"><span>包含：</span>${countryList}</div>
-        <table class="data-table">
-            <thead>
-                <tr>
-                    <th>国家/地区</th>
-                    <th style="text-align:right">开放站点</th>
-                    <th style="text-align:right">总站点</th>
-                    <th style="text-align:right">开放充电枪</th>
-                    <th style="text-align:right">总充电枪</th>
-                    <th class="pct-cell">开放率</th>
-                </tr>
-            </thead>
-            <tbody>`;
-        region.countries.forEach(c => {
-            const pct = c.total > 0 ? (c.open / c.total * 100) : 0;
-            const cls = barCls(pct);
-            const isFull = pct === 100;
-            const hasDetail = !!COUNTRY_DETAIL[c.name];
-            const rowAttrs = isFull ? ` class="full-row"` : (!hasDetail ? ' class="no-detail"' : '');
-            const nameCls = hasDetail ? ' has-detail' : '';
-            const clickAttr = hasDetail ? ` onclick="renderDetail('${c.name}')"` : '';
-            html += `<tr${rowAttrs}${clickAttr}>
-                <td class="country${nameCls}">${c.name}</td>
-                <td class="num">${fmt(c.open)}</td>
-                <td class="num">${fmt(c.total)}</td>
-                <td class="num">${fmt(c.openStalls)}</td>
-                <td class="num">${fmt(c.totalStalls)}</td>
-                <td class="pct-cell"><div class="pct-bar-wrap"><div class="pct-bar-bg"><div class="pct-bar ${cls}" style="width:${pct.toFixed(1)}%"></div></div><span class="pct-val ${cls}">${pct.toFixed(1)}%</span></div></td>
-            </tr>`;
+        const ss = regionSortState[ridx] || { col: null, asc: true };
+        html += `<div class="region-section" id="region-${ridx}"><div class="region-header"><span class="icon">${region.icon}</span><h2>${region.name}</h2><span class="count">${region.countries.length} 个国家/地区</span></div>`;
+        html += `<div class="region-countries"><span>包含：</span>${countryList}</div>`;
+        html += `<table class="data-table" data-region="${ridx}"><thead><tr>`;
+        html += `<th>国家/地区</th>`;
+        html += `<th class="sortable" style="text-align:right" onclick="handleSort(${ridx},'open')${ss.col==='open'?' sort-active':''}">开放站点${ss.col==='open'?`<span class="sort-arrow">${ss.asc?'↑':'↓'}</span>`:''}</th>`;
+        html += `<th class="sortable" style="text-align:right" onclick="handleSort(${ridx},'total')${ss.col==='total'?' sort-active':''}">总站点${ss.col==='total'?`<span class="sort-arrow">${ss.asc?'↑':'↓'}</span>`:''}</th>`;
+        html += `<th class="sortable" style="text-align:right" onclick="handleSort(${ridx},'openStalls')${ss.col==='openStalls'?' sort-active':''}">开放充电枪${ss.col==='openStalls'?`<span class="sort-arrow">${ss.asc?'↑':'↓'}</span>`:''}</th>`;
+        html += `<th class="sortable" style="text-align:right" onclick="handleSort(${ridx},'totalStalls')${ss.col==='totalStalls'?' sort-active':''}">总充电枪${ss.col==='totalStalls'?`<span class="sort-arrow">${ss.asc?'↑':'↓'}</span>`:''}</th>`;
+        html += `<th class="sortable pct-cell" onclick="handleSort(${ridx},'rate')${ss.col==='rate'?' sort-active':''}">开放率${ss.col==='rate'?`<span class="sort-arrow">${ss.asc?'↑':'↓'}</span>`:''}</th>`;
+        html += `</tr></thead><tbody>`;
+        let countries = [...region.countries];
+        if (ss.col) {
+            countries.sort((a,b) => {
+                let va,vb;
+                if (ss.col==='rate') { va=a.total>0?a.open/a.total:0; vb=b.total>0?b.open/b.total:0; }
+                else { va=a[ss.col]; vb=b[ss.col]; }
+                return ss.asc ? va-vb : vb-va;
+            });
+        }
+        countries.forEach(c => {
+            const pct = c.total>0?(c.open/c.total*100):0;
+            const cls = barCls(pct); const isFull = pct===100;
+            const isExpanded = expandedRows.has(c.name);
+            const rowClass = isFull ? 'full-row country-row' : 'country-row';
+            const expandCls = isExpanded ? ' expanded' : '';
+            html += `<tr class="${rowClass}${expandCls}" data-country="${c.name}" onclick="toggleRowExpand(this,'${c.name}')">`;
+            html += `<td class="country"><span class="expand-arrow">▶</span>${c.name}</td>`;
+            html += `<td class="num">${fmt(c.open)}</td><td class="num">${fmt(c.total)}</td>`;
+            html += `<td class="num">${fmt(c.openStalls)}</td><td class="num">${fmt(c.totalStalls)}</td>`;
+            html += `<td class="pct-cell"><div class="pct-bar-wrap"><div class="pct-bar-bg"><div class="pct-bar ${cls}" style="width:${pct.toFixed(1)}%"></div></div><span class="pct-val ${cls}">${pct.toFixed(1)}%</span></div></td></tr>`;
+            html += `<tr class="detail-expand-row${isExpanded?' expanded':''}" data-country-detail="${c.name}"><td colspan="6"><div class="detail-expand-content"><h4>${c.name}${c.isRegion?'（地区）':''}</h4>`;
+            html += `<div class="detail-field"><span class="detail-label">开放站点：</span>${fmt(c.open)} / ${fmt(c.total)}</div>`;
+            html += `<div class="detail-field"><span class="detail-label">开放充电枪：</span>${fmt(c.openStalls)} / ${fmt(c.totalStalls)}</div>`;
+            html += `<div class="detail-field"><span class="detail-label">开放率：</span>${pct.toFixed(1)}%</div></div></td></tr>`;
         });
         html += `</tbody></table></div>`;
     });
-
-    html += `
-    <div class="footer">
-        共 ${D.totalCountries} 个国家/地区有超充站开放给第三方（otherEVs=true）。<br>
-        数据来源 <a href="https://supercharge.info/service/supercharge/allSites" target="_blank">supercharge.info</a>。
-    </div>`;
-
+    if (D.archive && D.archive.length > 0) {
+        html += `<div class="archive-section"><h3>📅 历史数据</h3><ul class="archive-list">`;
+        D.archive.forEach(a => {
+            html += `<li><a href="${a.url}">${a.label}</a><span class="arch-stats">${a.stats}</span></li>`;
+        });
+        html += `</ul></div>`;
+    }
+    html += `<div class="footer">共 ${D.totalCountries} 个国家/地区有超充站开放给第三方（otherEVs=true）。<br>数据来源 <a href="https://supercharge.info/service/supercharge/allSites" target="_blank">supercharge.info</a>。<br><a href="https://tesla.gann.ing" style="color:#4a4a6a">tesla.gann.ing</a></div>`;
     app.innerHTML = html;
+    const sv = currentSearchValue;
+    if (sv) { document.getElementById('countrySearch').value = sv; handleSearch(sv); }
+    setupScrollSpy();
 }
 
-// ── 国家详情页 ─────────────────────────────────────────────
-function renderDetail(name) {
-    const cd = COUNTRY_DETAIL[name];
-    const cd0 = findCountry(name);
-    if (!cd || !cd0) return;
-
-    const totalSites = cd0.total, openSites = cd0.open;
-    const totalStalls = cd0.totalStalls, openStalls = cd0.openStalls;
-    const openRate = totalSites > 0 ? (openSites / totalSites * 100) : 0;
-    const maxStatus = Math.max(...cd.status.map(s => s.sites));
-    const maxPower = Math.max(...cd.power.map(p => p.stalls));
-    const maxPlug = Math.max(...cd.plugs.map(p => p.stalls));
-    const maxState = Math.max(...cd.states.map(s => s.sites));
-    const flagMap = { '美国': '🇺🇸', '中国': '🇨🇳', '德国': '🇩🇪', '英国': '🇬🇧', '法国': '🇫🇷', '日本': '🇯🇵', '韩国': '🇰🇷', '澳大利亚': '🇦🇺', '加拿大': '🇨🇦' };
-
-    let html = `<div class="page-detail">`;
-
-    html += `<button class="back-btn" onclick="renderMain()">‹ 返回概览</button>`;
-
-    html += `
-    <div class="detail-header">
-        <h1>${flagMap[name] || '🌐'} ${name}</h1>
-        <div class="sub">超充站详情 · ${D.reportDate}</div>
-    </div>
-
-    <div class="detail-stats">
-        <div class="d-stat">
-            <div class="label">总站点 / 充电枪</div>
-            <div class="value">${fmt(totalSites)}<span class="slash">/</span>${fmt(totalStalls)}</div>
-        </div>
-        <div class="d-stat">
-            <div class="label">开放站点 / 充电枪</div>
-            <div class="value orange">${fmt(openSites)}<span class="slash">/</span>${fmt(openStalls)}</div>
-        </div>
-        <div class="d-stat">
-            <div class="label">全球开放率对比</div>
-            <div class="value green">${openRate.toFixed(1)}%</div>
-        </div>
-    </div>
-
-    <div class="detail-sec">
-        <div class="detail-sec-header"><span class="icon">📍</span><h3>Status 分布</h3></div>
-        <div class="detail-sec-body">`;
-    cd.status.forEach(s => {
-        const pct = (s.sites / maxStatus * 100).toFixed(1);
-        const share = (s.sites / totalSites * 100).toFixed(1);
-        html += `<div class="mbar-row">
-            <div class="mbar-label">${s.label}</div>
-            <div class="mbar-bg"><div class="mbar blue" style="width:${pct}%"></div></div>
-            <div class="mbar-val">${fmt(s.sites)}站</div>
-            <div class="mbar-sub">${share}%</div>
-        </div>`;
-    });
-    html += `</div></div>
-
-    <div class="detail-sec">
-        <div class="detail-sec-header"><span class="icon">⚡</span><h3>功率等级分布</h3></div>
-        <div class="detail-sec-body">`;
-    cd.power.forEach(p => {
-        const pct = (p.stalls / maxPower * 100).toFixed(1);
-        html += `<div class="mbar-row">
-            <div class="mbar-label">${p.label}</div>
-            <div class="mbar-bg"><div class="mbar orange" style="width:${pct}%"></div></div>
-            <div class="mbar-val">${fmt(p.stalls)}枪</div>
-            <div class="mbar-sub">${fmt(p.sites)}站</div>
-        </div>`;
-    });
-    html += `</div></div>
-
-    <div class="detail-sec">
-        <div class="detail-sec-header"><span class="icon">🔌</span><h3>插头标准分布</h3></div>
-        <div class="detail-sec-body">`;
-    cd.plugs.forEach(p => {
-        const pct = (p.stalls / maxPlug * 100).toFixed(1);
-        html += `<div class="mbar-row">
-            <div class="mbar-label">${p.label}</div>
-            <div class="mbar-bg"><div class="mbar green" style="width:${pct}%"></div></div>
-            <div class="mbar-val">${fmt(p.stalls)}枪</div>
-        </div>`;
-    });
-    html += `</div></div>
-
-    <div class="detail-sec">
-        <div class="detail-sec-header"><span class="icon">🌱</span><h3>绿色能源 & 站点年龄</h3></div>
-        <div class="detail-sec-body">
-            <div class="tag-row">
-                <div class="tag"><span class="tag-label">☀️ 光伏顶</span><span class="tag-val">${cd.solar}站 · ${fmt(cd.solarStalls)}枪</span></div>
-                <div class="tag"><span class="tag-label">🔋 储能</span><span class="tag-val">${cd.battery}站 · ${fmt(cd.batteryStalls)}枪</span></div>
-                <div class="tag green-tag"><span class="tag-label">📅 平均站龄</span><span class="tag-val">${cd.avgAge}</span></div>
-                <div class="tag"><span class="tag-label">🆕 最新开业</span><span class="tag-val">${cd.newestOpen}</span></div>
-                <div class="tag"><span class="tag-label">📆 最早开业</span><span class="tag-val">${cd.oldestOpen}</span></div>
-            </div>
-        </div>
-    </div>
-
-    <div class="detail-sec">
-        <div class="detail-sec-header"><span class="icon">🗺️</span><h3>Top 15 州分布</h3></div>
-        <div class="detail-sec-body" style="padding:12px 0 8px">
-            <table class="state-table">
-                <thead>
-                    <tr><th>州</th><th style="text-align:right">站点</th><th style="text-align:right">开放</th><th style="text-align:right">开放率</th><th>占比</th></tr>
-                </thead>
-                <tbody>`;
-    cd.states.forEach(s => {
-        const pct = (s.sites / maxState * 100).toFixed(1);
-        const rcls = s.rate >= 80 ? 'high' : s.rate >= 60 ? 'mid' : s.rate >= 40 ? 'low' : 'very-low';
-        html += `<tr>
-            <td class="state-name">${s.name}</td>
-            <td class="num">${fmt(s.sites)}</td>
-            <td class="num">${fmt(s.open)}</td>
-            <td class="num"><span class="pct-val ${rcls}">${s.rate.toFixed(1)}%</span></td>
-            <td><div class="pct-bar-bg" style="width:100px"><div class="pct-bar blue" style="width:${pct}%"></div></div></td>
-        </tr>`;
-    });
-    html += `</tbody></table></div></div>`;
-
-    html += `</div>`;
-    app.innerHTML = html;
+const regionSortState = {};
+function handleSort(ridx, col) {
+    const s = regionSortState[ridx] || {col:null,asc:true};
+    if (s.col===col) s.asc=!s.asc; else { s.col=col; s.asc=false; }
+    regionSortState[ridx]=s;
+    renderMain();
 }
 
-window.renderMain = renderMain;
-window.renderDetail = renderDetail;
+// ── Theme Toggle ──
+(function() {
+    const saved = localStorage.getItem('tesla-tracker-theme');
+    if (saved) {
+        document.documentElement.setAttribute('data-theme', saved);
+    } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
+        document.documentElement.setAttribute('data-theme', 'light');
+    }
+})();
+document.addEventListener('click', function(e) {
+    if (e.target.closest('#themeToggle')) {
+        const current = document.documentElement.getAttribute('data-theme');
+        const next = current === 'light' ? 'dark' : 'light';
+        if (next === 'dark') document.documentElement.removeAttribute('data-theme');
+        else document.documentElement.setAttribute('data-theme', 'light');
+        localStorage.setItem('tesla-tracker-theme', next);
+        e.target.textContent = next === 'light' ? '🌙' : '☀️';
+    }
+});
+
+let currentSearchValue = '';
+function handleSearch(value) {
+    currentSearchValue = value;
+    const kw = value.trim().toLowerCase();
+    const sections = document.querySelectorAll('.region-section');
+    let total = 0;
+    sections.forEach(sec => {
+        const rows = sec.querySelectorAll('tr.country-row');
+        let vis = 0;
+        rows.forEach(row => {
+            const cn = row.getAttribute('data-country');
+            const det = sec.querySelector(`tr[data-country-detail="${cn}"]`);
+            if (!kw || cn.toLowerCase().includes(kw)) {
+                row.style.display = '';
+                if (det) det.style.display = row.classList.contains('expanded') ? 'table-row' : 'none';
+                vis++;
+            } else {
+                row.style.display = 'none';
+                if (det) det.style.display = 'none';
+            }
+        });
+        sec.style.display = (vis===0 && kw) ? 'none' : '';
+        total += vis;
+    });
+    const em = document.getElementById('searchEmpty');
+    if (em) em.style.display = (kw && total===0) ? 'block' : 'none';
+}
+
+function scrollToRegion(idx) { const el=document.getElementById('region-'+idx); if(el) el.scrollIntoView({behavior:'smooth',block:'start'}); }
+function setupScrollSpy() {
+    const btns = document.querySelectorAll('.anchor-btn');
+    const secs = document.querySelectorAll('.region-section');
+    const obs = new IntersectionObserver(entries => {
+        entries.forEach(e => { if(e.isIntersecting) { const idx=e.target.id.replace('region-',''); btns.forEach(b=>b.classList.toggle('active',b.getAttribute('data-region')===idx)); } });
+    }, {threshold:0.3, rootMargin:'-20px 0px -60% 0px'});
+    secs.forEach(s => obs.observe(s));
+}
+
+const expandedRows = new Set();
+function toggleRowExpand(rowEl, cn) {
+    event.stopPropagation();
+    const det = document.querySelector(`tr[data-country-detail="${cn}"]`);
+    if (!det) return;
+    if (expandedRows.has(cn)) { expandedRows.delete(cn); rowEl.classList.remove('expanded'); det.classList.remove('expanded'); det.style.display='none'; }
+    else { expandedRows.add(cn); rowEl.classList.add('expanded'); det.classList.add('expanded'); det.style.display='table-row'; }
+}
+
 renderMain();
 </script>
 </body>
