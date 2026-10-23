@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>特斯拉超充开放追踪 | Tesla Supercharger EV Accessibility Tracker - 2026年10月</title>
-    <meta name="description" content="追踪全球特斯拉超充站对第三方电动车开放情况，覆盖56个国家/地区、10,753个站点。每月更新开放率、站点变化数据。Tracking global Tesla Supercharger accessibility for non-Tesla EVs across 56 countries.">
+    <title>特斯拉超充站全球追踪 - 2026年10月</title>
+    <meta name="description" content="特斯拉超充站全球追踪报告，截至2026年10月，覆盖全球56个国家/地区，10874座超充站。">
     <meta name="keywords" content="特斯拉超充站,Tesla Supercharger,第三方开放,otherEVs,电动车充电,EV charging,超充追踪,开放率,新能源充电,supercharger tracker,EV accessibility,充电枪,supercharger info">
     <meta name="author" content="tesla.gann.ing">
     <meta name="robots" content="index, follow">
@@ -28,7 +28,7 @@
     {
         "@context": "https://schema.org",
         "@type": "Dataset",
-        "name": "Tesla Supercharger EV Accessibility Tracker",
+        "name": "特斯拉超充站全球追踪 - 2026年10月",
         "alternateName": "特斯拉超充开放追踪",
         "description": "Monthly tracking of Tesla Supercharger station accessibility for non-Tesla electric vehicles across 56 countries and regions.",
         "url": "https://tesla.gann.ing/",
@@ -38,7 +38,7 @@
             "name": "tesla.gann.ing",
             "url": "https://tesla.gann.ing/"
         },
-        "dateModified": "2026-10-21",
+        "dateModified": "2026-10-23",
         "temporalCoverage": "2026-10",
         "license": "https://creativecommons.org/licenses/by/4.0/",
         "distribution": {
@@ -49,7 +49,7 @@
         "variableMeasured": [
             {"@type": "PropertyValue", "name": "totalSites", "value": 10753},
             {"@type": "PropertyValue", "name": "openSites", "value": 6996},
-            {"@type": "PropertyValue", "name": "openRate", "value": "65.1%"},
+            {"@type": "PropertyValue", "name": "openRate", "value": "10874"},
             {"@type": "PropertyValue", "name": "totalCountries", "value": 56}
         ]
     }
@@ -369,618 +369,544 @@ body {
 </head>
 <body>
 <div class="container" id="app"></div>
-<noscript>
-<div style="max-width:1100px;margin:0 auto;padding:20px;background:#fff;color:#333;font-family:sans-serif;">
-<h1>特斯拉超充开放追踪 - 2026年10月</h1>
-<p>本站需要JavaScript才能完整显示。以下是核心统计数据：</p>
-<p>截至2026年10月，全球共有 <strong>56</strong> 个国家/地区拥有特斯拉超充站，总计 <strong>10,753</strong> 个站点、<strong>99,974</strong> 个充电枪。其中开放给第三方电动车使用的站点 <strong>6,996</strong> 个，充电枪 <strong>72,951</strong> 个，全球开放率 <strong>65.1%</strong>。</p>
-<h3>🌎 美洲（6个国家/地区）</h3>
-<table border='1' style='border-collapse:collapse;width:100%;margin-bottom:16px;'>
-<tr><th>国家/地区</th><th>开放站点</th><th>总站点</th><th>开放充电枪</th><th>总充电枪</th><th>开放率</th></tr>
-<tr><td>美国</td><td>3,126</td><td>4,228</td><td>37,252</td><td>49,281</td><td>73.9%</td></tr>
-<tr><td>加拿大</td><td>253</td><td>373</td><td>2,496</td><td>3,718</td><td>67.8%</td></tr>
-<tr><td>墨西哥</td><td>28</td><td>46</td><td>108</td><td>210</td><td>60.9%</td></tr>
-<tr><td>智利</td><td>0</td><td>14</td><td>0</td><td>12</td><td>0.0%</td></tr>
-<tr><td>哥伦比亚</td><td>0</td><td>5</td><td>0</td><td>12</td><td>0.0%</td></tr>
-<tr><td>乌拉圭</td><td>0</td><td>2</td><td>0</td><td>8</td><td>0.0%</td></tr>
-</table>
-<h3>🌍 欧洲（34个国家/地区）</h3>
-<table border='1' style='border-collapse:collapse;width:100%;margin-bottom:16px;'>
-<tr><th>国家/地区</th><th>开放站点</th><th>总站点</th><th>开放充电枪</th><th>总充电枪</th><th>开放率</th></tr>
-<tr><td>瑞典</td><td>150</td><td>150</td><td>2,023</td><td>2,023</td><td>100.0%</td></tr>
-<tr><td>奥地利</td><td>67</td><td>67</td><td>695</td><td>695</td><td>100.0%</td></tr>
-<tr><td>荷兰</td><td>57</td><td>57</td><td>976</td><td>976</td><td>100.0%</td></tr>
-<tr><td>土耳其</td><td>54</td><td>54</td><td>390</td><td>390</td><td>100.0%</td></tr>
-<tr><td>匈牙利</td><td>31</td><td>31</td><td>262</td><td>262</td><td>100.0%</td></tr>
-<tr><td>罗马尼亚</td><td>27</td><td>27</td><td>230</td><td>230</td><td>100.0%</td></tr>
-<tr><td>冰岛</td><td>23</td><td>23</td><td>181</td><td>181</td><td>100.0%</td></tr>
-<tr><td>葡萄牙</td><td>20</td><td>20</td><td>268</td><td>268</td><td>100.0%</td></tr>
-<tr><td>捷克</td><td>19</td><td>19</td><td>188</td><td>188</td><td>100.0%</td></tr>
-<tr><td>斯洛伐克</td><td>10</td><td>10</td><td>66</td><td>66</td><td>100.0%</td></tr>
-<tr><td>爱沙尼亚</td><td>4</td><td>4</td><td>23</td><td>23</td><td>100.0%</td></tr>
-<tr><td>立陶宛</td><td>3</td><td>3</td><td>36</td><td>36</td><td>100.0%</td></tr>
-<tr><td>卢森堡</td><td>1</td><td>1</td><td>16</td><td>16</td><td>100.0%</td></tr>
-<tr><td>德国</td><td>416</td><td>417</td><td>4,847</td><td>4,859</td><td>99.8%</td></tr>
-<tr><td>挪威</td><td>199</td><td>202</td><td>3,053</td><td>3,109</td><td>98.5%</td></tr>
-<tr><td>丹麦</td><td>51</td><td>52</td><td>874</td><td>880</td><td>98.1%</td></tr>
-<tr><td>瑞士</td><td>46</td><td>47</td><td>516</td><td>536</td><td>97.9%</td></tr>
-<tr><td>比利时</td><td>29</td><td>30</td><td>442</td><td>450</td><td>96.7%</td></tr>
-<tr><td>法国</td><td>318</td><td>330</td><td>4,443</td><td>4,560</td><td>96.4%</td></tr>
-<tr><td>西班牙</td><td>138</td><td>144</td><td>1,456</td><td>1,500</td><td>95.8%</td></tr>
-<tr><td>意大利</td><td>135</td><td>146</td><td>1,408</td><td>1,546</td><td>92.5%</td></tr>
-<tr><td>芬兰</td><td>55</td><td>61</td><td>450</td><td>486</td><td>90.2%</td></tr>
-<tr><td>爱尔兰</td><td>22</td><td>25</td><td>164</td><td>186</td><td>88.0%</td></tr>
-<tr><td>克罗地亚</td><td>22</td><td>27</td><td>166</td><td>200</td><td>81.5%</td></tr>
-<tr><td>波兰</td><td>26</td><td>35</td><td>291</td><td>345</td><td>74.3%</td></tr>
-<tr><td>斯洛文尼亚</td><td>8</td><td>11</td><td>84</td><td>106</td><td>72.7%</td></tr>
-<tr><td>英国</td><td>207</td><td>309</td><td>1,920</td><td>3,140</td><td>67.0%</td></tr>
-<tr><td>希腊</td><td>5</td><td>9</td><td>36</td><td>52</td><td>55.6%</td></tr>
-<tr><td>以色列</td><td>1</td><td>26</td><td>8</td><td>230</td><td>3.8%</td></tr>
-<tr><td>保加利亚</td><td>0</td><td>5</td><td>0</td><td>34</td><td>0.0%</td></tr>
-<tr><td>拉脱维亚</td><td>0</td><td>4</td><td>0</td><td>16</td><td>0.0%</td></tr>
-<tr><td>塞尔维亚</td><td>0</td><td>3</td><td>0</td><td>24</td><td>0.0%</td></tr>
-<tr><td>哈萨克斯坦</td><td>0</td><td>2</td><td>0</td><td>10</td><td>0.0%</td></tr>
-<tr><td>列支敦士登</td><td>0</td><td>1</td><td>0</td><td>10</td><td>0.0%</td></tr>
-</table>
-<h3>🌏 亚太（11个国家/地区）</h3>
-<table border='1' style='border-collapse:collapse;width:100%;margin-bottom:16px;'>
-<tr><th>国家/地区</th><th>开放站点</th><th>总站点</th><th>开放充电枪</th><th>总充电枪</th><th>开放率</th></tr>
-<tr><td>新西兰</td><td>30</td><td>36</td><td>164</td><td>190</td><td>83.3%</td></tr>
-<tr><td>韩国</td><td>140</td><td>194</td><td>957</td><td>1,300</td><td>72.2%</td></tr>
-<tr><td>澳大利亚</td><td>120</td><td>185</td><td>842</td><td>1,286</td><td>64.9%</td></tr>
-<tr><td>印度</td><td>6</td><td>10</td><td>20</td><td>36</td><td>60.0%</td></tr>
-<tr><td>中国</td><td>1,126</td><td>2,811</td><td>5,449</td><td>13,690</td><td>40.1%</td></tr>
-<tr><td>马来西亚</td><td>4</td><td>29</td><td>22</td><td>122</td><td>13.8%</td></tr>
-<tr><td>台湾地区</td><td>18</td><td>140</td><td>125</td><td>798</td><td>12.9%</td></tr>
-<tr><td>新加坡</td><td>1</td><td>22</td><td>4</td><td>66</td><td>4.5%</td></tr>
-<tr><td>日本</td><td>0</td><td>164</td><td>0</td><td>802</td><td>0.0%</td></tr>
-<tr><td>泰国</td><td>0</td><td>58</td><td>0</td><td>305</td><td>0.0%</td></tr>
-<tr><td>菲律宾</td><td>0</td><td>7</td><td>0</td><td>28</td><td>0.0%</td></tr>
-</table>
-<h3>🌍 中东及非洲（5个国家/地区）</h3>
-<table border='1' style='border-collapse:collapse;width:100%;margin-bottom:16px;'>
-<tr><th>国家/地区</th><th>开放站点</th><th>总站点</th><th>开放充电枪</th><th>总充电枪</th><th>开放率</th></tr>
-<tr><td>阿联酋</td><td>0</td><td>44</td><td>0</td><td>331</td><td>0.0%</td></tr>
-<tr><td>摩洛哥</td><td>0</td><td>13</td><td>0</td><td>24</td><td>0.0%</td></tr>
-<tr><td>沙特阿拉伯</td><td>0</td><td>13</td><td>0</td><td>80</td><td>0.0%</td></tr>
-<tr><td>约旦</td><td>0</td><td>4</td><td>0</td><td>14</td><td>0.0%</td></tr>
-<tr><td>卡塔尔</td><td>0</td><td>3</td><td>0</td><td>28</td><td>0.0%</td></tr>
-</table>
-<p style="color:#666;font-size:13px;">数据来源 <a href="https://supercharge.info/service/supercharge/allSites">supercharge.info</a> | <a href="https://tesla.gann.ing">tesla.gann.ing</a></p>
-</div>
-</noscript>
+<noscript><p>截至2026年10月，全球共有10874座第三方开放超充站，覆盖56个国家/地区。数据来源：supercharge.info</p></noscript>
 <script>
 const REPORT_DATA = {
-    "reportDate": "2026年10月",
-    "reportType": "月度更新",
-    "dataSource": "supercharge.info",
-    "totalSites": 10753,
-    "openSites": 6996,
-    "totalStalls": 99974,
-    "openStalls": 72951,
-    "openRate": 65.1,
-    "totalCountries": 56,
-    "regions": [
+  "reportDate": "2026年10月",
+  "reportType": "月度更新",
+  "dataSource": "supercharge.info",
+  "totalSites": 10874,
+  "openSites": 7119,
+  "totalStalls": 100612,
+  "openStalls": 73681,
+  "openRate": 65.5,
+  "totalCountries": 56,
+  "regions": [
+    {
+      "name": "美洲",
+      "icon": "🌎",
+      "countries": [
         {
-            "name": "美洲",
-            "icon": "🌎",
-            "countries": [
-                {
-                    "name": "美国",
-                    "open": 3126,
-                    "total": 4228,
-                    "openStalls": 37252,
-                    "totalStalls": 49281
-                },
-                {
-                    "name": "加拿大",
-                    "open": 253,
-                    "total": 373,
-                    "openStalls": 2496,
-                    "totalStalls": 3718
-                },
-                {
-                    "name": "墨西哥",
-                    "open": 28,
-                    "total": 46,
-                    "openStalls": 108,
-                    "totalStalls": 210
-                },
-                {
-                    "name": "智利",
-                    "open": 0,
-                    "total": 14,
-                    "openStalls": 0,
-                    "totalStalls": 12
-                },
-                {
-                    "name": "哥伦比亚",
-                    "open": 0,
-                    "total": 5,
-                    "openStalls": 0,
-                    "totalStalls": 12
-                },
-                {
-                    "name": "乌拉圭",
-                    "open": 0,
-                    "total": 2,
-                    "openStalls": 0,
-                    "totalStalls": 8
-                }
-            ]
+          "name": "美国",
+          "open": 3196,
+          "total": 4293,
+          "openStalls": 37505,
+          "totalStalls": 49448
         },
         {
-            "name": "欧洲",
-            "icon": "🌍",
-            "countries": [
-                {
-                    "name": "瑞典",
-                    "open": 150,
-                    "total": 150,
-                    "openStalls": 2023,
-                    "totalStalls": 2023
-                },
-                {
-                    "name": "奥地利",
-                    "open": 67,
-                    "total": 67,
-                    "openStalls": 695,
-                    "totalStalls": 695
-                },
-                {
-                    "name": "荷兰",
-                    "open": 57,
-                    "total": 57,
-                    "openStalls": 976,
-                    "totalStalls": 976
-                },
-                {
-                    "name": "土耳其",
-                    "open": 54,
-                    "total": 54,
-                    "openStalls": 390,
-                    "totalStalls": 390
-                },
-                {
-                    "name": "匈牙利",
-                    "open": 31,
-                    "total": 31,
-                    "openStalls": 262,
-                    "totalStalls": 262
-                },
-                {
-                    "name": "罗马尼亚",
-                    "open": 27,
-                    "total": 27,
-                    "openStalls": 230,
-                    "totalStalls": 230
-                },
-                {
-                    "name": "冰岛",
-                    "open": 23,
-                    "total": 23,
-                    "openStalls": 181,
-                    "totalStalls": 181
-                },
-                {
-                    "name": "葡萄牙",
-                    "open": 20,
-                    "total": 20,
-                    "openStalls": 268,
-                    "totalStalls": 268
-                },
-                {
-                    "name": "捷克",
-                    "open": 19,
-                    "total": 19,
-                    "openStalls": 188,
-                    "totalStalls": 188
-                },
-                {
-                    "name": "斯洛伐克",
-                    "open": 10,
-                    "total": 10,
-                    "openStalls": 66,
-                    "totalStalls": 66
-                },
-                {
-                    "name": "爱沙尼亚",
-                    "open": 4,
-                    "total": 4,
-                    "openStalls": 23,
-                    "totalStalls": 23
-                },
-                {
-                    "name": "立陶宛",
-                    "open": 3,
-                    "total": 3,
-                    "openStalls": 36,
-                    "totalStalls": 36
-                },
-                {
-                    "name": "卢森堡",
-                    "open": 1,
-                    "total": 1,
-                    "openStalls": 16,
-                    "totalStalls": 16
-                },
-                {
-                    "name": "德国",
-                    "open": 416,
-                    "total": 417,
-                    "openStalls": 4847,
-                    "totalStalls": 4859
-                },
-                {
-                    "name": "挪威",
-                    "open": 199,
-                    "total": 202,
-                    "openStalls": 3053,
-                    "totalStalls": 3109
-                },
-                {
-                    "name": "丹麦",
-                    "open": 51,
-                    "total": 52,
-                    "openStalls": 874,
-                    "totalStalls": 880
-                },
-                {
-                    "name": "瑞士",
-                    "open": 46,
-                    "total": 47,
-                    "openStalls": 516,
-                    "totalStalls": 536
-                },
-                {
-                    "name": "比利时",
-                    "open": 29,
-                    "total": 30,
-                    "openStalls": 442,
-                    "totalStalls": 450
-                },
-                {
-                    "name": "法国",
-                    "open": 318,
-                    "total": 330,
-                    "openStalls": 4443,
-                    "totalStalls": 4560
-                },
-                {
-                    "name": "西班牙",
-                    "open": 138,
-                    "total": 144,
-                    "openStalls": 1456,
-                    "totalStalls": 1500
-                },
-                {
-                    "name": "意大利",
-                    "open": 135,
-                    "total": 146,
-                    "openStalls": 1408,
-                    "totalStalls": 1546
-                },
-                {
-                    "name": "芬兰",
-                    "open": 55,
-                    "total": 61,
-                    "openStalls": 450,
-                    "totalStalls": 486
-                },
-                {
-                    "name": "爱尔兰",
-                    "open": 22,
-                    "total": 25,
-                    "openStalls": 164,
-                    "totalStalls": 186
-                },
-                {
-                    "name": "克罗地亚",
-                    "open": 22,
-                    "total": 27,
-                    "openStalls": 166,
-                    "totalStalls": 200
-                },
-                {
-                    "name": "波兰",
-                    "open": 26,
-                    "total": 35,
-                    "openStalls": 291,
-                    "totalStalls": 345
-                },
-                {
-                    "name": "斯洛文尼亚",
-                    "open": 8,
-                    "total": 11,
-                    "openStalls": 84,
-                    "totalStalls": 106
-                },
-                {
-                    "name": "英国",
-                    "open": 207,
-                    "total": 309,
-                    "openStalls": 1920,
-                    "totalStalls": 3140
-                },
-                {
-                    "name": "希腊",
-                    "open": 5,
-                    "total": 9,
-                    "openStalls": 36,
-                    "totalStalls": 52
-                },
-                {
-                    "name": "以色列",
-                    "open": 1,
-                    "total": 26,
-                    "openStalls": 8,
-                    "totalStalls": 230
-                },
-                {
-                    "name": "保加利亚",
-                    "open": 0,
-                    "total": 5,
-                    "openStalls": 0,
-                    "totalStalls": 34
-                },
-                {
-                    "name": "拉脱维亚",
-                    "open": 0,
-                    "total": 4,
-                    "openStalls": 0,
-                    "totalStalls": 16
-                },
-                {
-                    "name": "塞尔维亚",
-                    "open": 0,
-                    "total": 3,
-                    "openStalls": 0,
-                    "totalStalls": 24
-                },
-                {
-                    "name": "哈萨克斯坦",
-                    "open": 0,
-                    "total": 2,
-                    "openStalls": 0,
-                    "totalStalls": 10
-                },
-                {
-                    "name": "列支敦士登",
-                    "open": 0,
-                    "total": 1,
-                    "openStalls": 0,
-                    "totalStalls": 10
-                }
-            ]
+          "name": "加拿大",
+          "open": 256,
+          "total": 375,
+          "openStalls": 2552,
+          "totalStalls": 3758
         },
         {
-            "name": "亚太",
-            "icon": "🌏",
-            "countries": [
-                {
-                    "name": "新西兰",
-                    "open": 30,
-                    "total": 36,
-                    "openStalls": 164,
-                    "totalStalls": 190
-                },
-                {
-                    "name": "韩国",
-                    "open": 140,
-                    "total": 194,
-                    "openStalls": 957,
-                    "totalStalls": 1300
-                },
-                {
-                    "name": "澳大利亚",
-                    "open": 120,
-                    "total": 185,
-                    "openStalls": 842,
-                    "totalStalls": 1286
-                },
-                {
-                    "name": "印度",
-                    "open": 6,
-                    "total": 10,
-                    "openStalls": 20,
-                    "totalStalls": 36
-                },
-                {
-                    "name": "中国",
-                    "open": 1126,
-                    "total": 2811,
-                    "openStalls": 5449,
-                    "totalStalls": 13690
-                },
-                {
-                    "name": "马来西亚",
-                    "open": 4,
-                    "total": 29,
-                    "openStalls": 22,
-                    "totalStalls": 122
-                },
-                {
-                    "name": "台湾地区",
-                    "open": 18,
-                    "total": 140,
-                    "openStalls": 125,
-                    "totalStalls": 798,
-                    "isRegion": true
-                },
-                {
-                    "name": "新加坡",
-                    "open": 1,
-                    "total": 22,
-                    "openStalls": 4,
-                    "totalStalls": 66
-                },
-                {
-                    "name": "日本",
-                    "open": 0,
-                    "total": 164,
-                    "openStalls": 0,
-                    "totalStalls": 802
-                },
-                {
-                    "name": "泰国",
-                    "open": 0,
-                    "total": 58,
-                    "openStalls": 0,
-                    "totalStalls": 305
-                },
-                {
-                    "name": "菲律宾",
-                    "open": 0,
-                    "total": 7,
-                    "openStalls": 0,
-                    "totalStalls": 28
-                }
-            ]
+          "name": "墨西哥",
+          "open": 28,
+          "total": 50,
+          "openStalls": 108,
+          "totalStalls": 214
         },
         {
-            "name": "中东及非洲",
-            "icon": "🌍",
-            "countries": [
-                {
-                    "name": "阿联酋",
-                    "open": 0,
-                    "total": 44,
-                    "openStalls": 0,
-                    "totalStalls": 331
-                },
-                {
-                    "name": "摩洛哥",
-                    "open": 0,
-                    "total": 13,
-                    "openStalls": 0,
-                    "totalStalls": 24
-                },
-                {
-                    "name": "沙特阿拉伯",
-                    "open": 0,
-                    "total": 13,
-                    "openStalls": 0,
-                    "totalStalls": 80
-                },
-                {
-                    "name": "约旦",
-                    "open": 0,
-                    "total": 4,
-                    "openStalls": 0,
-                    "totalStalls": 14
-                },
-                {
-                    "name": "卡塔尔",
-                    "open": 0,
-                    "total": 3,
-                    "openStalls": 0,
-                    "totalStalls": 28
-                }
-            ]
+          "name": "智利",
+          "open": 0,
+          "total": 14,
+          "openStalls": 0,
+          "totalStalls": 12
+        },
+        {
+          "name": "哥伦比亚",
+          "open": 0,
+          "total": 5,
+          "openStalls": 0,
+          "totalStalls": 12
+        },
+        {
+          "name": "乌拉圭",
+          "open": 0,
+          "total": 2,
+          "openStalls": 0,
+          "totalStalls": 8
         }
-    ],
-    "changes": [
+      ]
+    },
+    {
+      "name": "欧洲",
+      "icon": "🌍",
+      "countries": [
         {
-            "type": "📋 方法论说明",
-            "flag": "📋",
-            "items": [
-                "总站点 = Status(Open/Expanding/Construction/Permit/Plan)的所有站点",
-                "开放站点 = 上述站点中 otherEVs=True 的站点",
-                "开放率 = 开放站点 / 总站点",
-                "可比口径（开放站点）: 上月6,733 → 本月6,996（净增+263站）"
-            ]
+          "name": "瑞典",
+          "open": 152,
+          "total": 152,
+          "openStalls": 2063,
+          "totalStalls": 2063
         },
         {
-            "type": "🆕 新增追踪国家/地区",
-            "flag": "🆕",
-            "items": [
-                "乌拉圭 新增（开放0/2）"
-            ]
+          "name": "奥地利",
+          "open": 67,
+          "total": 67,
+          "openStalls": 693,
+          "totalStalls": 693
         },
         {
-            "type": "📈 开放站点增加",
-            "flag": "📈",
-            "items": [
-                "中国 +21站（开放1105→1126）",
-                "丹麦 +1站（开放50→51）",
-                "冰岛 +1站（开放22→23）",
-                "加拿大 +7站（开放246→253）",
-                "匈牙利 +1站（开放30→31）",
-                "台湾地区 +1站（开放17→18）",
-                "土耳其 +1站（开放53→54）",
-                "奥地利 +1站（开放66→67）",
-                "希腊 +1站（开放4→5）",
-                "德国 +3站（开放413→416）",
-                "意大利 +1站（开放134→135）",
-                "挪威 +3站（开放196→199）",
-                "捷克 +1站（开放18→19）",
-                "新加坡 +1站（开放0→1）",
-                "法国 +5站（开放313→318）",
-                "澳大利亚 +1站（开放119→120）",
-                "爱沙尼亚 +1站（开放3→4）",
-                "瑞典 +1站（开放149→150）",
-                "美国 +194站（开放2932→3126）",
-                "芬兰 +2站（开放53→55）",
-                "英国 +8站（开放199→207）",
-                "西班牙 +1站（开放137→138）",
-                "韩国 +6站（开放134→140）"
-            ]
+          "name": "荷兰",
+          "open": 58,
+          "total": 58,
+          "openStalls": 992,
+          "totalStalls": 992
         },
         {
-            "type": "🏗️ 总站点增加",
-            "flag": "🏗️",
-            "items": [
-                "中国 +2站",
-                "丹麦 +1站",
-                "乌拉圭 +2站",
-                "冰岛 +1站",
-                "加拿大 +4站",
-                "匈牙利 +1站",
-                "台湾地区 +1站",
-                "土耳其 +1站",
-                "奥地利 +1站",
-                "希腊 +1站",
-                "德国 +3站",
-                "意大利 +2站",
-                "挪威 +3站",
-                "捷克 +1站",
-                "新加坡 +2站",
-                "日本 +3站",
-                "智利 +1站",
-                "法国 +4站",
-                "泰国 +3站",
-                "澳大利亚 +3站",
-                "爱沙尼亚 +1站",
-                "瑞典 +1站",
-                "美国 +173站",
-                "芬兰 +2站",
-                "英国 +7站",
-                "西班牙 +1站",
-                "韩国 +6站",
-                "马来西亚 +1站"
-            ]
+          "name": "土耳其",
+          "open": 53,
+          "total": 53,
+          "openStalls": 398,
+          "totalStalls": 398
+        },
+        {
+          "name": "匈牙利",
+          "open": 31,
+          "total": 31,
+          "openStalls": 262,
+          "totalStalls": 262
+        },
+        {
+          "name": "罗马尼亚",
+          "open": 28,
+          "total": 28,
+          "openStalls": 230,
+          "totalStalls": 230
+        },
+        {
+          "name": "冰岛",
+          "open": 23,
+          "total": 23,
+          "openStalls": 191,
+          "totalStalls": 191
+        },
+        {
+          "name": "葡萄牙",
+          "open": 20,
+          "total": 20,
+          "openStalls": 260,
+          "totalStalls": 260
+        },
+        {
+          "name": "捷克",
+          "open": 19,
+          "total": 19,
+          "openStalls": 204,
+          "totalStalls": 204
+        },
+        {
+          "name": "斯洛伐克",
+          "open": 10,
+          "total": 10,
+          "openStalls": 66,
+          "totalStalls": 66
+        },
+        {
+          "name": "爱沙尼亚",
+          "open": 4,
+          "total": 4,
+          "openStalls": 23,
+          "totalStalls": 23
+        },
+        {
+          "name": "立陶宛",
+          "open": 3,
+          "total": 3,
+          "openStalls": 28,
+          "totalStalls": 28
+        },
+        {
+          "name": "卢森堡",
+          "open": 1,
+          "total": 1,
+          "openStalls": 16,
+          "totalStalls": 16
+        },
+        {
+          "name": "德国",
+          "open": 416,
+          "total": 417,
+          "openStalls": 4837,
+          "totalStalls": 4849
+        },
+        {
+          "name": "挪威",
+          "open": 199,
+          "total": 202,
+          "openStalls": 3061,
+          "totalStalls": 3117
+        },
+        {
+          "name": "丹麦",
+          "open": 52,
+          "total": 53,
+          "openStalls": 898,
+          "totalStalls": 904
+        },
+        {
+          "name": "瑞士",
+          "open": 46,
+          "total": 47,
+          "openStalls": 528,
+          "totalStalls": 548
+        },
+        {
+          "name": "比利时",
+          "open": 29,
+          "total": 30,
+          "openStalls": 450,
+          "totalStalls": 458
+        },
+        {
+          "name": "法国",
+          "open": 318,
+          "total": 330,
+          "openStalls": 4470,
+          "totalStalls": 4587
+        },
+        {
+          "name": "西班牙",
+          "open": 138,
+          "total": 144,
+          "openStalls": 1468,
+          "totalStalls": 1512
+        },
+        {
+          "name": "意大利",
+          "open": 136,
+          "total": 147,
+          "openStalls": 1424,
+          "totalStalls": 1562
+        },
+        {
+          "name": "芬兰",
+          "open": 55,
+          "total": 61,
+          "openStalls": 458,
+          "totalStalls": 494
+        },
+        {
+          "name": "爱尔兰",
+          "open": 22,
+          "total": 25,
+          "openStalls": 164,
+          "totalStalls": 186
+        },
+        {
+          "name": "克罗地亚",
+          "open": 22,
+          "total": 27,
+          "openStalls": 166,
+          "totalStalls": 200
+        },
+        {
+          "name": "波兰",
+          "open": 26,
+          "total": 35,
+          "openStalls": 291,
+          "totalStalls": 345
+        },
+        {
+          "name": "斯洛文尼亚",
+          "open": 8,
+          "total": 11,
+          "openStalls": 84,
+          "totalStalls": 106
+        },
+        {
+          "name": "英国",
+          "open": 218,
+          "total": 320,
+          "openStalls": 2010,
+          "totalStalls": 3230
+        },
+        {
+          "name": "希腊",
+          "open": 5,
+          "total": 9,
+          "openStalls": 36,
+          "totalStalls": 52
+        },
+        {
+          "name": "以色列",
+          "open": 1,
+          "total": 26,
+          "openStalls": 8,
+          "totalStalls": 230
+        },
+        {
+          "name": "保加利亚",
+          "open": 0,
+          "total": 5,
+          "openStalls": 0,
+          "totalStalls": 34
+        },
+        {
+          "name": "拉脱维亚",
+          "open": 0,
+          "total": 4,
+          "openStalls": 0,
+          "totalStalls": 16
+        },
+        {
+          "name": "塞尔维亚",
+          "open": 0,
+          "total": 3,
+          "openStalls": 0,
+          "totalStalls": 24
+        },
+        {
+          "name": "哈萨克斯坦",
+          "open": 0,
+          "total": 2,
+          "openStalls": 0,
+          "totalStalls": 10
+        },
+        {
+          "name": "列支敦士登",
+          "open": 0,
+          "total": 1,
+          "openStalls": 0,
+          "totalStalls": 10
         }
-    ],
-    "archive": [
+      ]
+    },
+    {
+      "name": "亚太",
+      "icon": "🌏",
+      "countries": [
         {
-            "label": "2026年10月",
-            "stats": "56个国家/地区 · 10,753站 · 开放率65.1%",
-            "ym": "202610",
-            "url": "https://tesla.gann.ing"
+          "name": "新西兰",
+          "open": 30,
+          "total": 36,
+          "openStalls": 164,
+          "totalStalls": 190
         },
         {
-            "label": "2026年9月",
-            "stats": "55个国家/地区 · 10,521站 · 开放率64.0%",
-            "ym": "202609",
-            "url": "https://tesla.gann.ing"
+          "name": "韩国",
+          "open": 159,
+          "total": 211,
+          "openStalls": 1042,
+          "totalStalls": 1385
         },
         {
-            "label": "2026年8月",
-            "stats": "55个国家/地区 · 10,421站 · 开放率63.5%",
-            "ym": "202608",
-            "url": "https://tesla.gann.ing"
+          "name": "澳大利亚",
+          "open": 123,
+          "total": 187,
+          "openStalls": 872,
+          "totalStalls": 1318
+        },
+        {
+          "name": "印度",
+          "open": 6,
+          "total": 10,
+          "openStalls": 20,
+          "totalStalls": 36
+        },
+        {
+          "name": "中国",
+          "open": 1138,
+          "total": 2824,
+          "openStalls": 5488,
+          "totalStalls": 13733
+        },
+        {
+          "name": "马来西亚",
+          "open": 4,
+          "total": 30,
+          "openStalls": 22,
+          "totalStalls": 126
+        },
+        {
+          "name": "台湾地区",
+          "open": 18,
+          "total": 140,
+          "openStalls": 125,
+          "totalStalls": 798,
+          "isRegion": true
+        },
+        {
+          "name": "新加坡",
+          "open": 1,
+          "total": 22,
+          "openStalls": 4,
+          "totalStalls": 66
+        },
+        {
+          "name": "日本",
+          "open": 0,
+          "total": 164,
+          "openStalls": 0,
+          "totalStalls": 802
+        },
+        {
+          "name": "泰国",
+          "open": 0,
+          "total": 58,
+          "openStalls": 0,
+          "totalStalls": 305
+        },
+        {
+          "name": "菲律宾",
+          "open": 0,
+          "total": 7,
+          "openStalls": 0,
+          "totalStalls": 28
         }
-    ]
+      ]
+    },
+    {
+      "name": "中东及非洲",
+      "icon": "🌍",
+      "countries": [
+        {
+          "name": "阿联酋",
+          "open": 0,
+          "total": 44,
+          "openStalls": 0,
+          "totalStalls": 327
+        },
+        {
+          "name": "沙特阿拉伯",
+          "open": 0,
+          "total": 14,
+          "openStalls": 0,
+          "totalStalls": 80
+        },
+        {
+          "name": "摩洛哥",
+          "open": 0,
+          "total": 13,
+          "openStalls": 0,
+          "totalStalls": 24
+        },
+        {
+          "name": "约旦",
+          "open": 0,
+          "total": 4,
+          "openStalls": 0,
+          "totalStalls": 14
+        },
+        {
+          "name": "卡塔尔",
+          "open": 0,
+          "total": 3,
+          "openStalls": 0,
+          "totalStalls": 28
+        }
+      ]
+    }
+  ],
+  "changes": [
+    {
+      "type": "📋 方法论说明",
+      "flag": "📋",
+      "items": [
+        "总站点 = Status(Open/Expanding/Construction/Permit/Plan)的所有站点",
+        "开放站点 = 上述站点中 otherEVs=True 的站点",
+        "开放率 = 开放站点 / 总站点",
+        "本月新增追踪: 乌拉圭（+2站，其中0个开放）",
+        "剔除新增后可比口径（开放站点）: 上月6,733 → 本月7,119（净增+386站）"
+      ]
+    },
+    {
+      "type": "🆕 新增追踪国家/地区",
+      "flag": "🆕",
+      "items": [
+        "乌拉圭 新增（开放0/2）"
+      ]
+    },
+    {
+      "type": "📈 开放站点增加",
+      "flag": "📈",
+      "items": [
+        "中国 +33站（开放1105→1138）",
+        "丹麦 +2站（开放50→52）",
+        "冰岛 +1站（开放22→23）",
+        "加拿大 +10站（开放246→256）",
+        "匈牙利 +1站（开放30→31）",
+        "台湾地区 +1站（开放17→18）",
+        "奥地利 +1站（开放66→67）",
+        "希腊 +1站（开放4→5）",
+        "德国 +3站（开放413→416）",
+        "意大利 +2站（开放134→136）",
+        "挪威 +3站（开放196→199）",
+        "捷克 +1站（开放18→19）",
+        "新加坡 +1站（开放0→1）",
+        "法国 +5站（开放313→318）",
+        "澳大利亚 +4站（开放119→123）",
+        "爱沙尼亚 +1站（开放3→4）",
+        "瑞典 +3站（开放149→152）",
+        "罗马尼亚 +1站（开放27→28）",
+        "美国 +264站（开放2932→3196）",
+        "芬兰 +2站（开放53→55）",
+        "英国 +19站（开放199→218）",
+        "荷兰 +1站（开放57→58）",
+        "西班牙 +1站（开放137→138）",
+        "韩国 +25站（开放134→159）"
+      ]
+    },
+    {
+      "type": "🏗️ 总站点增加",
+      "flag": "🏗️",
+      "items": [
+        "中国 +15站",
+        "丹麦 +2站",
+        "乌拉圭 +2站",
+        "冰岛 +1站",
+        "加拿大 +6站",
+        "匈牙利 +1站",
+        "台湾地区 +1站",
+        "墨西哥 +4站",
+        "奥地利 +1站",
+        "希腊 +1站",
+        "德国 +3站",
+        "意大利 +3站",
+        "挪威 +3站",
+        "捷克 +1站",
+        "新加坡 +2站",
+        "日本 +3站",
+        "智利 +1站",
+        "沙特阿拉伯 +1站",
+        "法国 +4站",
+        "泰国 +3站",
+        "澳大利亚 +5站",
+        "爱沙尼亚 +1站",
+        "瑞典 +3站",
+        "罗马尼亚 +1站",
+        "美国 +238站",
+        "芬兰 +2站",
+        "英国 +18站",
+        "荷兰 +1站",
+        "西班牙 +1站",
+        "韩国 +23站",
+        "马来西亚 +2站"
+      ]
+    }
+  ],
+  "archive": [
+    {
+      "label": "2026年10月",
+      "stats": "56个国家/地区 · 10,874站 · 开放率65.5%",
+      "ym": "202610",
+      "url": "https://tesla.gann.ing"
+    },
+    {
+      "label": "2026年9月",
+      "stats": "55个国家/地区 · 10,521站 · 开放率64.0%",
+      "ym": "202609",
+      "url": "https://tesla.gann.ing"
+    },
+    {
+      "label": "2026年8月",
+      "stats": "55个国家/地区 · 10,421站 · 开放率63.5%",
+      "ym": "202608",
+      "url": "https://tesla.gann.ing"
+    }
+  ]
 };
 
 const COUNTRY_DETAIL = {};
