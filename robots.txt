@@ -1,5 +1,3 @@
 User-agent: *
 Allow: /
-Disallow: /preview/
-
 Sitemap: https://tesla.gann.ing/sitemap.xml
