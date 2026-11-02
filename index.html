@@ -174,6 +174,7 @@ body {
 .data-table tr.country-row td .expand-arrow { display: inline-block; transition: transform 0.2s; margin-right: 4px; font-size: 12px; color: #6a6a8a; }
 .data-table tr.country-row.expanded td .expand-arrow { transform: rotate(90deg); }
 .detail-expand-row { display: none; }
+.detail-expand-row.expanded { display: table-row; }
 .detail-expand-row td { padding: 0 !important; background: #111118; }
 .detail-expand-content { padding: 16px 24px 20px; border-left: 3px solid #e84118; margin: 0 12px 12px; background: #0f0f18; border-radius: 0 12px 12px 0; }
 .detail-expand-content h4 { color: #fff; font-size: 17px; margin-bottom: 10px; }
@@ -681,11 +682,13 @@ function handleSearch(value) {
             const det = sec.querySelector(`tr[data-country-detail="${cn}"]`);
             if (!kw || cn.toLowerCase().includes(kw)) {
                 row.style.display = '';
-                if (det) det.style.display = row.classList.contains('expanded') ? 'table-row' : 'none';
+                // 展开态统一由 class 控制（CSS .detail-expand-row.expanded），不写内联样式，
+                // 否则排序重建 DOM 后内联状态丢失、行会「箭头转着但内容不见」。
+                if (det) det.classList.toggle('expanded', row.classList.contains('expanded'));
                 vis++;
             } else {
                 row.style.display = 'none';
-                if (det) det.style.display = 'none';
+                if (det) det.classList.remove('expanded');
             }
         });
         sec.style.display = (vis===0 && kw) ? 'none' : '';
@@ -707,11 +710,14 @@ function setupScrollSpy() {
 
 const expandedRows = new Set();
 function toggleRowExpand(rowEl, cn) {
-    event.stopPropagation();
     const det = document.querySelector(`tr[data-country-detail="${cn}"]`);
     if (!det) return;
-    if (expandedRows.has(cn)) { expandedRows.delete(cn); rowEl.classList.remove('expanded'); det.classList.remove('expanded'); det.style.display='none'; }
-    else { expandedRows.add(cn); rowEl.classList.add('expanded'); det.classList.add('expanded'); det.style.display='table-row'; }
+    // 只切 class，显示/隐藏交给 CSS（.detail-expand-row.expanded）。
+    // 这样排序、搜索重建 DOM 后展开态能正确恢复，也不会依赖隐式全局 event。
+    const on = !expandedRows.has(cn);
+    if (on) expandedRows.add(cn); else expandedRows.delete(cn);
+    rowEl.classList.toggle('expanded', on);
+    det.classList.toggle('expanded', on);
 }
 
 renderMain();
